@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog | Magnus Platform</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --brand: #F97316;
+            --brand-dark: #EA580C;
+            --magnus-gold: #F59E0B;
+            --magnus-gold-dark: #D97706;
+            --dark-bg: #0F172A;
+            --text-light: #E2E8F0;
+            --card-bg: rgba(30, 41, 59, 0.7);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--text-light);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-image: 
+                radial-gradient(at 80% 20%, rgba(249, 115, 22, 0.15) 0, transparent 60%),
+                radial-gradient(at 20% 80%, rgba(245, 158, 11, 0.1) 0, transparent 60%);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            width: 100%;
+        }
+        
+        /* NAVIGATION STYLES */
+        .nav-wrap {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        nav {
+            background: rgba(15, 23, 42, 0.8);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 15px 0;
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: white;
+            text-decoration: none;
+        }
+        
+        .logo-img {
+            width: 36px;
+            height: 36px;
+            background: var(--brand);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 15px;
+            align-items: center;
+        }
+        
+        .nav-link {
+            color: var(--text-light);
+            text-decoration: none;
+            padding: 8px 15px;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link:hover {
+            color: var(--magnus-gold);
+            background: rgba(255, 255, 255, 0.05);
+        }
+        
+        .nav-cta {
+            background: var(--magnus-gold);
+            color: var(--dark-bg);
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-cta:hover {
+            background: var(--brand);
+            transform: translateY(-2px);
+        }
+        
+        .nav-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-light);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        /* Mobile menu */
+        .mobile-menu {
+            display: none;
+            background: rgba(15, 23, 42, 0.95);
+            padding: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .mobile-menu.active {
+            display: block;
+        }
+        
+        .mobile-menu .nav-link {
+            display: block;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* BLOG HERO SECTION */
+        .blog-hero {
+            padding: 80px 0 50px;
+            text-align: center;
+            background: linear-gradient(180deg, rgba(15, 23, 42, 0.8) 0%, transparent 100%);
+        }
+        
+        .blog-hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            background: linear-gradient(to right, var(--magnus-gold), var(--brand));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .blog-hero p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto 30px;
+            line-height: 1.6;
+        }
+        
+        .search-box {
+            display: flex;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        .search-input {
+            flex: 1;
+            padding: 15px 20px;
+            border-radius: 10px 0 0 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(15, 23, 42, 0.4);
+            color: var(--text-light);
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .search-btn {
+            padding: 15px 25px;
+            background: var(--brand);
+            color: white;
+            border: none;
+            border-radius: 0 10px 10px 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .search-btn:hover {
+            background: var(--brand-dark);
+        }
+        
+        /* BLOG CONTENT */
+        .blog-content {
+            padding: 50px 0 80px;
+        }
+        
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+        
+        .blog-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+        
+        .blog-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+        }
+        
+        .blog-card-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .blog-card-content {
+            padding: 25px;
+        }
+        
+        .blog-card-meta {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+            color: var(--magnus-gold);
+        }
+        
+        .blog-card-date {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .blog-card-title {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: white;
+        }
+        
+        .blog-card-excerpt {
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        
+        .blog-card-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--magnus-gold);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .blog-card-link:hover {
+            gap: 12px;
+            color: var(--brand);
+        }
+        
+        .blog-categories {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 40px;
+            justify-content: center;
+        }
+        
+        .category-btn {
+            padding: 10px 20px;
+            background: rgba(249, 115, 22, 0.1);
+            color: var(--magnus-gold);
+            border: 1px solid rgba(249, 115, 22, 0.2);
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .category-btn.active, .category-btn:hover {
+            background: var(--brand);
+            color: white;
+        }
+        
+        .load-more {
+            display: block;
+            margin: 0 auto;
+            padding: 15px 40px;
+            background: transparent;
+            color: var(--magnus-gold);
+            border: 1px solid var(--magnus-gold);
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .load-more:hover {
+            background: var(--magnus-gold);
+            color: var(--dark-bg);
+        }
+        
+        /* NEWSLETTER SECTION */
+        .newsletter {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 40px;
+            text-align: center;
+            margin: 50px 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+        
+        .newsletter h2 {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            color: var(--magnus-gold);
+        }
+        
+        .newsletter p {
+            margin-bottom: 25px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .newsletter-form {
+            display: flex;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        .newsletter-input {
+            flex: 1;
+            padding: 15px 20px;
+            border-radius: 10px 0 0 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(15, 23, 42, 0.4);
+            color: var(--text-light);
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .newsletter-btn {
+            padding: 15px 25px;
+            background: var(--brand);
+            color: white;
+            border: none;
+            border-radius: 0 10px 10px 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .newsletter-btn:hover {
+            background: var(--brand-dark);
+        }
+        
+        /* FOOTER */
+        footer {
+            padding: 50px 0 30px;
+            background: rgba(15, 23, 42, 0.8);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: white;
+        }
+        
+        .footer-about {
+            margin-bottom: 20px;
+        }
+        
+        .footer-heading {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: var(--magnus-gold);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: var(--magnus-gold);
+            padding-left: 5px;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .social-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: var(--text-light);
+            transition: all 0.3s ease;
+        }
+        
+        .social-link:hover {
+            background: var(--brand);
+            color: white;
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* RESPONSIVE STYLES */
+        @media (max-width: 968px) {
+            .nav-menu {
+                display: none;
+            }
+            
+            .nav-toggle {
+                display: block;
+            }
+            
+            .blog-hero h1 {
+                font-size: 2.8rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .blog-hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .search-box, .newsletter-form {
+                flex-direction: column;
+            }
+            
+            .search-input, .newsletter-input {
+                border-radius: 10px 10px 0 0;
+                margin-bottom: 1px;
+            }
+            
+            .search-btn, .newsletter-btn {
+                border-radius: 0 0 10px 10px;
+            }
+            
+            .blog-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <div class="nav-wrap">
+        <nav>
+            <div class="container nav-container">
+                <a href="#" class="brand">
+                    <div class="logo-img">M</div>
+                    <span>Magnus</span>
+                </a>
+                
+                <ul class="nav-menu">
+                    <li><a href="#" class="nav-link">Home</a></li>
+                    <li><a href="#" class="nav-link">Features</a></li>
+                    <li><a href="#" class="nav-link">Packages</a></li>
+                    <li><a href="#" class="nav-link active">Blog</a></li>
+                    <li><a href="#" class="nav-cta">Register</a></li>
+                </ul>
+                
+                <button class="nav-toggle" id="navToggle">☰</button>
+            </div>
+        </nav>
+        
+        <!-- Mobile Menu -->
+        <div class="mobile-menu" id="mobileMenu">
+            <a href="/index.html" class="nav-link">Home</a>
+            <a href="#" class="nav-link">Features</a>
+            <a href="#" class="nav-link">Packages</a>
+            <a href="/magnus_blogs.html" class="nav-link active">Blog</a>
+            <a href="/magnus_registration.html" class="nav-link" style="background: var(--magnus-gold); color: var(--dark-bg); text-align: center; margin-top: 10px;">Register</a>
+        </div>
+    </div>
+    
+    <!-- Blog Hero Section -->
+    <section class="blog-hero">
+        <div class="container">
+            <h1>Magnus Blog</h1>
+            <p>Stay updated with the latest news, tips, and strategies to maximize your earnings on the Magnus platform.</p>
+            
+            <div class="search-box">
+                <input type="text" class="search-input" placeholder="Search articles...">
+                <button class="search-btn"><i class="fas fa-search"></i></button>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Blog Content -->
+    <section class="blog-content">
+        <div class="container">
+            <div class="blog-categories">
+                <button class="category-btn active">All Topics</button>
+                <button class="category-btn">Earning Tips</button>
+                <button class="category-btn">Platform Updates</button>
+                <button class="category-btn">Success Stories</button>
+                <button class="category-btn">Tutorials</button>
+            </div>
+            
+            <div class="blog-grid">
+                <!-- Blog Post 1 -->
+                <article class="blog-card">
+                    <img src="https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Maximizing Earnings" class="blog-card-img">
+                    <div class="blog-card-content">
+                        <div class="blog-card-meta">
+                            <span class="blog-card-date"><i class="far fa-calendar"></i> June 15, 2023</span>
+                            <span><i class="far fa-clock"></i> 5 min read</span>
+                        </div>
+                        <h3 class="blog-card-title">10 Proven Strategies to Maximize Your Earnings on Magnus</h3>
+                        <p class="blog-card-excerpt">Discover the top strategies that successful Magnus users employ to maximize their daily earnings and grow their income streams.</p>
+                        <a href="/blogs/test.html" class="blog-card-link">Read More <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </article>
+                
+                <!-- Blog Post 2 -->
+                <article class="blog-card">
+                    <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1115&q=80" alt="New Features" class="blog-card-img">
+                    <div class="blog-card-content">
+                        <div class="blog-card-meta">
+                            <span class="blog-card-date"><i class="far fa-calendar"></i> June 10, 2023</span>
+                            <span><i class="far fa-clock"></i> 4 min read</span>
+                        </div>
+                        <h3 class="blog-card-title">New Features Added to Magnus Stream: What You Need to Know</h3>
+                        <p class="blog-card-excerpt">Learn about the latest updates to Magnus Stream and how these new features can help you earn more while enjoying your favorite content.</p>
+                        <a href="#" class="blog-card-link">Read More <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </article>
+                
+                <!-- Blog Post 3 -->
+                <article class="blog-card">
+                    <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" alt="Success Story" class="blog-card-img">
+                    <div class="blog-card-content">
+                        <div class="blog-card-meta">
+                            <span class="blog-card-date"><i class="far fa-calendar"></i> June 5, 2023</span>
+                            <span><i class="far fa-clock"></i> 7 min read</span>
+                        </div>
+                        <h3 class="blog-card-title">From Zero to Hero: How Chinedu Earned ₦500,000 in 3 Months</h3>
+                        <p class="blog-card-excerpt">Read the inspiring story of Chinedu, who went from being a novice to earning over half a million naira on Magnus in just three months.</p>
+                        <a href="#" class="blog-card-link">Read More <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </article>
+                
+                <!-- Blog Post 4 -->
+                <article class="blog-card">
+                    <img src="https://images.unsplash.com/photo-1543286386-713bdd548da4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Tutorial" class="blog-card-img">
+                    <div class="blog-card-content">
+                        <div class="blog-card-meta">
+                            <span class="blog-card-date"><i class="far fa-calendar"></i> May 28, 2023</span>
+                            <span><i class="far fa-clock"></i> 6 min read</span>
+                        </div>
+                        <h3 class="blog-card-title">How to Build a Strong Referral Network on Magnus</h3>
+                        <p class="blog-card-excerpt">Learn the secrets to building a powerful referral network that can significantly boost your passive income on the Magnus platform.</p>
+                        <a href="#" class="blog-card-link">Read More <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </article>
+                
+                <!-- Blog Post 5 -->
+                <article class="blog-card">
+                    <img src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Withdrawal Tips" class="blog-card-img">
+                    <div class="blog-card-content">
+                        <div class="blog-card-meta">
+                            <span class="blog-card-date"><i class="far fa-calendar"></i> May 20, 2023</span>
+                            <span><i class="far fa-clock"></i> 3 min read</span>
+                        </div>
+                        <h3 class="blog-card-title">Optimizing Your Withdrawal Strategy for Maximum Profit</h3>
+                        <p class="blog-card-excerpt">Discover the best practices for timing and structuring your withdrawals to maximize your earnings and minimize fees on Magnus.</p>
+                        <a href="#" class="blog-card-link">Read More <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </article>
+                
+                <!-- Blog Post 6 -->
+                <article class="blog-card">
+                    <img src="https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1169&q=80" alt="Mobile Optimization" class="blog-card-img">
+                    <div class="blog-card-content">
+                        <div class="blog-card-meta">
+                            <span class="blog-card-date"><i class="far fa-calendar"></i> May 12, 2023</span>
+                            <span><i class="far fa-clock"></i> 5 min read</span>
+                        </div>
+                        <h3 class="blog-card-title">How to Use Magnus on Mobile: Tips for Earning On-The-Go</h3>
+                        <p class="blog-card-excerpt">Maximize your earning potential by learning how to effectively use Magnus on your mobile device, no matter where you are.</p>
+                        <a href="#" class="blog-card-link">Read More <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </article>
+            </div>
+            
+            <button class="load-more">Load More Articles</button>
+            
+            <!-- Newsletter Section -->
+            <div class="newsletter">
+                <h2>Stay Updated with Magnus</h2>
+                <p>Subscribe to our newsletter to receive the latest updates, earning tips, and exclusive offers directly in your inbox.</p>
+                
+                <form class="newsletter-form">
+                    <input type="email" class="newsletter-input" placeholder="Enter your email address">
+                    <button type="submit" class="newsletter-btn">Subscribe</button>
+                </form>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-about">
+                    <div class="footer-logo">
+                        <div class="logo-img">M</div>
+                        <span>Magnus</span>
+                    </div>
+                    <p class="footer-about">Magnus is a leading platform that helps users earn money through various online activities including streaming, reviews, and referrals.</p>
+                    
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-links">
+                    <h3 class="footer-heading">Quick Links</h3>
+                    <ul>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Features</a></li>
+                        <li><a href="#">Pricing</a></li>
+                        <li><a href="#">Blog</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-links">
+                    <h3 class="footer-heading">Support</h3>
+                    <ul>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">FAQs</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-links">
+                    <h3 class="footer-heading">Contact Info</h3>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Magnus Avenue, Lagos, Nigeria</li>
+                        <li><i class="fas fa-phone"></i> +234 800 123 4567</li>
+                        <li><i class="fas fa-envelope"></i> info@magnuswebsite.site</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>© 2023 Magnus Platform. All rights reserved. | RC: 1234567</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const navToggle = document.getElementById('navToggle');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        navToggle.addEventListener('click', () => {
+            mobileMenu.classList.toggle('active');
+        });
+        
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (mobileMenu.classList.contains('active') && 
+                !e.target.closest('.mobile-menu') && 
+                !e.target.closest('.nav-toggle')) {
+                mobileMenu.classList.remove('active');
+            }
+        });
+        
+        // Category filter functionality
+        const categoryButtons = document.querySelectorAll('.category-btn');
+        
+        categoryButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Remove active class from all buttons
+                categoryButtons.forEach(btn => btn.classList.remove('active'));
+                
+                // Add active class to clicked button
+                button.classList.add('active');
+                
+                // Here you would typically filter the blog posts
+                // This is just a placeholder for the functionality
+                console.log('Filtering by category: ' + button.textContent);
+            });
+        });
+        
+        // Load more functionality
+        const loadMoreButton = document.querySelector('.load-more');
+        
+        loadMoreButton.addEventListener('click', () => {
+            // This would typically load more blog posts
+            // For now, we'll just simulate loading
+            loadMoreButton.textContent = 'Loading...';
+            
+            setTimeout(() => {
+                loadMoreButton.textContent = 'Load More Articles';
+                alert('More articles would be loaded here. This is a simulation.');
+            }, 1500);
+        });
+        
+        // Newsletter form submission
+        const newsletterForm = document.querySelector('.newsletter-form');
+        
+        newsletterForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const emailInput = newsletterForm.querySelector('input[type="email"]');
+            
+            if (emailInput.value) {
+                alert('Thank you for subscribing to our newsletter!');
+                emailInput.value = '';
+            }
+        });
+    </script>
+</body>
+</html>

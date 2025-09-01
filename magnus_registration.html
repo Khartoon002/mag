@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register | Magnus Platform</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --brand: #F97316;
+            --brand-dark: #EA580C;
+            --magnus-gold: #F59E0B;
+            --magnus-gold-dark: #D97706;
+            --dark-bg: #0F172A;
+            --text-light: #E2E8F0;
+            --card-bg: rgba(30, 41, 59, 0.7);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--text-light);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-image: 
+                radial-gradient(at 80% 20%, rgba(249, 115, 22, 0.15) 0, transparent 60%),
+                radial-gradient(at 20% 80%, rgba(245, 158, 11, 0.1) 0, transparent 60%);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            width: 100%;
+        }
+        
+        /* NAVIGATION STYLES */
+        .nav-wrap {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        nav {
+            background: rgba(15, 23, 42, 0.8);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 15px 0;
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: white;
+            text-decoration: none;
+        }
+        
+        .logo-img {
+            width: 36px;
+            height: 36px;
+            background: var(--brand);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 15px;
+            align-items: center;
+        }
+        
+        .nav-link {
+            color: var(--text-light);
+            text-decoration: none;
+            padding: 8px 15px;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link:hover {
+            color: var(--magnus-gold);
+            background: rgba(255, 255, 255, 0.05);
+        }
+        
+        .nav-cta {
+            background: var(--magnus-gold);
+            color: var(--dark-bg);
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-cta:hover {
+            background: var(--brand);
+            transform: translateY(-2px);
+        }
+        
+        .nav-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-light);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        /* Mobile menu */
+        .mobile-menu {
+            display: none;
+            background: rgba(15, 23, 42, 0.95);
+            padding: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .mobile-menu.active {
+            display: block;
+        }
+        
+        .mobile-menu .nav-link {
+            display: block;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* MAIN CONTENT */
+        .main-content {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            padding: 40px 0;
+        }
+        
+        .registration-container {
+            display: flex;
+            width: 100%;
+            gap: 40px;
+            align-items: center;
+        }
+        
+        .registration-info {
+            flex: 1;
+            padding: 30px;
+        }
+        
+        .registration-form-container {
+            flex: 1;
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+        
+        .timer-container {
+            background: linear-gradient(to right, var(--brand), var(--brand-dark));
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 15px rgba(249, 115, 22, 0.4);
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 5px 15px rgba(249, 115, 22, 0.4); }
+            50% { box-shadow: 0 5px 20px rgba(249, 115, 22, 0.7); }
+            100% { box-shadow: 0 5px 15px rgba(249, 115, 22, 0.4); }
+        }
+        
+        .timer-title {
+            font-size: 1rem;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        .timer {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .timer-unit {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 10px;
+            min-width: 60px;
+        }
+        
+        .timer-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+        
+        .timer-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            opacity: 0.8;
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            background: linear-gradient(to right, var(--magnus-gold), var(--brand));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            line-height: 1.6;
+            max-width: 500px;
+        }
+        
+        .benefits {
+            margin-top: 40px;
+        }
+        
+        .benefit-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .benefit-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(249, 115, 22, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--magnus-gold);
+            font-size: 18px;
+        }
+        
+        .form-title {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            text-align: center;
+            color: var(--magnus-gold);
+        }
+        
+        .form-subtitle {
+            text-align: center;
+            margin-bottom: 25px;
+            opacity: 0.9;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(15, 23, 42, 0.4);
+            color: var(--text-light);
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: var(--brand);
+            box-shadow: 0 0 0 2px rgba(249, 115, 22, 0.3);
+        }
+        
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .checkbox-group input {
+            width: 18px;
+            height: 18px;
+        }
+        
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(to right, var(--brand), var(--brand-dark));
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(249, 115, 22, 0.4);
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(249, 115, 22, 0.6);
+        }
+        
+        .login-link {
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        .login-link a {
+            color: var(--magnus-gold);
+            text-decoration: none;
+        }
+        
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+        
+        /* SUCCESS POPUP */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .popup-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .glass-popup {
+            background: rgba(30, 41, 59, 0.9);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 30px;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+        }
+        
+        .popup-overlay.active .glass-popup {
+            transform: translateY(0);
+        }
+        
+        .popup-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+        
+        .popup-title {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--magnus-gold);
+        }
+        
+        .popup-message {
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+        
+        .popup-btn {
+            display: inline-block;
+            padding: 12px 25px;
+            background: var(--brand);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .popup-btn:hover {
+            background: var(--brand-dark);
+            transform: translateY(-2px);
+        }
+        
+        footer {
+            padding: 30px 0;
+            background: rgba(15, 23, 42, 0.8);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            margin-top: 40px;
+        }
+        
+        /* RESPONSIVE STYLES */
+        @media (max-width: 968px) {
+            .registration-container {
+                flex-direction: column;
+            }
+            
+            .registration-info, .registration-form-container {
+                width: 100%;
+            }
+            
+            .nav-menu {
+                display: none;
+            }
+            
+            .nav-toggle {
+                display: block;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .registration-form-container {
+                padding: 30px 20px;
+            }
+            
+            .timer-unit {
+                min-width: 50px;
+            }
+            
+            .timer-value {
+                font-size: 1.5rem;
+            }
+            
+            .nav-container {
+                padding: 0 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <div class="nav-wrap">
+        <nav>
+            <div class="container nav-container">
+                <a href="#" class="brand">
+                    <div class="logo-img">M</div>
+                    <span>Magnus</span>
+                </a>
+                
+                <ul class="nav-menu">
+                    <li><a href="/index.html" class="nav-link">Home</a></li>
+                    <li><a href="#" class="nav-link">Features</a></li>
+                    <li><a href="#" class="nav-link">Packages</a></li>
+                    <li><a href="#" class="nav-link">Testimonials</a></li>
+                    <li><a href="/magnus_registration.html" class="nav-cta">Register</a></li>
+                </ul>
+                
+                <button class="nav-toggle" id="navToggle">☰</button>
+            </div>
+        </nav>
+        
+        <!-- Mobile Menu -->
+        <div class="mobile-menu" id="mobileMenu">
+            <a href="#" class="nav-link">Home</a>
+            <a href="#" class="nav-link">Features</a>
+            <a href="#" class="nav-link">Packages</a>
+            <a href="#" class="nav-link">Testimonials</a>
+            <a href="#" class="nav-link" style="background: var(--magnus-gold); color: var(--dark-bg); text-align: center; margin-top: 10px;">Register</a>
+        </div>
+    </div>
+    
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="container">
+            <div class="registration-container">
+                <div class="registration-info">
+                    <h1>Join Magnus Today</h1>
+                    <p class="subtitle">Create your account and start earning with our platform. One-time registration fee of ₦8,500 unlocks all opportunities.</p>
+                    
+                    <div class="benefits">
+                        <div class="benefit-item">
+                            <div class="benefit-icon">💸</div>
+                            <div>
+                                <h3>Earn Daily Income</h3>
+                                <p>Stream content, review products, and refer friends</p>
+                            </div>
+                        </div>
+                        
+                        <div class="benefit-item">
+                            <div class="benefit-icon">🚀</div>
+                            <div>
+                                <h3>Fast Withdrawals</h3>
+                                <p>Get your earnings directly to your bank account</p>
+                            </div>
+                        </div>
+                        
+                        <div class="benefit-item">
+                            <div class="benefit-icon">🛡️</div>
+                            <div>
+                                <h3>Secure Platform</h3>
+                                <p>Your data and earnings are protected</p>
+                            </div>
+                        </div>
+                        
+                        <div class="benefit-item">
+                            <div class="benefit-icon">⏰</div>
+                            <div>
+                                <h3>Limited Time Offer</h3>
+                                <p>Register now to get exclusive bonuses</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="registration-form-container">
+                    <div class="timer-container">
+                        <div class="timer-title">Special offer expires in:</div>
+                        <div class="timer">
+                            <div class="timer-unit">
+                                <div class="timer-value" id="minutes">30</div>
+                                <div class="timer-label">Minutes</div>
+                            </div>
+                            <div class="timer-unit">
+                                <div class="timer-value" id="seconds">00</div>
+                                <div class="timer-label">Seconds</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <h2 class="form-title">Create Account</h2>
+                    <p class="form-subtitle">Register now to claim your exclusive benefits</p>
+                    
+                    <form id="registrationForm">
+                        <div class="form-group">
+                            <label for="fullName" class="form-label">Full Name</label>
+                            <input type="text" id="fullName" class="form-input" placeholder="Enter your full name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email" class="form-label">Email Address</label>
+                            <input type="email" id="email" class="form-input" placeholder="Enter your email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="phone" class="form-label">Phone Number</label>
+                            <input type="tel" id="phone" class="form-input" placeholder="Enter your phone number" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" id="password" class="form-input" placeholder="Create a password" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="confirmPassword" class="form-label">Confirm Password</label>
+                            <input type="password" id="confirmPassword" class="form-input" placeholder="Confirm your password" required>
+                        </div>
+                        
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="terms" required>
+                            <label for="terms">I agree to the <a href="#" style="color: var(--magnus-gold);">Terms of Service</a> and <a href="#" style="color: var(--magnus-gold);">Privacy Policy</a></label>
+                        </div>
+                        
+                        <button type="submit" class="btn">Create Account - ₦8,500</button>
+                        
+                        <div class="login-link">
+                            Already have an account? <a href="#">Log In</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Success Popup -->
+    <div class="popup-overlay" id="successPopup">
+        <div class="glass-popup">
+            <div class="popup-icon">✅</div>
+            <h3 class="popup-title">Registration Successful!</h3>
+            <p class="popup-message">Your account has been created successfully. You will be redirected to the payment page shortly.</p>
+            <a href="#" class="popup-btn" id="redirectButton">Continue to Payment</a>
+        </div>
+    </div>
+    
+    <footer>
+        <div class="container">
+            <p>© 2023 Magnus Platform. All rights reserved. | RC: 1234567</p>
+        </div>
+    </footer>
+
+    <script>
+        // CONFIGURATION - Update these URLs as needed
+        const redirectUrl = "https://linktr.ee/magnusonline"; // Change to your payment URL
+        const redirectDelay = 3000; // 3 seconds delay before redirect (adjust as needed)
+        
+        // Mobile menu toggle
+        const navToggle = document.getElementById('navToggle');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        navToggle.addEventListener('click', () => {
+            mobileMenu.classList.toggle('active');
+        });
+        
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (mobileMenu.classList.contains('active') && 
+                !e.target.closest('.mobile-menu') && 
+                !e.target.closest('.nav-toggle')) {
+                mobileMenu.classList.remove('active');
+            }
+        });
+        
+        // Countdown timer functionality
+        function startTimer(duration, displayMinutes, displaySeconds) {
+            let timer = duration, minutes, seconds;
+            
+            const interval = setInterval(function () {
+                minutes = parseInt(timer / 60, 10);
+                seconds = parseInt(timer % 60, 10);
+                
+                minutes = minutes < 10 ? "0" + minutes : minutes;
+                seconds = seconds < 10 ? "0" + seconds : seconds;
+                
+                displayMinutes.textContent = minutes;
+                displaySeconds.textContent = seconds;
+                
+                if (--timer < 0) {
+                    clearInterval(interval);
+                    // Timer expired action
+                    document.querySelector('.timer-title').textContent = "Offer has expired!";
+                    document.getElementById('minutes').textContent = "00";
+                    document.getElementById('seconds').textContent = "00";
+                }
+            }, 1000);
+        }
+        
+        // Start the timer when the page loads
+        window.onload = function () {
+            const thirtyMinutes = 30 * 60;
+            const displayMinutes = document.querySelector('#minutes');
+            const displaySeconds = document.querySelector('#seconds');
+            
+            startTimer(thirtyMinutes, displayMinutes, displaySeconds);
+        };
+        
+        // Form validation and success popup
+        document.getElementById('registrationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            
+            // Validate passwords match
+            if (password !== confirmPassword) {
+                alert('Passwords do not match!');
+                return;
+            }
+            
+            // If everything is valid, show success popup
+            const successPopup = document.getElementById('successPopup');
+            successPopup.classList.add('active');
+            
+            // Set the redirect URL for the button
+            document.getElementById('redirectButton').href = redirectUrl;
+            
+            // Redirect after delay
+            setTimeout(() => {
+                window.location.href = redirectUrl;
+            }, redirectDelay);
+        });
+        
+        // Close popup if user clicks the button manually
+        document.getElementById('redirectButton').addEventListener('click', () => {
+            document.getElementById('successPopup').classList.remove('active');
+        });
+    </script>
+</body>
+</html>
