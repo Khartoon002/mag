@@ -1,6 +1,7 @@
 (() => {
-  const ALLOW_SELECTOR = 'input, textarea, [data-allow-select]'; // allow forms or tagged elements
-
+  const ALLOW_SELECTOR = 'input, textarea, [data-allow-select]';
+  const PROTECTED_URL = 'https://magnuswebsite.site/';
+  
   function injectStyles() {
     const css = `
       .cg-noselect { -webkit-user-select:none; -ms-user-select:none; user-select:none; }
@@ -37,6 +38,31 @@
     toastTimer = setTimeout(() => { t.style.opacity = '0'; }, 2000);
   }
 
+  // Block view-source: protocol attempts
+  function blockViewSource() {
+    // Override window.open to prevent view-source
+    const originalOpen = window.open;
+    window.open = function(url, name, features) {
+      if (url && url.toString().startsWith('view-source:')) {
+        toast("content is protected");
+        return null;
+      }
+      return originalOpen.apply(this, arguments);
+    };
+    
+    // Monitor for view-source attempts in address bar (limited capability)
+    let lastUrl = window.location.href;
+    setInterval(() => {
+      if (window.location.href !== lastUrl) {
+        if (window.location.href.startsWith('view-source:')) {
+          window.location.href = PROTECTED_URL;
+          toast("content is protected");
+        }
+        lastUrl = window.location.href;
+      }
+    }, 100);
+  }
+
   // Block selection (except allowed)
   document.addEventListener('selectstart', e => {
     if (!e.target.closest(ALLOW_SELECTOR)) {
@@ -68,21 +94,37 @@
     const k = (e.key || '').toLowerCase();
     const ctrl = e.ctrlKey || e.metaKey;
     const shift = e.shiftKey;
+    const alt = e.altKey;
 
-    if ((ctrl && (k === 'u' || k === 's' || k === 'p'))) {
+    // Block view-source shortcuts
+    if (ctrl && shift && k === 'u') {
       e.preventDefault(); e.stopPropagation();
       toast("content is protected");
+      return;
     }
 
-    const isBlockedCombo =
-      (k === 'f12') ||
-      (ctrl && shift && (k === 'i' || k === 'j' || k === 'c'));
+    // Block all function keys that might open dev tools
+    if (k.startsWith('f') && !isNaN(k.substring(1)) && parseInt(k.substring(1)) >= 1 && parseInt(k.substring(1)) <= 12) {
+      e.preventDefault(); e.stopPropagation();
+      toast("content is protected");
+      return;
+    }
 
-    if (isBlockedCombo) {
+    // Block other DevTools shortcuts
+    if ((ctrl && shift && (k === 'i' || k === 'j' || k === 'c')) || 
+        (ctrl && (k === 'u' || k === 's' || k === 'p')) ||
+        (alt && k === 'f12')) {
       e.preventDefault(); e.stopPropagation();
       toast("content is protected");
     }
   }, {capture:true});
 
+  // Block iframe embedding
+  if (window.top !== window.self) {
+    document.body.innerHTML = '<div style="text-align:center;padding:50px;font-family:Arial;">This content cannot be embedded.</div>';
+    throw new Error("Embedding not allowed");
+  }
+
   injectStyles();
+  blockViewSource();
 })();
