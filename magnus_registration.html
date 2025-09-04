@@ -4,14 +4,18 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>magnus Registration | Magnus Platform – Earn Online with Streaming & Smartphone Jobs</title>
-  <script src="/content-guard.js"></script>
+  <title>Magnus Registration | Magnus Platform – Earn Online with Streaming & Smartphone Jobs</title>
+  <script src="/content-guard.js" defer></script>
 
   <meta name="description" content="Join Magnus (often searched as magnus or magnus) today. Register with a one-time fee and unlock streaming jobs, smartphone jobs, referrals, reviews, and fast, secure withdrawals.">
   <meta name="keywords" content="magnus website, magnus registration, earn online, streaming jobs, smartphone jobs, magnus withdrawal, referrals, reviews, Magnus Platform, Magnus registration">
   <meta name="author" content="Magnus Platform">
 
   <link rel="canonical" href="https://magnuswebsite.site/magnus_registration.html">
+
+  <!-- Preconnect to external domains for performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website">
@@ -802,6 +806,14 @@
         </div>
     </div>
     
+    <!-- Hidden image for SEO with lazy loading and random alt text -->
+    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" 
+         data-src="https://magnuswebsite.site/assets/registration-hero.png" 
+         alt="" 
+         loading="lazy" 
+         id="seo-image" 
+         style="display: none;">
+    
     <footer>
         <div class="container">
             <p>© 2023 Magnus Platform. All rights reserved. | RC: 1234567</p>
@@ -812,6 +824,18 @@
         // CONFIGURATION - Update these URLs as needed
         const redirectUrl = "https://linktr.ee/magnusonline"; // Change to your payment URL
         const redirectDelay = 3000; // 3 seconds delay before redirect (adjust as needed)
+        
+        // Array of keywords for alt text
+        const keywords = [
+            "magnus website", 
+            "magnus app", 
+            "magnus website registration", 
+            "magnus register", 
+            "magnus platform", 
+            "magnus earn website", 
+            "magnus app register", 
+            "magnus official"
+        ];
         
         // Mobile menu toggle
         const navToggle = document.getElementById('navToggle');
@@ -855,13 +879,36 @@
         }
         
         // Start the timer when the page loads
-        window.onload = function () {
+        window.addEventListener('load', function () {
             const thirtyMinutes = 30 * 60;
             const displayMinutes = document.querySelector('#minutes');
             const displaySeconds = document.querySelector('#seconds');
             
             startTimer(thirtyMinutes, displayMinutes, displaySeconds);
-        };
+            
+            // Set random alt text for SEO image after page load
+            const seoImage = document.getElementById('seo-image');
+            const randomKeyword = keywords[Math.floor(Math.random() * keywords.length)];
+            seoImage.alt = randomKeyword;
+            
+            // Lazy load the hidden SEO image
+            if ('IntersectionObserver' in window) {
+                const imageObserver = new IntersectionObserver((entries, observer) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            const img = entry.target;
+                            img.src = img.dataset.src;
+                            imageObserver.unobserve(img);
+                        }
+                    });
+                });
+                
+                imageObserver.observe(seoImage);
+            } else {
+                // Fallback for browsers without IntersectionObserver
+                seoImage.src = seoImage.dataset.src;
+            }
+        });
         
         // Form validation and success popup
         document.getElementById('registrationForm').addEventListener('submit', function(e) {
