@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="en">
 <head>
   <!-- Charset & Viewport -->
@@ -83,12 +83,7 @@
             bounceIn: { '0%': { transform: 'scale(0.3)', opacity: 0 }, '50%': { transform: 'scale(1.05)', opacity: 1 }, '70%': { transform: 'scale(0.9)' }, '100%': { transform: 'scale(1)', opacity: 1 } },
             slideInFromRight: { '0%': { transform: 'translateX(100%)', opacity: 0 }, '100%': { transform: 'translateX(0)', opacity: 1 } },
             slideInFromLeft: { '0%': { transform: 'translateX(-100%)', opacity: 0 }, '100%': { transform: 'translateX(0)', opacity: 1 } },
-            slideUp: { '0%': { transform: 'translateY(100%)', opacity: 0 }, '100%': { transform: 'translateY(0)', opacity: 1 } },
-            float: { '0%,100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-10px)' } },
-            glassShine: { '0%': { transform: 'translateX(-120%) rotate(12deg)' }, '100%': { transform: 'translateX(120%) rotate(12deg)' } },
-            creditPop: { '0%': { transform: 'translateY(-10px) scale(.95)', opacity: 0 }, '12%': { transform: 'translateY(0) scale(1)', opacity: 1 }, '85%': { opacity: 1 }, '100%': { transform: 'translateY(-6px) scale(.98)', opacity: 0 } },
-            cashRise: { '0%': { transform: 'translateY(0) translateX(0) scale(.8)', opacity: 1 }, '100%': { transform: 'translateY(-80px) translateX(var(--drift, 20px)) scale(1.1)', opacity: 0 } },
-            sparkFlash: { '0%': { opacity: .6 }, '50%': { opacity: 1 }, '100%': { opacity: .6 } }
+            slideUp: { '0%': { transform: 'translateY(100%)', opacity: 0 }, '100%': { transform: 'translateY(0)', opacity: 1 } }
           },
           animation: {
             fadeIn: 'fadeIn .18s ease-out',
@@ -100,12 +95,7 @@
             bounceIn: 'bounceIn 2s',
             slideInFromRight: 'slideInFromRight 1s ease-out',
             slideInFromLeft: 'slideInFromLeft 1s ease-out',
-            slideUp: 'slideUp 1s ease-out',
-            float: 'float 6s ease-in-out infinite',
-            glassShine: 'glassShine 4.5s linear infinite',
-            creditPop: 'creditPop 3.2s ease-out forwards',
-            cashRise: 'cashRise 1.8s ease-out forwards',
-            sparkFlash: 'sparkFlash 1.2s ease-in-out infinite'
+            slideUp: 'slideUp 1s ease-out'
           }
         }
       },
@@ -318,22 +308,13 @@
     .to-top { position: fixed; bottom: 24px; right: 24px; z-index: 40; }
     .is-hidden { opacity: 0; pointer-events: none; transform: translateY(6px); transition: all .25s ease; }
 
-    /* Hero background */
+    /* Hero background - simplified */
     .hero-bg {
       position: absolute; inset: 0; z-index: 0;
       background: linear-gradient(120deg, #F97316 0%, #FB923C 30%, #EA580C 60%, #0F172A 100%);
-      background-size: 300% 300%; animation: gradientShift 12s ease infinite;
-      filter: contrast(1.05) saturate(1.05);
     }
-    @keyframes gradientShift { 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
-    .hero-aurora { position:absolute; inset:0; z-index:0; pointer-events:none; overflow:hidden; }
-    .hero-blob { position:absolute; border-radius:50%; filter:blur(90px); opacity:.28; mix-blend-mode:screen; animation:blobMove 10s ease-in-out infinite; }
-    .blob-a { width:520px; height:520px; background: rgba(251,146,60,.85); top:-8%; left:-12%; animation-duration:16s; }
-    .blob-b { width:420px; height:420px; background: rgba(249,115,22,.7); bottom:-18%; right:-14%; animation-duration:18s; }
-    .blob-c { width:360px; height:360px; background: rgba(55,48,40,.45); bottom:12%; left:18%; animation-duration:14s; opacity:.22; }
-    @keyframes blobMove { 0%{transform:translate(0,0) scale(1)} 50%{transform:translate(70px,-90px) scale(1.08)} 100%{transform:translate(0,0) scale(1)} }
 
-    /* Glass phone */
+    /* Phone styling - simplified animations */
     .phone-wrap { perspective: 1200px; display:flex; align-items:center; justify-content:center; }
     .phone {
       width: 300px; height: 620px; border-radius: 38px; position: relative;
@@ -344,11 +325,9 @@
       border: 1px solid rgba(255,255,255,.18);
       backdrop-filter: blur(8px);
       overflow: hidden;
-      animation: float 6s ease-in-out infinite;
       isolation: isolate;
     }
     .phone:hover { transform: rotateY(-4deg) rotateX(0deg) translateY(-6px); box-shadow: 0 40px 130px rgba(0,0,0,.6); }
-    @keyframes float { 0%,100%{ transform: translateY(0) rotateY(-14deg) rotateX(5deg) } 50%{ transform: translateY(-8px) rotateY(-10deg) rotateX(5deg) } }
 
     .phone::before {
       content:""; position:absolute; inset:-2px; border-radius: 40px;
@@ -356,11 +335,6 @@
         radial-gradient(120% 60% at 0% 0%, rgba(255,255,255,.18), transparent 60%),
         radial-gradient(120% 60% at 100% 100%, rgba(255,255,255,.08), transparent 60%);
       pointer-events:none;
-    }
-    .phone::after{
-      content:""; position:absolute; inset:-30%; transform: translateX(-120%) rotate(12deg);
-      background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,.25) 50%, transparent 100%);
-      filter: blur(6px); mix-blend-mode: screen; animation: glassShine 5.5s linear infinite;
     }
 
     .notch {
@@ -416,24 +390,6 @@
       display:flex; justify-content:space-around; border:1px solid rgba(255,255,255,0.06); backdrop-filter: blur(6px);
     }
 
-    .credit-toasts { position:absolute; top:58px; left:0; right:0; display:flex; justify-content:center; pointer-events:none; z-index:5; }
-    .credit-toast {
-      background: linear-gradient(90deg, rgba(16,185,129,.2), rgba(16,185,129,.08));
-      border:1px solid rgba(16,185,129,.45);
-      color:#bbf7d0; padding:8px 12px; border-radius:12px; backdrop-filter: blur(6px);
-      box-shadow: 0 10px 30px rgba(16,185,129,.25);
-      display:flex; align-items:center; gap:8px; font-weight:600;
-    }
-    .credit-particles { position:absolute; inset:0; pointer-events:none; overflow:hidden; }
-    .coin {
-      position:absolute; bottom:22%; left:50%;
-      transform: translateX(-50%); font-weight:700; color:#34d399;
-      text-shadow: 0 2px 10px rgba(52,211,153,.55);
-      filter: drop-shadow(0 2px 8px rgba(0,0,0,.4));
-      animation: cashRise 1.6s ease-out forwards;
-      will-change: transform, opacity;
-    }
-
     /* Responsive */
     @media (max-width: 1024px) {
       .phone { width: 260px; height:540px; }
@@ -442,7 +398,7 @@
     @media (max-width: 768px) {
       .hero-grid { flex-direction: column; gap: 28px; text-align: center; align-items: center; }
       .hero-left, .hero-right { width: 100%; }
-      .phone { transform: none; animation: none; }
+      .phone { transform: none; }
     }
   </style>
 </head>
@@ -469,7 +425,7 @@
           <li><a class="nav-link" href="#packages" rel="follow">Packages</a></li>
           <li><a class="nav-link" href="#videos" rel="follow">Magnus Registration — How to Register?</a></li>
           <li><a class="nav-link" href="magnus_registration.html" rel="follow">Payment</a></li>
-          <li><a class="nav-cta animate-pulseGlow" href="magnus_registration.html" rel="follow">Register</a></li>
+          <li><a class="nav-cta" href="magnus_registration.html" rel="follow">Register</a></li>
         </ul>
 
         <!-- Mobile hamburger -->
@@ -497,11 +453,6 @@
     <!-- HERO -->
     <section class="relative min-h-[90vh] flex items-center overflow-hidden" id="hero">
       <div aria-hidden="true" class="hero-bg"></div>
-      <div aria-hidden="true" class="hero-aurora">
-        <div class="hero-blob blob-a"></div>
-        <div class="hero-blob blob-b"></div>
-        <div class="hero-blob blob-c"></div>
-      </div>
 
       <div class="section-wrap relative z-10 py-20">
         <div class="hero-grid flex items-center gap-10 lg:gap-16">
@@ -537,12 +488,8 @@
           <!-- RIGHT: GLASS PHONE DASHBOARD -->
           <div class="hero-right lg:w-1/2 flex justify-center items-center">
             <div class="phone-wrap">
-              <div class="phone" aria-label="Glass phone showing Magnus earnings dashboard with live credit animations" role="img">
+              <div class="phone" aria-label="Glass phone showing Magnus earnings dashboard" role="img">
                 <div class="notch"><span class="cam-dot"></span></div>
-
-                <!-- Overlay toasts & particles -->
-                <div class="credit-toasts" id="creditToasts"></div>
-                <div class="credit-particles" id="creditParticles"></div>
 
                 <!-- Screen -->
                 <div class="phone-screen">
@@ -1004,83 +951,8 @@
     });
   </script>
 
-  <!-- Phone credit animation logic + UI interactions -->
+  <!-- Simplified JavaScript for UI interactions -->
   <script>
-    // Phone dashboard credit animation
-    (function () {
-      const fmt = (n) => '₦' + n.toLocaleString();
-      const balanceEl = document.getElementById('balanceTotal');
-      const deltaEl   = document.getElementById('balanceDelta');
-      const dailyEl   = document.getElementById('dailyEarn');
-      const streamEl  = document.getElementById('streamEarn');
-      const refEl     = document.getElementById('refEarn');
-      const toasts    = document.getElementById('creditToasts');
-      const particles = document.getElementById('creditParticles');
-
-      let total = 120650;
-      let today = 0;
-      let daily = 12650, stream = 4200, ref = 3900;
-
-      function animateNumber(el, from, to, dur = 650) {
-        const start = performance.now();
-        function step(t) {
-          const p = Math.min(1, (t - start) / dur);
-          const val = Math.round(from + (to - from) * (0.5 - Math.cos(Math.PI * p)/2)); // easeInOut
-          el.textContent = fmt(val);
-          if (p < 1) requestAnimationFrame(step);
-        }
-        requestAnimationFrame(step);
-      }
-
-      function spawnParticles(amount) {
-        for (let i = 0; i < Math.min(10, 4 + Math.floor(amount/1500)); i++) {
-          const c = document.createElement('div');
-          c.className = 'coin';
-          c.style.left = (50 + (Math.random()*24 - 12)) + '%';
-          c.style.setProperty('--drift', (Math.random()*60 - 30) + 'px');
-          c.style.fontSize = (12 + Math.random()*8) + 'px';
-          c.textContent = '₦';
-          particles.appendChild(c);
-          c.addEventListener('animationend', () => c.remove());
-        }
-      }
-
-      function showToast(amount) {
-        const toast = document.createElement('div');
-        toast.className = 'credit-toast animate-creditPop';
-        toast.innerHTML = `<span>✅</span> <span>+${fmt(amount)}</span> <span class="text-xs opacity-80">credited</span>`;
-        toasts.appendChild(toast);
-        toast.addEventListener('animationend', () => toast.remove());
-      }
-
-      function pulseSparkline() {
-        const path = document.getElementById('sparkPath');
-        path.style.transition = 'stroke 160ms ease';
-        path.style.stroke = '#86efac';
-        setTimeout(() => { path.style.stroke = '#34d399'; }, 180);
-      }
-
-      function creditTick() {
-        const amount = (Math.floor(Math.random()*7) + 3) * 250; // 750–2500
-        total += amount; today += amount;
-
-        const bucket = Math.random();
-        if (bucket < .45) { daily += amount; animateNumber(dailyEl, parseInt(dailyEl.textContent.replace(/[₦,]/g,'')), daily); }
-        else if (bucket < .75) { stream += amount; animateNumber(streamEl, parseInt(streamEl.textContent.replace(/[₦,]/g,'')), stream); }
-        else { ref += amount; animateNumber(refEl, parseInt(refEl.textContent.replace(/[₦,]/g,'')), ref); }
-
-        animateNumber(balanceEl, parseInt(balanceEl.textContent.replace(/[₦,]/g,'')), total);
-        deltaEl.textContent = `+${fmt(today)} today`;
-
-        showToast(amount);
-        spawnParticles(amount);
-        pulseSparkline();
-      }
-
-      setTimeout(creditTick, 1200);
-      setInterval(creditTick, 3600 + Math.random()*1400);
-    })();
-
     // Mobile menu
     (function() {
       const toggle = document.getElementById('navToggle');
