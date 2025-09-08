@@ -1,25 +1,22 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <!-- Charset & Viewport -->
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <!-- Primary Meta Tags -->
-
   <title>Magnus Website | Magnus Registration to Earn Online – Streaming &amp; Smartphone Jobs, Referrals &amp; Reviews</title>
   <script src="/content-guard.js" defer></script>
   <meta name="description" content="Looking for the Magnus website or Magnus registration? This is the official Magnus platform — register to earn online with streaming jobs, smartphone jobs, referrals, and fast, secure withdrawals. Read user reviews and get started today." />
   <meta name="keywords" content="magnus website, magnus registration, earn online, streaming jobs, smartphone jobs, magnus withdrawal, referrals, reviews, Magnus, Magnus registration, Magnus withdrawal" />
   <meta name="author" content="Magnus Platform" />
+  <meta name="theme-color" content="#ff8c00" />
 
   <!-- Canonical + Robots -->
-
   <link rel="canonical" href="https://magnuswebsite.site/" />
   <meta name="robots" content="index, follow" />
 
-  <!-- Open Graph / Facebook -->
-
+  <!-- Social -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Magnus Registration on Magnus | Earn Online: Streaming &amp; Smartphone Jobs, Referrals &amp; Reviews" />
   <meta property="og:description" content="Explore the Magnus platform: register, earn online with streaming and smartphone jobs, invite referrals, and enjoy fast withdrawals. Honest reviews inside." />
@@ -29,24 +26,18 @@
   <meta property="og:image:width" content="512" />
   <meta property="og:image:height" content="512" />
   <meta property="og:image:type" content="image/png" />
-
-  <!-- Twitter Card -->
-
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Magnus Platform | Register &amp; Earn Online" />
   <meta name="twitter:description" content="Magnus lets you earn by streaming music, watching videos, writing reviews, and referrals." />
   <meta name="twitter:image" content="https://magnuswebsite.site/img/magnus_logo_512.png" />
   <meta name="twitter:image:alt" content="Magnus Platform logo" />
 
-  <!-- Favicons / App Icons -->
-
+  <!-- Favicons -->
   <link rel="icon" type="image/png" sizes="32x32" href="https://magnuswebsite.site/img/favicon-32.png?v=2" />
   <link rel="icon" type="image/png" sizes="16x16" href="https://magnuswebsite.site/img/favicon-16.png?v=2" />
   <link rel="apple-touch-icon" sizes="180x180" href="https://magnuswebsite.site/img/apple-touch-icon.png?v=2" />
-  <meta name="theme-color" content="#ff8c00" />
 
-  <!-- Fonts -->
-
+  <!-- Fonts (swap + metric override to prevent CLS) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="preload" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -54,8 +45,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   </noscript>
 
-  <!-- Tailwind CSS -->
+  <!-- Preload LCP candidates (above-the-fold images) -->
+  <link rel="preload" as="image" href="https://magnuswebsite.site/img/magnus_logo_512.png" imagesrcset="https://magnuswebsite.site/img/magnus_logo_512.png 512w" imagesizes="80px" />
 
+  <!-- Tailwind (JIT CDN). Preload to reduce blocking; keep script in head for styles. -->
+  <link rel="preload" as="script" href="https://cdn.tailwindcss.com">
   <script src="https://cdn.tailwindcss.com"></script>
 
   <script>
@@ -63,63 +57,55 @@
       theme: {
         extend: {
           colors: {
-            brand: '#F97316',
-            brandDark: '#EA580C',
-            text: '#0f172a',
-            magnusGold: '#F59E0B',
-            magnusGoldDark: '#D97706',
-            accent: '#10B981',
-            darkBg: '#0F172A'
+            brand:'#F97316', brandDark:'#EA580C', text:'#0f172a',
+            magnusGold:'#F59E0B', magnusGoldDark:'#D97706', accent:'#10B981', darkBg:'#0F172A'
           },
           fontFamily: {
-            sans: ['Poppins', 'system-ui', 'Segoe UI', 'Roboto', 'Arial', 'sans-serif'],
-            display: ['Montserrat', 'Poppins', 'sans-serif']
+            sans:['Poppins','system-ui','Segoe UI','Roboto','Arial','sans-serif'],
+            display:['Montserrat','Poppins','sans-serif']
           },
-          boxShadow: {
-            glow: '0 10px 30px rgba(245, 158, 11, 0.45)',
-            goldGlow: '0 10px 30px rgba(245, 158, 11, 0.45)',
-            card: '0 10px 30px rgba(0, 0, 0, 0.1)'
+          boxShadow:{
+            glow:'0 10px 30px rgba(245, 158, 11, 0.45)',
+            goldGlow:'0 10px 30px rgba(245, 158, 11, 0.45)',
+            card:'0 10px 30px rgba(0,0,0,0.1)'
           },
-          /* NEW keyframes/animations added for the phone shine + cash particles */
-          keyframes: {
-            fadeIn: { '0%': { opacity: 0 }, '100%': { opacity: 1 } },
-            pop: { '0%': { transform: 'translateY(12px) scale(.98)', opacity: 0 }, '100%': { transform: 'translateY(0) scale(1)', opacity: 1 } },
-            slideDown: { '0%': { transform: 'translateY(-8px)', opacity: 0 }, '100%': { transform: 'translateY(0)', opacity: 1 } },
-            underlineGrow: { '0%': { width: '0%' }, '100%': { width: '100%' } },
-            pulseGlow: { '0%,100%': { boxShadow: '0 0 0 rgba(245, 158, 11, 0)' }, '50%': { boxShadow: '0 0 32px rgba(245, 158, 11, .45)' } },
-            navReveal: { '0%': { transform: 'translateY(-100%)', opacity: 0 }, '100%': { transform: 'translateY(0)', opacity: 1 } },
-            in: { '0%': { opacity: 0, transform: 'translateY(6px) scale(.98)' }, '100%': { opacity: 1, transform: 'translateY(0) scale(1)' } },
-            bounceIn: { '0%': { transform: 'scale(0.3)', opacity: 0 }, '50%': { transform: 'scale(1.05)', opacity: 1 }, '70%': { transform: 'scale(0.9)' }, '100%': { transform: 'scale(1)', opacity: 1 } },
-            slideInFromRight: { '0%': { transform: 'translateX(100%)', opacity: 0 }, '100%': { transform: 'translateX(0)', opacity: 1 } },
-            slideInFromLeft: { '0%': { transform: 'translateX(-100%)', opacity: 0 }, '100%': { transform: 'translateX(0)', opacity: 1 } },
-            slideUp: { '0%': { transform: 'translateY(100%)', opacity: 0 }, '100%': { transform: 'translateY(0)', opacity: 1 } },
-            /* Added from your animation snippet */
-            glassShine: { '0%': { transform: 'translateX(-120%) rotate(12deg)' }, '100%': { transform: 'translateX(120%) rotate(12deg)' } },
-            cashRise: { '0%': { transform: 'translateY(0) translateX(0) scale(.8)', opacity: 1 }, '100%': { transform: 'translateY(-80px) translateX(var(--drift, 20px)) scale(1.1)', opacity: 0 } }
+          keyframes:{
+            fadeIn:{'0%':{opacity:0},'100%':{opacity:1}},
+            pop:{'0%':{transform:'translateY(12px) scale(.98)',opacity:0},'100%':{transform:'translateY(0) scale(1)',opacity:1}},
+            slideDown:{'0%':{transform:'translateY(-8px)',opacity:0},'100%':{transform:'translateY(0)',opacity:1}},
+            pulseGlow:{'0%,100%':{boxShadow:'0 0 0 rgba(245,158,11,0)'},'50%':{boxShadow:'0 0 32px rgba(245,158,11,.45)'}},
+            navReveal:{'0%':{transform:'translateY(-100%)',opacity:0},'100%':{transform:'translateY(0)',opacity:1}},
+            in:{'0%':{opacity:0,transform:'translateY(6px) scale(.98)'},'100%':{opacity:1,transform:'translateY(0) scale(1)'}},
+            bounceIn:{'0%':{transform:'scale(0.3)',opacity:0},'50%':{transform:'scale(1.05)',opacity:1},'70%':{transform:'scale(0.9)'},'100%':{transform:'scale(1)',opacity:1}},
+            slideInFromRight:{'0%':{transform:'translateX(100%)',opacity:0},'100%':{transform:'translateX(0)',opacity:1}},
+            slideInFromLeft:{'0%':{transform:'translateX(-100%)',opacity:0},'100%':{transform:'translateX(0)',opacity:1}},
+            slideUp:{'0%':{transform:'translateY(100%)',opacity:0},'100%':{transform:'translateY(0)',opacity:1}},
+            glassShine:{'0%':{transform:'translateX(-120%) rotate(12deg)'},
+                        '100%':{transform:'translateX(120%) rotate(12deg)'}},
+            cashRise:{'0%':{transform:'translateY(0) translateX(0) scale(.8)',opacity:1},
+                      '100%':{transform:'translateY(-80px) translateX(var(--drift,20px)) scale(1.1)',opacity:0}}
           },
-          animation: {
-            fadeIn: 'fadeIn .18s ease-out',
-            pop: 'pop .22s cubic-bezier(.2,.7,.2,1)',
-            slideDown: 'slideDown .18s ease-out',
-            pulseGlow: 'pulseGlow 2.4s ease-in-out infinite',
-            navReveal: 'navReveal .25s ease-out',
-            in: 'in .25s ease-out',
-            bounceIn: 'bounceIn 2s',
-            slideInFromRight: 'slideInFromRight 1s ease-out',
-            slideInFromLeft: 'slideInFromLeft 1s ease-out',
-            slideUp: 'slideUp 1s ease-out',
-            /* Added */
-            glassShine: 'glassShine 5.5s linear infinite',
-            cashRise: 'cashRise 1.6s ease-out forwards'
+          animation:{
+            fadeIn:'fadeIn .18s ease-out',
+            pop:'pop .22s cubic-bezier(.2,.7,.2,1)',
+            slideDown:'slideDown .18s ease-out',
+            pulseGlow:'pulseGlow 2.4s ease-in-out infinite',
+            navReveal:'navReveal .25s ease-out',
+            in:'in .25s ease-out',
+            bounceIn:'bounceIn 2s',
+            slideInFromRight:'slideInFromRight 1s ease-out',
+            slideInFromLeft:'slideInFromLeft 1s ease-out',
+            slideUp:'slideUp 1s ease-out',
+            glassShine:'glassShine 5.5s linear infinite',
+            cashRise:'cashRise 1.6s ease-out forwards'
           }
         }
       },
-      darkMode: 'class'
+      darkMode:'class'
     }
   </script>
 
-  <!-- Page CSS (Tailwind layer + custom) -->
-
+  <!-- Tailwind layer + custom CSS -->
   <style type="text/tailwindcss">
     @layer components {
       .glass { @apply rounded-2xl shadow-lg ring-1 ring-white/10 backdrop-blur-md bg-white/10; }
@@ -142,13 +128,9 @@
 
     :root { scroll-behavior: smooth; }
 
-    /* CLS FIX: always keep images stable if width/height exist */
-    img[width][height]{ height:auto; display:block; } 
-
-    /* CLS FIX: reserve nav height from first paint */
-    nav#siteNav{ min-height:56px; } 
-
-    /* CLS FIX: numerals shouldn’t change width during count-up */
+    /* CLS guards */
+    img[width][height]{ height:auto; display:block; }
+    nav#siteNav{ min-height:56px; }
     .stat-number, #balanceTotal, #dailyEarn, #streamEarn, #refEarn{ font-variant-numeric: tabular-nums lining-nums; }
 
     body {
@@ -158,132 +140,63 @@
         radial-gradient(at 20% 80%, rgba(245, 158, 11, 0.1) 0, transparent 60%);
     }
 
-    /* Scroll progress bar */
-    #scrollProgress {
-      position: fixed; top: 0; left: 0; width: 0%; height: 4px;
-      background: linear-gradient(to right, #F97316, #F59E0B);
-      z-index: 9999; transition: width 0.2s ease;
-    }
+    /* Progress bar */
+    #scrollProgress{position:fixed;top:0;left:0;width:0%;height:4px;background:linear-gradient(to right,#F97316,#F59E0B);z-index:9999;transition:width .2s ease;}
 
-    .nav-hidden { transform: translateY(-100%); }
-    .to-top { position: fixed; bottom: 24px; right: 24px; z-index: 40; }
-    .is-hidden { opacity: 0; pointer-events: none; transform: translateY(6px); transition: all .25s ease; }
+    .nav-hidden{transform:translateY(-100%);}
+    .to-top{position:fixed;bottom:24px;right:24px;z-index:40;}
+    .is-hidden{opacity:0;pointer-events:none;transform:translateY(6px);transition:all .25s ease;}
 
-    .hero-bg {
-      position: absolute; inset: 0; z-index: 0;
-      background: linear-gradient(120deg, #F97316 0%, #FB923C 30%, #EA580C 60%, #0F172A 100%);
-    }
+    .hero-bg{position:absolute;inset:0;z-index:0;background:linear-gradient(120deg,#F97316 0%,#FB923C 30%,#EA580C 60%,#0F172A 100%);}
 
     /* Phone */
-    .phone-wrap { perspective: 1200px; display:flex; align-items:center; justify-content:center; }
-    .phone {
-      width: 300px; height:620px; border-radius: 38px; position: relative;
-      transform: rotateY(-14deg) rotateX(5deg);
-      transition: transform .5s ease, box-shadow .5s ease;
-      box-shadow: 0 30px 90px rgba(0,0,0,.5);
-      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.02));
-      border: 1px solid rgba(255,255,255,.18);
-      backdrop-filter: blur(8px);
-      overflow: hidden;
-      isolation: isolate;
-    }
-    .phone:hover { transform: rotateY(-4deg) rotateX(0deg) translateY(-6px); box-shadow: 0 40px 130px rgba(0,0,0,.6); }
+    .phone-wrap{perspective:1200px;display:flex;align-items:center;justify-content:center;}
+    .phone{width:300px;height:620px;border-radius:38px;position:relative;transform:rotateY(-14deg) rotateX(5deg);transition:transform .5s ease,box-shadow .5s ease;box-shadow:0 30px 90px rgba(0,0,0,.5);background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.02));border:1px solid rgba(255,255,255,.18);backdrop-filter:blur(8px);overflow:hidden;isolation:isolate;}
+    .phone:hover{transform:rotateY(-4deg) rotateX(0deg) translateY(-6px);box-shadow:0 40px 130px rgba(0,0,0,.6);}
+    .phone::before{content:"";position:absolute;inset:-2px;border-radius:40px;background:radial-gradient(120% 60% at 0% 0%,rgba(255,255,255,.18),transparent 60%),radial-gradient(120% 60% at 100% 100%,rgba(255,255,255,.08),transparent 60%);pointer-events:none;}
+    .phone::after{content:"";position:absolute;inset:-30%;transform:translateX(-120%) rotate(12deg);background:linear-gradient(90deg,transparent 0%,rgba(255,255,255,.25) 50%,transparent 100%);filter:blur(6px);mix-blend-mode:screen;animation:glassShine 5.5s linear infinite;}
+    .notch{position:absolute;top:10px;left:50%;transform:translateX(-50%);width:160px;height:28px;background:rgba(6,9,15,.85);border-radius:0 0 18px 18px;border:1px solid rgba(255,255,255,.06);box-shadow:inset 0 -2px 6px rgba(255,255,255,.05);z-index:2;}
+    .notch::before{content:"";position:absolute;left:24px;top:50%;transform:translateY(-50%);width:56px;height:6px;border-radius:999px;background:rgba(255,255,255,.15);}
+    .cam-dot{position:absolute;right:20px;top:50%;transform:translateY(-50%);width:10px;height:10px;border-radius:999px;background:#0ea5e9;box-shadow:0 0 10px #38bdf8,inset 0 0 6px rgba(255,255,255,.35);}
 
-    .phone::before {
-      content:""; position:absolute; inset:-2px; border-radius: 40px;
-      background:
-        radial-gradient(120% 60% at 0% 0%, rgba(255,255,255,.18), transparent 60%),
-        radial-gradient(120% 60% at 100% 100%, rgba(255,255,255,.08), transparent 60%);
-      pointer-events:none;
-    }
+    .phone-screen{position:absolute;inset:18px 12px 18px 12px;border-radius:28px;overflow:hidden;background:linear-gradient(180deg,rgba(5,9,18,.92),rgba(10,18,30,.92));border:1px solid rgba(255,255,255,.06);box-shadow:inset 0 0 40px rgba(255,255,255,.03);padding:16px;display:flex;flex-direction:column;gap:14px;color:#e6f4ff;font-size:13px;}
+    .screen-header{display:flex;justify-content:space-between;align-items:center;}
+    .logo-sm img{height:30px;width:34px;filter:drop-shadow(0 2px 8px rgba(0,0,0,.4));}
+    .avatar{width:34px;height:34px;border-radius:999px;background:rgba(255,255,255,0.06);display:grid;place-items:center;border:1px solid rgba(255,255,255,.08);}
 
-    /* NEW: moving shine */
-    .phone::after{
-      content:""; position:absolute; inset:-30%;
-      transform: translateX(-120%) rotate(12deg);
-      background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,.25) 50%, transparent 100%);
-      filter: blur(6px); mix-blend-mode: screen;
-      animation: glassShine 5.5s linear infinite;
-    }
+    .balance{position:relative;border-radius:16px;padding:14px 14px 10px;background:linear-gradient(145deg,rgba(249,115,22,.18),rgba(251,146,60,.06));border:1px solid rgba(255,255,255,.06);display:flex;justify-content:space-between;align-items:flex-end;overflow:hidden;}
+    .balance::after{content:"";position:absolute;inset:0;background:radial-gradient(120px 80px at 100% 0%,rgba(255,255,255,.18),transparent 60%);opacity:.3;pointer-events:none;}
+    .sparkline{width:120px;height:44px;opacity:.9;filter:drop-shadow(0 2px 6px rgba(16,185,129,.35));}
 
-    .notch {
-      position:absolute; top:10px; left:50%; transform:translateX(-50%);
-      width: 160px; height: 28px; background: rgba(6,9,15,.85);
-      border-radius: 0 0 18px 18px; border:1px solid rgba(255,255,255,.06);
-      box-shadow: inset 0 -2px 6px rgba(255,255,255,.05);
-      z-index: 2;
-    }
-    .notch::before{
-      content:""; position:absolute; left:24px; top:50%; transform:translateY(-50%);
-      width:56px; height:6px; border-radius:999px; background:rgba(255,255,255,.15);
-    }
-    .cam-dot{
-      position:absolute; right:20px; top:50%; transform:translateY(-50%);
-      width:10px; height:10px; border-radius:999px; background:#0ea5e9; box-shadow:0 0 10px #38bdf8, inset 0 0 6px rgba(255,255,255,.35);
-    }
+    .pills{display:flex;gap:8px;margin-top:2px;}
+    .pill{padding:6px 10px;border-radius:999px;background:rgba(249,115,22,0.12);border:1px solid rgba(249,115,22,0.25);font-size:12px;}
 
-    .phone-screen {
-      position:absolute; inset: 18px 12px 18px 12px; border-radius:28px; overflow:hidden;
-      background: linear-gradient(180deg, rgba(5,9,18,.92), rgba(10,18,30,.92));
-      border: 1px solid rgba(255,255,255,.06);
-      box-shadow: inset 0 0 40px rgba(255,255,255,.03);
-      padding: 16px; display:flex; flex-direction:column; gap: 14px; color: #e6f4ff; font-size: 13px;
-    }
+    .grid-cards{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+    .card-mini{background:linear-gradient(180deg,rgba(15,23,42,.9),rgba(2,6,23,.88));border-radius:12px;padding:10px;display:flex;gap:10px;align-items:center;border:1px solid rgba(255,255,255,.05);}
+    .icon-badge{width:40px;height:40px;border-radius:12px;background:rgba(255,255,255,.05);display:grid;place-items:center;border:1px solid rgba(255,255,255,.06);}
 
-    .screen-header { display:flex; justify-content:space-between; align-items:center; }
-    .logo-sm img{ height:30px; width: 34px; filter: drop-shadow(0 2px 8px rgba(0,0,0,.4)); }
-    .avatar { width:34px; height:34px; border-radius:999px; background:rgba(255,255,255,0.06); display:grid; place-items:center; border:1px solid rgba(255,255,255,.08); }
+    .screen-bottom{position:absolute;left:12px;right:12px;bottom:12px;background:rgba(2,8,22,0.75);border-radius:16px;padding:8px 12px;display:flex;justify-content:space-around;border:1px solid rgba(255,255,255,0.06);backdrop-filter: blur(6px);}
 
-    .balance {
-      position:relative; border-radius:16px; padding:14px 14px 10px;
-      background: linear-gradient(145deg, rgba(249,115,22,.18), rgba(251,146,60,.06));
-      border: 1px solid rgba(255,255,255,.06);
-      display:flex; justify-content:space-between; align-items:flex-end; overflow:hidden;
-    }
-    .balance::after{
-      content:""; position:absolute; inset:0; background: radial-gradient(120px 80px at 100% 0%, rgba(255,255,255,.18), transparent 60%);
-      opacity:.3; pointer-events:none;
-    }
-    .sparkline { width: 120px; height: 44px; opacity:.9; filter: drop-shadow(0 2px 6px rgba(16,185,129,.35)); }
-
-    .pills { display:flex; gap:8px; margin-top:2px; }
-    .pill { padding:6px 10px; border-radius:999px; background: rgba(249, 115, 22, 0.12); border:1px solid rgba(249, 115, 22, 0.25); font-size:12px; }
-
-    .grid-cards { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
-    .card-mini { background:linear-gradient(180deg, rgba(15,23,42,.9), rgba(2,6,23,.88)); border-radius:12px; padding:10px; display:flex; gap:10px; align-items:center; border:1px solid rgba(255,255,255,.05); }
-    .icon-badge { width:40px; height:40px; border-radius:12px; background: rgba(255,255,255,.05); display:grid; place-items:center; border:1px solid rgba(255,255,255,.06); }
-
-    .screen-bottom {
-      position:absolute; left:12px; right:12px; bottom:12px;
-      background: rgba(2,8,22,0.75); border-radius:16px; padding:8px 12px;
-      display:flex; justify-content:space-around; border:1px solid rgba(255,255,255,0.06); backdrop-filter: blur(6px);
-    }
-
-    /* CREDIT TOASTS + PARTICLES (new) */
+    /* CREDIT TOASTS + PARTICLES */
     .credit-toasts{position:absolute;top:58px;left:0;right:0;display:flex;justify-content:center;pointer-events:none;z-index:5}
-    .credit-toast{background:linear-gradient(90deg,rgba(16,185,129,.2),rgba(16,185,129,.08));border:1px solid rgba(16,185,129,.45);color:#bbf7d0;padding:8px 12px;border-radius:12px;backdrop-filter:blur(6px);box-shadow:0 10px 30px rgba(16,185,129,.25);display:flex;align-items:center;gap:8px;font-weight:600;animation: toast 3.2s ease-out forwards}
+    .credit-toast{background:linear-gradient(90deg,rgba(16,185,129,.2),rgba(16,185,129,.08));border:1px solid rgba(16,185,129,.45);color:#bbf7d0;padding:8px 12px;border-radius:12px;backdrop-filter:blur(6px);box-shadow:0 10px 30px rgba(16,185,129,.25);display:flex;align-items:center;gap:8px;font-weight:600;animation:toast 3.2s ease-out forwards}
     @keyframes toast{0%{transform:translateY(-10px) scale(.95);opacity:0}12%{transform:translateY(0) scale(1);opacity:1}85%{opacity:1}100%{transform:translateY(-6px) scale(.98);opacity:0}}
     .credit-particles{position:absolute;inset:0;pointer-events:none;overflow:hidden}
     .coin{position:absolute;bottom:22%;left:50%;transform:translateX(-50%);font-weight:700;color:#34d399;text-shadow:0 2px 10px rgba(52,211,153,.55);filter:drop-shadow(0 2px 8px rgba(0,0,0,.4));animation:cashRise 1.6s ease-out forwards;will-change:transform,opacity}
 
     /* Responsive */
-    @media (max-width: 1024px) {
-      .phone { width: 260px; height:540px; }
-      .phone-screen { padding:14px; }
-    }
-    @media (max-width: 768px) {
-      .hero-grid { flex-direction: column; gap: 28px; text-align: center; align-items: center; }
-      .hero-left, .hero-right { width: 100%; }
-      .phone { transform: none; }
-    }
+    @media (max-width:1024px){ .phone{width:260px;height:540px;} .phone-screen{padding:14px;} }
+    @media (max-width:768px){ .hero-grid{flex-direction:column;gap:28px;text-align:center;align-items:center;} .hero-left,.hero-right{width:100%;} .phone{transform:none;} }
 
-    /* CLS FIX: consistent aspect ratios on media */
+    /* Stable media aspect ratios */
     .ratio-3x2{ aspect-ratio: 3 / 2; object-fit: cover; }
     .ratio-16x9{ aspect-ratio: 16 / 9; }
+
+    /* Progressive rendering: below-the-fold sections don't cost layout/paint until scrolled into view */
+    section[id]:not(#hero){ content-visibility: auto; contain-intrinsic-size: 1000px; }
   </style>
 
   <!-- Font metric override to reduce swap shift (CLS FIX) -->
-
   <style>
     @font-face{
       font-family: "Poppins Fallback";
@@ -293,9 +206,11 @@
       line-gap-override: 0%;
       size-adjust: 102%;
     }
-    html{ font-family: "Poppins", "Poppins Fallback", system-ui, Segoe UI, Roboto, Arial, sans-serif; }
+    html{ font-family: "Poppins","Poppins Fallback",system-ui, Segoe UI, Roboto, Arial, sans-serif; }
+    @media (prefers-reduced-motion: reduce){
+      *{animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important;}
+    }
   </style>
-
 </head>
 
 <body class="text-white font-sans">
@@ -303,11 +218,9 @@
   <div aria-hidden="true" id="scrollProgress"></div>
 
   <!-- Skip to Content -->
-
   <a class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 bg-white text-slate-900 px-3 py-2 rounded" href="#main">Skip to content</a>
 
-  <!-- NAV (mobile menu copied exactly from the source file) -->
-
+  <!-- NAV -->
   <div class="nav-wrap" id="top">
     <nav class="nav sticky top-0 z-50 backdrop-blur supports-[backdrop-filter]:bg-slate-900/50 bg-slate-900/70 border-b border-white/10 transition-transform duration-300" id="siteNav" style="contain:layout paint;">
       <div class="section-wrap flex items-center justify-between py-3">
@@ -329,7 +242,7 @@
         <button aria-controls="mobilePanel" aria-expanded="false" aria-label="Open menu" class="md:hidden nav-cta" id="navToggle">Menu</button>
       </div>
 
-      <!-- Mobile panel (from the source file: non-fixed panel, no close button) -->
+      <!-- Mobile panel -->
       <div aria-modal="true" class="md:hidden hidden bg-slate-900/80 border-top border-white/10" data-open="false" id="mobilePanel" role="dialog">
         <div class="section-wrap py-4">
           <ul class="space-y-2">
@@ -346,7 +259,6 @@
   </div>
 
   <!-- MAIN -->
-
   <main class="relative" id="main" role="main">
     <!-- HERO -->
     <section class="relative min-h-[90vh] flex items-center overflow-hidden" id="hero">
@@ -383,17 +295,15 @@
             </div>
           </div>
 
-          <!-- RIGHT: GLASS PHONE DASHBOARD with ANIMATION -->
+          <!-- RIGHT: GLASS PHONE -->
           <div class="hero-right lg:w-1/2 flex justify-center items-center">
             <div class="phone-wrap" data-animate="phone">
               <div class="phone" aria-label="Glass phone showing Magnus earnings dashboard" role="img">
                 <div class="notch"><span class="cam-dot"></span></div>
 
-                <!-- NEW: dynamic UI layers -->
                 <div class="credit-toasts" id="creditToasts"></div>
                 <div class="credit-particles" id="creditParticles"></div>
 
-                <!-- Screen -->
                 <div class="phone-screen">
                   <div class="screen-header">
                     <div class="logo-sm">
@@ -407,7 +317,6 @@
                     </div>
                   </div>
 
-                  <!-- Balance / sparkline -->
                   <div class="balance">
                     <div>
                       <p style="opacity:.85;font-size:.8rem;margin:0">Total Earnings</p>
@@ -488,7 +397,7 @@
     </section>
 
     <!-- STATS -->
-    <section class="py-16 bg-slate-900/20">
+    <section class="py-16 bg-slate-900/20" id="stats">
       <div class="section-wrap grid gap-6 md:grid-cols-3">
         <div class="stat-card">
           <div class="stat-number">12,500</div>
@@ -514,6 +423,8 @@
         </div>
 
         <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <!-- cards -->
+          <!-- (unchanged; placeholders already CLS-safe) -->
           <div class="card h-full flex flex-col">
             <div class="flex justify-center mb-4">
               <img alt="Magnus registration guide — earn on the Magnus website" class="lazy-load h-40 w-full object-cover rounded-lg ratio-3x2" decoding="async" loading="lazy" width="300" height="200" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 200'/%3E" />
@@ -554,7 +465,7 @@
     </section>
 
     <!-- TESTIMONIALS -->
-    <section class="py-16 bg-slate-900/30">
+    <section class="py-16 bg-slate-900/30" id="testimonials">
       <div class="section-wrap">
         <div class="text-center max-w-3xl mx-auto mb-16">
           <h2 class="h2 mb-6">User Reviews &amp; Real Results from Magnus (magnus)</h2>
@@ -636,6 +547,7 @@
         </div>
 
         <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <!-- (cards unchanged) -->
           <div class="card h-full flex flex-col">
             <div class="flex justify-center mb-4">
               <img alt="Magnus website marketplace — Magnus Trade on the Magnus platform" class="lazy-load h-40 w-full object-cover rounded-lg ratio-3x2" decoding="async" loading="lazy" width="300" height="200" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 200'/%3E" />
@@ -684,9 +596,10 @@
         </div>
 
         <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <!-- (cards unchanged) -->
           <div class="card h-full flex flex-col">
             <div class="flex justify-center mb-4">
-              <img alt="Magnus website registration — Starter package on Magnus platform" class="lazy-load h-40 w-full object-cover rounded-lg ratio-3x2" decoding="async" loading="lazy" width="300" height="200" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 200'/%3E" />
+              <img alt="Magnus website registration — Starter package on Magnus platform" class="lazy-load h-40 w/full object-cover rounded-lg ratio-3x2" decoding="async" loading="lazy" width="300" height="200" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 200'/%3E" />
             </div>
             <h3 class="h3 text-center mb-3">magnus Starter — Begin to Earn Online</h3>
             <p class="para mb-4">Low-cost access to basic tasks, starter micro-courses, and referral bonuses to get you started.</p>
@@ -695,7 +608,7 @@
 
           <div class="card h-full flex flex-col">
             <div class="flex justify-center mb-4">
-              <img alt="Magnus app register — Plus package with streaming jobs &amp; rewards" class="lazy-load h-40 w-full object-cover rounded-lg ratio-3x2" decoding="async" loading="lazy" width="300" height="200" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 200'/%3E" />
+              <img alt="Magnus app register — Plus package with streaming jobs &amp; rewards" class="lazy-load h-40 w/full object-cover rounded-lg ratio-3x2" decoding="async" loading="lazy" width="300" height="200" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 200'/%3E" />
             </div>
             <h3 class="h3 text-center mb-3">magnus Plus — More Streaming Jobs &amp; Rewards</h3>
             <p class="para mb-4">Higher bonuses, access to additional contests and early access to special events and features.</p>
@@ -704,7 +617,7 @@
 
           <div class="card h-full flex flex-col">
             <div class="flex justify-center mb-4">
-              <img alt="Magnus registration Ultra package — faster withdrawals on Magnus website" class="lazy-load h-40 w-full object-cover rounded-lg ratio-3x2" decoding="async" loading="lazy" width="300" height="200" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 200'/%3E" />
+              <img alt="Magnus registration Ultra package — faster withdrawals on Magnus website" class="lazy-load h-40 w/full object-cover rounded-lg ratio-3x2" decoding="async" loading="lazy" width="300" height="200" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 200'/%3E" />
             </div>
             <h3 class="h3 text-center mb-3">magnus Ultra — Higher Limits &amp; Faster Withdrawals</h3>
             <p class="para mb-4">Premium contributor benefits, higher payout multipliers, priority support and expanded ownership credits.</p>
@@ -713,7 +626,7 @@
 
           <div class="card h-full flex flex-col">
             <div class="flex justify-center mb-4">
-              <img alt="Magnus platform certification — prove skills for smartphone jobs in the Magnus app" class="lazy-load h-40 w-full object-cover rounded-lg ratio-3x2" decoding="async" loading="lazy" width="300" height="200" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 200'/%3E" />
+              <img alt="Magnus platform certification — prove skills for smartphone jobs in the Magnus app" class="lazy-load h-40 w/full object-cover rounded-lg ratio-3x2" decoding="async" loading="lazy" width="300" height="200" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 200'/%3E" />
             </div>
             <h3 class="h3 text-center mb-3">magnus Certification — Prove Skills for Smartphone Jobs</h3>
             <p class="para mb-4">Complete certification tracks to increase trust, access higher-level opportunities and showcase your skills.</p>
@@ -781,7 +694,6 @@
   </main>
 
   <!-- FOOTER -->
-
   <footer class="py-12 bg-slate-900/80 border-t border-white/10">
     <div class="section-wrap">
       <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
@@ -829,7 +741,6 @@
   </footer>
 
   <!-- Lazy loading for images -->
-
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       if ('IntersectionObserver' in window) {
@@ -844,7 +755,7 @@
               observer.unobserve(img);
             }
           });
-        });
+        }, { rootMargin: '200px 0px', threshold: 0.01 });
         lazyImages.forEach(img => imageObserver.observe(img));
       } else {
         document.querySelectorAll('.lazy-load').forEach(img => {
@@ -855,10 +766,9 @@
     });
   </script>
 
-  <!-- Simplified JavaScript for UI interactions (from source file) -->
-
+  <!-- UI interactions (passive, non-blocking) -->
   <script>
-    // Mobile menu (copied from the source file)
+    // Mobile menu
     (function() {
       const toggle = document.getElementById('navToggle');
       const panel = document.getElementById('mobilePanel');
@@ -871,7 +781,7 @@
           toggle.setAttribute('aria-label', nowOpen ? 'Close menu' : 'Open menu');
           body.classList.toggle('overflow-hidden', nowOpen);
           if (nowOpen) panel.querySelector('a')?.focus();
-        });
+        }, { passive: true });
       }
     })();
 
@@ -889,18 +799,16 @@
           else siteNav.classList.remove('nav-hidden');
           lastY = y;
         }
-
         const docH = document.documentElement.scrollHeight - window.innerHeight;
         const pct = Math.max(0, Math.min(1, (y / (docH || 1))));
         scrollProgress.style.width = (pct * 100) + '%';
-
         if (toTop) toTop.classList.toggle('is-hidden', y < 300);
       }, { passive: true });
 
       toTop?.addEventListener('click', (e) => {
         e.preventDefault();
         window.scrollTo({ top: 0, behavior: 'smooth' });
-      });
+      }, { passive: true });
     })();
 
     // FAQ accordion
@@ -911,7 +819,7 @@
           const isOpen = faqItem.classList.contains('active');
           document.querySelectorAll('.faq-item').forEach(item => item.classList.remove('active'));
           if (!isOpen) faqItem.classList.add('active');
-        });
+        }, { passive: true });
       });
     })();
 
@@ -920,19 +828,19 @@
       const animateCounter = (el, target, duration = 2000) => {
         let start = 0;
         const inc = target / (duration / 16);
-        const tick = () => {
+        const step = () => {
           start += inc;
           if (start < target) {
             el.textContent = Math.floor(start).toLocaleString();
-            requestAnimationFrame(tick);
+            requestAnimationFrame(step);
           } else {
             el.textContent = target.toLocaleString();
           }
         };
-        tick();
+        requestAnimationFrame(step);
       };
 
-      const stats = document.querySelector('.bg-slate-900\\/20');
+      const stats = document.getElementById('stats');
       if (!('IntersectionObserver' in window) || !stats) return;
 
       const io = new IntersectionObserver((entries) => {
@@ -945,16 +853,25 @@
             io.disconnect();
           }
         });
-      }, { threshold: 0.5 });
+      }, { threshold: 0.4, rootMargin: '100px 0px' });
 
       io.observe(stats);
     })();
   </script>
 
-  <!-- NEW: Phone animation loop (performance-capped) -->
-
+  <!-- Phone animation loop (deferred to post-load & only when visible) -->
   <script>
     (function(){
+      const startWhenVisible = (el, fn) => {
+        if (!('IntersectionObserver' in window) || !el) { fn(); return; }
+        const io = new IntersectionObserver((entries)=>{
+          entries.forEach(entry=>{
+            if (entry.isIntersecting) { fn(); io.disconnect(); }
+          });
+        }, { rootMargin:'0px 0px -20% 0px', threshold:0.25 });
+        io.observe(el);
+      };
+
       const fmt = (n)=>'₦'+Math.max(0,Math.round(n)).toLocaleString();
       const balance=document.getElementById('balanceTotal');
       const delta=document.getElementById('balanceDelta');
@@ -963,36 +880,24 @@
       const ref=document.getElementById('refEarn');
       const toasts=document.getElementById('creditToasts');
       const particles=document.getElementById('creditParticles');
+      const phone = document.querySelector('.phone');
 
-      // Conservative limits to avoid layout thrash and keep FPS smooth
       const CONFIG={
-        amountStep:250,
-        minStepUnits:3,
-        maxStepUnits:10,
-        minInterval:2200,
-        maxInterval:4200,
-        loop:{
-          totalMin:115000,totalMax:135000,
-          dailyMin:10000,dailyMax:18000,
-          streamMin:3000,streamMax:7000,
-          refMin:3000,refMax:7000,
-          todayResetAt:25000
-        },
-        domCaps:{maxParticles:24,maxToasts:3}
+        amountStep:250, minStepUnits:3, maxStepUnits:10,
+        minInterval:2200, maxInterval:4200,
+        loop:{ totalMin:115000,totalMax:135000, dailyMin:10000,dailyMax:18000, streamMin:3000,streamMax:7000, refMin:3000,refMax:7000, todayResetAt:25000 },
+        domCaps:{maxParticles:16,maxToasts:2}
       };
 
       let total=120650,today=0,dailyVal=12650,streamVal=4200,refVal=3900;
+      let paused = false;
 
-      function clamp(v,min,max){
-        if(v>max)return min+(v-max)%(max-min);
-        if(v<min)return min;
-        return v;
-      }
+      function clamp(v,min,max){ if(v>max)return min+(v-max)%(max-min); if(v<min)return min; return v; }
       function animate(el,val){ el.textContent = fmt(val); }
 
       function spawnParticles(amount){
-        const budget=CONFIG.domCaps.maxParticles - particles.childElementCount;
-        const count=Math.min(budget, 4 + Math.floor(amount/1500));
+        if (particles.childElementCount >= CONFIG.domCaps.maxParticles) return;
+        const count=Math.min(CONFIG.domCaps.maxParticles - particles.childElementCount, 2 + Math.floor(amount/2000));
         for(let i=0;i<count;i++){
           const c=document.createElement('div');
           c.className='coin';
@@ -1017,23 +922,16 @@
       }
 
       function tick(){
+        if (paused) return;
         const units=Math.floor(Math.random()*(CONFIG.maxStepUnits-CONFIG.minStepUnits+1))+CONFIG.minStepUnits;
         const amount=units*CONFIG.amountStep;
         const bucket=Math.random();
-        if(bucket<.45){
-          dailyVal=clamp(dailyVal+amount,CONFIG.loop.dailyMin,CONFIG.loop.dailyMax);
-          animate(daily,dailyVal);
-        }else if(bucket<.75){
-          streamVal=clamp(streamVal+amount,CONFIG.loop.streamMin,CONFIG.loop.streamMax);
-          animate(stream,streamVal);
-        }else{
-          refVal=clamp(refVal+amount,CONFIG.loop.refMin,CONFIG.loop.refMax);
-          animate(ref,refVal);
-        }
+        if(bucket<.45){ dailyVal=clamp(dailyVal+amount,CONFIG.loop.dailyMin,CONFIG.loop.dailyMax); animate(daily,dailyVal); }
+        else if(bucket<.75){ streamVal=clamp(streamVal+amount,CONFIG.loop.streamMin,CONFIG.loop.streamMax); animate(stream,streamVal); }
+        else { refVal=clamp(refVal+amount,CONFIG.loop.refMin,CONFIG.loop.refMax); animate(ref,refVal); }
         total=clamp(total+amount,CONFIG.loop.totalMin,CONFIG.loop.totalMax);
         animate(balance,total);
-        today+=amount;
-        if(today>CONFIG.loop.todayResetAt) today=0;
+        today+=amount; if(today>CONFIG.loop.todayResetAt) today=0;
         delta.textContent=`+${fmt(today)} today`;
         showToast(amount);
         spawnParticles(amount);
@@ -1043,12 +941,21 @@
         const ms=CONFIG.minInterval+Math.random()*(CONFIG.maxInterval-CONFIG.minInterval);
         setTimeout(()=>{ tick(); schedule(); }, ms);
       }
-      // Only start if elements exist (keeps this script safe across pages)
-      if(balance && daily && stream && ref && toasts && particles){
-        schedule();
-      }
+
+      // Pause when tab hidden to protect INP & battery
+      document.addEventListener('visibilitychange', ()=>{ paused = document.hidden; }, { passive:true });
+
+      // Respect reduced motion
+      const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (prefersReduced) paused = true;
+
+      // Start after load + when phone visible
+      window.addEventListener('load', ()=>{
+        if(balance && daily && stream && ref && toasts && particles){
+          startWhenVisible(phone, ()=>schedule());
+        }
+      }, { passive:true });
     })();
   </script>
-
 </body>
 </html>
