@@ -72,6 +72,7 @@
             goldGlow: '0 10px 30px rgba(245, 158, 11, 0.45)',
             card: '0 10px 30px rgba(0, 0, 0, 0.1)'
           },
+          /* NEW keyframes/animations added for the phone shine + cash particles */
           keyframes: {
             fadeIn: { '0%': { opacity: 0 }, '100%': { opacity: 1 } },
             pop: { '0%': { transform: 'translateY(12px) scale(.98)', opacity: 0 }, '100%': { transform: 'translateY(0) scale(1)', opacity: 1 } },
@@ -83,7 +84,10 @@
             bounceIn: { '0%': { transform: 'scale(0.3)', opacity: 0 }, '50%': { transform: 'scale(1.05)', opacity: 1 }, '70%': { transform: 'scale(0.9)' }, '100%': { transform: 'scale(1)', opacity: 1 } },
             slideInFromRight: { '0%': { transform: 'translateX(100%)', opacity: 0 }, '100%': { transform: 'translateX(0)', opacity: 1 } },
             slideInFromLeft: { '0%': { transform: 'translateX(-100%)', opacity: 0 }, '100%': { transform: 'translateX(0)', opacity: 1 } },
-            slideUp: { '0%': { transform: 'translateY(100%)', opacity: 0 }, '100%': { transform: 'translateY(0)', opacity: 1 } }
+            slideUp: { '0%': { transform: 'translateY(100%)', opacity: 0 }, '100%': { transform: 'translateY(0)', opacity: 1 } },
+            /* Added from your animation snippet */
+            glassShine: { '0%': { transform: 'translateX(-120%) rotate(12deg)' }, '100%': { transform: 'translateX(120%) rotate(12deg)' } },
+            cashRise: { '0%': { transform: 'translateY(0) translateX(0) scale(.8)', opacity: 1 }, '100%': { transform: 'translateY(-80px) translateX(var(--drift, 20px)) scale(1.1)', opacity: 0 } }
           },
           animation: {
             fadeIn: 'fadeIn .18s ease-out',
@@ -95,15 +99,16 @@
             bounceIn: 'bounceIn 2s',
             slideInFromRight: 'slideInFromRight 1s ease-out',
             slideInFromLeft: 'slideInFromLeft 1s ease-out',
-            slideUp: 'slideUp 1s ease-out'
+            slideUp: 'slideUp 1s ease-out',
+            /* Added */
+            glassShine: 'glassShine 5.5s linear infinite',
+            cashRise: 'cashRise 1.6s ease-out forwards'
           }
         }
       },
       darkMode: 'class'
     }
   </script>
-
-  <!-- JSON-LD blocks (unchanged) ... -->
 
   <!-- Page CSS (Tailwind layer + custom) -->
   <style type="text/tailwindcss">
@@ -129,7 +134,7 @@
     :root { scroll-behavior: smooth; }
 
     /* CLS FIX: always keep images stable if width/height exist */
-    img[width][height]{ height:auto; display:block; } /* prevents intrinsic ratio surprises */
+    img[width][height]{ height:auto; display:block; } 
 
     /* CLS FIX: reserve nav height from first paint */
     nav#siteNav{ min-height:56px; } 
@@ -144,7 +149,7 @@
         radial-gradient(at 20% 80%, rgba(245, 158, 11, 0.1) 0, transparent 60%);
     }
 
-    /* Scroll progress bar (already fixed height at first paint) */
+    /* Scroll progress bar */
     #scrollProgress {
       position: fixed; top: 0; left: 0; width: 0%; height: 4px;
       background: linear-gradient(to right, #F97316, #F59E0B);
@@ -183,6 +188,15 @@
       pointer-events:none;
     }
 
+    /* NEW: moving shine */
+    .phone::after{
+      content:""; position:absolute; inset:-30%;
+      transform: translateX(-120%) rotate(12deg);
+      background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,.25) 50%, transparent 100%);
+      filter: blur(6px); mix-blend-mode: screen;
+      animation: glassShine 5.5s linear infinite;
+    }
+
     .notch {
       position:absolute; top:10px; left:50%; transform:translateX(-50%);
       width: 160px; height: 28px; background: rgba(6,9,15,.85);
@@ -208,7 +222,7 @@
     }
 
     .screen-header { display:flex; justify-content:space-between; align-items:center; }
-    .logo-sm img{ height:34px; width:auto; filter: drop-shadow(0 2px 8px rgba(0,0,0,.4)); }
+    .logo-sm img{ height:30px; width: 34px; filter: drop-shadow(0 2px 8px rgba(0,0,0,.4)); }
     .avatar { width:34px; height:34px; border-radius:999px; background:rgba(255,255,255,0.06); display:grid; place-items:center; border:1px solid rgba(255,255,255,.08); }
 
     .balance {
@@ -236,6 +250,13 @@
       display:flex; justify-content:space-around; border:1px solid rgba(255,255,255,0.06); backdrop-filter: blur(6px);
     }
 
+    /* CREDIT TOASTS + PARTICLES (new) */
+    .credit-toasts{position:absolute;top:58px;left:0;right:0;display:flex;justify-content:center;pointer-events:none;z-index:5}
+    .credit-toast{background:linear-gradient(90deg,rgba(16,185,129,.2),rgba(16,185,129,.08));border:1px solid rgba(16,185,129,.45);color:#bbf7d0;padding:8px 12px;border-radius:12px;backdrop-filter:blur(6px);box-shadow:0 10px 30px rgba(16,185,129,.25);display:flex;align-items:center;gap:8px;font-weight:600;animation: toast 3.2s ease-out forwards}
+    @keyframes toast{0%{transform:translateY(-10px) scale(.95);opacity:0}12%{transform:translateY(0) scale(1);opacity:1}85%{opacity:1}100%{transform:translateY(-6px) scale(.98);opacity:0}}
+    .credit-particles{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+    .coin{position:absolute;bottom:22%;left:50%;transform:translateX(-50%);font-weight:700;color:#34d399;text-shadow:0 2px 10px rgba(52,211,153,.55);filter:drop-shadow(0 2px 8px rgba(0,0,0,.4));animation:cashRise 1.6s ease-out forwards;will-change:transform,opacity}
+
     /* Responsive */
     @media (max-width: 1024px) {
       .phone { width: 260px; height:540px; }
@@ -247,17 +268,13 @@
       .phone { transform: none; }
     }
 
-    /* CLS FIX: consistent aspect ratios on all card images */
+    /* CLS FIX: consistent aspect ratios on media */
     .ratio-3x2{ aspect-ratio: 3 / 2; object-fit: cover; }
-
-    /* CLS FIX: video/iframe shells keep space reserved */
     .ratio-16x9{ aspect-ratio: 16 / 9; }
-
   </style>
 
   <!-- Font metric override to reduce swap shift (CLS FIX) -->
   <style>
-    /* Works when browser supports size-adjust; keeps fallback metrics close to Poppins */
     @font-face{
       font-family: "Poppins Fallback";
       src: local("Arial");
@@ -279,7 +296,7 @@
 
   <!-- NAV -->
   <div class="nav-wrap" id="top">
-    <nav class="nav sticky top-0 z-50 backdrop-blur supports-[backdrop-filter]:bg-slate-900/50 bg-slate-900/70 border-b border-white/10 transition-transform duration-300" id="siteNav" style="contain:layout paint;"> <!-- CLS FIX: contain to isolate effects -->
+    <nav class="nav sticky top-0 z-50 backdrop-blur supports-[backdrop-filter]:bg-slate-900/50 bg-slate-900/70 border-b border-white/10 transition-transform duration-300" id="siteNav" style="contain:layout paint;">
       <div class="section-wrap flex items-center justify-between py-3">
         <a aria-label="Magnus Home" class="brand flex items-center gap-2 focus-ring group" href="/">
           <img alt="Magnus website logo — official Magnus platform" class="rounded-lg transition-transform duration-300 group-hover:rotate-6 group-hover:scale-105" decoding="async" loading="eager" fetchpriority="high" width="36" height="36" src="https://magnuswebsite.site/img/magnus_logo_512.png" />
@@ -300,7 +317,6 @@
       </div>
 
       <!-- Mobile panel -->
-      <!-- CLS FIX: fixed overlay so it never reflows the page -->
       <div aria-modal="true" class="md:hidden hidden fixed inset-0 z-50 bg-slate-900/90 backdrop-blur-sm border-t border-white/10" data-open="false" id="mobilePanel" role="dialog">
         <div class="section-wrap py-6">
           <ul class="space-y-2">
@@ -354,11 +370,15 @@
             </div>
           </div>
 
-          <!-- RIGHT: GLASS PHONE DASHBOARD -->
+          <!-- RIGHT: GLASS PHONE DASHBOARD with ANIMATION -->
           <div class="hero-right lg:w-1/2 flex justify-center items-center">
-            <div class="phone-wrap">
+            <div class="phone-wrap" data-animate="phone">
               <div class="phone" aria-label="Glass phone showing Magnus earnings dashboard" role="img">
                 <div class="notch"><span class="cam-dot"></span></div>
+
+                <!-- NEW: dynamic UI layers -->
+                <div class="credit-toasts" id="creditToasts"></div>
+                <div class="credit-particles" id="creditParticles"></div>
 
                 <!-- Screen -->
                 <div class="phone-screen">
@@ -481,7 +501,6 @@
         </div>
 
         <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-          <!-- CLS FIX: add aspect-ratio helper class -->
           <div class="card h-full flex flex-col">
             <div class="flex justify-center mb-4">
               <img alt="Magnus registration guide — earn on the Magnus website" class="lazy-load h-40 w-full object-cover rounded-lg ratio-3x2" decoding="async" loading="lazy" width="300" height="200" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 200'/%3E" />
@@ -577,7 +596,6 @@
         <div class="grid md:grid-cols-2 gap-8">
           <div class="card">
             <div class="relative mb-4 rounded-lg overflow-hidden ratio-16x9">
-              <!-- CLS FIX: keep img as poster with fixed ratio -->
               <img alt="Magnus registration video — how to register on the Magnus website" class="lazy-load absolute inset-0 w-full h-full object-cover" decoding="async" loading="lazy" width="640" height="360" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 640 360'/%3E" />
             </div>
             <h3 class="h3 mb-3">MAGNUS REGISTRATION: HOW TO REGISTER ON MAGNUS</h3>
@@ -805,7 +823,6 @@
           entries.forEach(entry => {
             if (entry.isIntersecting) {
               const img = entry.target;
-              // If you later switch from SVG placeholders to real images, set data-src / data-srcset
               if (img.dataset.src) img.src = img.dataset.src;
               if (img.dataset.srcset) img.srcset = img.dataset.srcset;
               img.classList.remove('lazy-load');
@@ -825,7 +842,7 @@
 
   <!-- Simplified JavaScript for UI interactions -->
   <script>
-    // Mobile menu (CLS FIX: fixed overlay, never reflows)
+    // Mobile menu
     (function() {
       const toggle = document.getElementById('navToggle');
       const panel = document.getElementById('mobilePanel');
@@ -872,7 +889,7 @@
       });
     })();
 
-    // FAQ accordion (user-triggered; excluded from CLS scoring)
+    // FAQ accordion
     (function() {
       document.querySelectorAll('.faq-question').forEach(button => {
         button.addEventListener('click', () => {
@@ -884,7 +901,7 @@
       });
     })();
 
-    // Stats count-up on view (digits are tabular to prevent width jumps)
+    // Stats count-up on view
     (function() {
       const animateCounter = (el, target, duration = 2000) => {
         let start = 0;
@@ -917,6 +934,104 @@
       }, { threshold: 0.5 });
 
       io.observe(stats);
+    })();
+  </script>
+
+  <!-- NEW: Phone animation loop (performance-capped) -->
+  <script>
+    (function(){
+      const fmt = (n)=>'₦'+Math.max(0,Math.round(n)).toLocaleString();
+      const balance=document.getElementById('balanceTotal');
+      const delta=document.getElementById('balanceDelta');
+      const daily=document.getElementById('dailyEarn');
+      const stream=document.getElementById('streamEarn');
+      const ref=document.getElementById('refEarn');
+      const toasts=document.getElementById('creditToasts');
+      const particles=document.getElementById('creditParticles');
+
+      // Conservative limits to avoid layout thrash and keep FPS smooth
+      const CONFIG={
+        amountStep:250,
+        minStepUnits:3,
+        maxStepUnits:10,
+        minInterval:2200,
+        maxInterval:4200,
+        loop:{
+          totalMin:115000,totalMax:135000,
+          dailyMin:10000,dailyMax:18000,
+          streamMin:3000,streamMax:7000,
+          refMin:3000,refMax:7000,
+          todayResetAt:25000
+        },
+        domCaps:{maxParticles:24,maxToasts:3}
+      };
+
+      let total=120650,today=0,dailyVal=12650,streamVal=4200,refVal=3900;
+
+      function clamp(v,min,max){
+        if(v>max)return min+(v-max)%(max-min);
+        if(v<min)return min;
+        return v;
+      }
+      function animate(el,val){ el.textContent = fmt(val); }
+
+      function spawnParticles(amount){
+        const budget=CONFIG.domCaps.maxParticles - particles.childElementCount;
+        const count=Math.min(budget, 4 + Math.floor(amount/1500));
+        for(let i=0;i<count;i++){
+          const c=document.createElement('div');
+          c.className='coin';
+          c.style.left=(50+(Math.random()*24-12))+'%';
+          c.style.setProperty('--drift',(Math.random()*60-30)+'px');
+          c.style.fontSize=(12+Math.random()*8)+'px';
+          c.textContent='₦';
+          particles.appendChild(c);
+          c.addEventListener('animationend',()=>c.remove(),{once:true});
+        }
+      }
+
+      function showToast(amount){
+        while(toasts.childElementCount>=CONFIG.domCaps.maxToasts){
+          toasts.removeChild(toasts.firstElementChild);
+        }
+        const t=document.createElement('div');
+        t.className='credit-toast';
+        t.innerHTML=`<span>✅</span> +${fmt(amount)} <span class="text-xs">credited</span>`;
+        toasts.appendChild(t);
+        t.addEventListener('animationend',()=>t.remove(),{once:true});
+      }
+
+      function tick(){
+        const units=Math.floor(Math.random()*(CONFIG.maxStepUnits-CONFIG.minStepUnits+1))+CONFIG.minStepUnits;
+        const amount=units*CONFIG.amountStep;
+        const bucket=Math.random();
+        if(bucket<.45){
+          dailyVal=clamp(dailyVal+amount,CONFIG.loop.dailyMin,CONFIG.loop.dailyMax);
+          animate(daily,dailyVal);
+        }else if(bucket<.75){
+          streamVal=clamp(streamVal+amount,CONFIG.loop.streamMin,CONFIG.loop.streamMax);
+          animate(stream,streamVal);
+        }else{
+          refVal=clamp(refVal+amount,CONFIG.loop.refMin,CONFIG.loop.refMax);
+          animate(ref,refVal);
+        }
+        total=clamp(total+amount,CONFIG.loop.totalMin,CONFIG.loop.totalMax);
+        animate(balance,total);
+        today+=amount;
+        if(today>CONFIG.loop.todayResetAt) today=0;
+        delta.textContent=`+${fmt(today)} today`;
+        showToast(amount);
+        spawnParticles(amount);
+      }
+
+      function schedule(){
+        const ms=CONFIG.minInterval+Math.random()*(CONFIG.maxInterval-CONFIG.minInterval);
+        setTimeout(()=>{ tick(); schedule(); }, ms);
+      }
+      // Only start if elements exist (keeps this script safe across pages)
+      if(balance && daily && stream && ref && toasts && particles){
+        schedule();
+      }
     })();
   </script>
 </body>
