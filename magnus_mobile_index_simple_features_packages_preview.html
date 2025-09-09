@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <title>Magnus — Mobile Home</title>
+  <meta name="description" content="Magnus mobile home: simple features and live packages from GitHub." />
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: { DEFAULT: '#FF8A00', dark: '#E57C00' },
+            bg: '#0a0a15'
+          },
+          fontFamily: {
+            sans: ['Poppins','ui-sans-serif','system-ui','Segoe UI','Roboto','Arial','sans-serif'],
+            display: ['Montserrat','Poppins','ui-sans-serif','system-ui']
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    html,body{background:#0a0a15}
+    .glass{backdrop-filter:blur(14px) saturate(140%);-webkit-backdrop-filter:blur(14px) saturate(140%);background:rgba(15,15,25,.7)}
+    .magnus-gradient{background:linear-gradient(135deg,#FF8A00 0%,#FFA000 100%)}
+    .dark-card{background:rgba(20,20,30,.75);border:1px solid rgba(255,138,0,.12)}
+    .ratio-frame{position:relative;width:100%}
+    .ratio-frame::before{content:"";display:block;padding-top:62%}
+    .ratio-frame>iframe{position:absolute;inset:0;width:100%;height:100%;border:0;border-radius:14px}
+  </style>
+</head>
+<body class="text-white font-sans antialiased">
+
+  <!-- Header -->
+  <header class="sticky top-0 z-40 backdrop-blur bg-black/40 border-b border-orange-500/10">
+    <div class="max-w-md mx-auto px-4 py-3 flex items-center gap-3">
+      <div class="w-9 h-9 rounded-xl magnus-gradient grid place-items-center font-display font-extrabold">M</div>
+      <div class="min-w-0">
+        <h1 class="font-display text-lg font-extrabold tracking-tight">Magnus</h1>
+        <p class="text-xs text-white/60 -mt-0.5">Simple • Fast • Mobile</p>
+      </div>
+      <a href="#packages" class="ml-auto text-[11px] font-bold px-3 py-1 rounded-full bg-white text-orange-700">Packages</a>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="max-w-md mx-auto px-4 pt-5">
+    <div class="dark-card rounded-2xl p-4">
+      <h2 class="font-display text-xl font-extrabold text-orange-200">Welcome 👋</h2>
+      <p class="text-sm text-white/70 mt-1">Explore features and view live earning packages loaded straight from your GitHub page.</p>
+      <div class="mt-4 grid grid-cols-3 gap-2 text-center">
+        <div class="rounded-xl bg-white/5 border border-orange-500/10 p-3"><p class="text-xs text-white/60">Daily</p><p class="text-base font-bold text-orange-300">Rewards</p></div>
+        <div class="rounded-xl bg-white/5 border border-orange-500/10 p-3"><p class="text-xs text-white/60">Referrals</p><p class="text-base font-bold text-orange-300">Bonus</p></div>
+        <div class="rounded-xl bg-white/5 border border-orange-500/10 p-3"><p class="text-xs text-white/60">Support</p><p class="text-base font-bold text-orange-300">24/7</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section id="features" class="max-w-md mx-auto px-4 py-4">
+    <h3 class="font-display text-lg font-bold mb-3 text-orange-300">Features</h3>
+    <div class="grid grid-cols-1 gap-3">
+      <button class="feature-btn text-left rounded-2xl dark-card p-4 w-full" data-kind="earn">
+        <h4 class="font-semibold text-orange-200">Create • Share • Earn</h4>
+        <p class="text-sm text-white/70">Post or share content daily and unlock earnings with transparency.</p>
+      </button>
+      <button class="feature-btn text-left rounded-2xl dark-card p-4 w-full" data-kind="referral">
+        <h4 class="font-semibold text-orange-200">Referral Engine</h4>
+        <p class="text-sm text-white/70">Invite friends, earn bonuses, and grow your team effortlessly.</p>
+      </button>
+      <button class="feature-btn text-left rounded-2xl dark-card p-4 w-full" data-kind="contest">
+        <h4 class="font-semibold text-orange-200">30-Day Marathon</h4>
+        <p class="text-sm text-white/70">Compete for a shared prize pool—top performers win more.</p>
+      </button>
+    </div>
+  </section>
+
+  <!-- Packages (now opened in a modal) -->
+  <section id="packages" class="max-w-md mx-auto px-4 pb-6">
+    <div class="flex items-center justify-between mb-2">
+      <h3 class="font-display text-lg font-bold text-orange-300">Earning Packages</h3>
+      <a id="openSrc" href="#" class="text-[11px] underline text-white/60">Open source</a>
+    </div>
+
+    <div class="dark-card rounded-2xl p-3 space-y-3">
+      <div class="rounded-xl bg-white/5 border border-white/10 p-4 flex items-center justify-between gap-3">
+        <div>
+          <p class="text-sm text-white/80 font-medium">View packages in a popup</p>
+        </div>
+        <button id="openPackages" class="px-4 py-2 rounded-xl magnus-gradient text-white font-semibold">Open Packages</button>
+      </div>
+      <p class="text-[11px] text-white/55">Tip: update the file on GitHub and the popup reflects it automatically.</p>
+    </div>
+  </section>
+
+  <!-- Modal -->
+  <div id="overlay" class="hidden fixed inset-0 z-40 bg-black/70"></div>
+  <div id="modal" class="hidden fixed z-50 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[92%] max-w-md">
+    <div class="glass rounded-2xl border border-orange-500/20 overflow-hidden max-h-[85vh] flex flex-col">
+      <div class="px-4 py-3 flex items-center justify-between border-b border-orange-500/20">
+        <h5 id="mTitle" class="font-display text-lg font-extrabold text-orange-200">Details</h5>
+        <button id="mClose" class="p-2 rounded-lg hover:bg-white/10" aria-label="Close">
+          <svg viewBox="0 0 24 24" class="w-5 h-5 text-orange-300" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6l-12 12"/></svg>
+        </button>
+      </div>
+      <!-- Scrollable body -->
+      <div id="mBody" class="px-4 py-3 text-sm text-white/85 space-y-3 overflow-y-auto"></div>
+      <div class="px-4 py-3 border-t border-orange-500/20 flex justify-end gap-2">
+        <button id="mOk" class="px-4 py-2 rounded-xl magnus-gradient text-white font-semibold">OK</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom Nav -->
+  <nav class="fixed left-4 right-4 bottom-4 z-30">
+    <div class="mx-auto max-w-md">
+      <div class="rounded-2xl bg-white/5 backdrop-blur border border-orange-500/20">
+        <ul class="grid grid-cols-3 text-center">
+          <li><a href="#" class="block py-3 text-orange-300 font-semibold text-[11px]">Home</a></li>
+          <li><a href="#features" class="block py-3 text-white/70 hover:text-orange-200 text-[11px]">Features</a></li>
+          <li><a href="#packages" class="block py-3 text-white/70 hover:text-orange-200 text-[11px]">Packages</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <script>
+    // ====== Minimal JS (no updates needed) ======
+    const OVERLAY = document.getElementById('overlay');
+    const MODAL = document.getElementById('modal');
+    const mTitle = document.getElementById('mTitle');
+    const mBody  = document.getElementById('mBody');
+    const mClose = document.getElementById('mClose');
+    const mOk    = document.getElementById('mOk');
+
+    const openSrc = document.getElementById('openSrc');
+    const openPackagesBtn = document.getElementById('openPackages');
+    const DEFAULT_PKG_SRC = "https://khartoon002.github.io/app/packages.html"; // <- edit this
+    let pkgSrc = DEFAULT_PKG_SRC;
+
+    function openModal(title, html){
+      mTitle.textContent = title || 'Details';
+      mBody.innerHTML = html || '';
+      OVERLAY.classList.remove('hidden');
+      MODAL.classList.remove('hidden');
+      document.body.classList.add('overflow-hidden');
+    }
+    function closeModal(){
+      OVERLAY.classList.add('hidden');
+      MODAL.classList.add('hidden');
+      document.body.classList.remove('overflow-hidden');
+    }
+    mClose.addEventListener('click', closeModal);
+    OVERLAY.addEventListener('click', closeModal);
+    mOk.addEventListener('click', closeModal);
+
+    // Features modal content
+    const featureHTML = {
+      earn: `
+        <p><strong>Create • Share • Earn:</strong> Share short videos or posts, complete simple actions, and see your rewards grow.</p>
+        <ul class="list-disc pl-5 space-y-1 text-white/70">
+          <li>Post daily or re-share trending content</li>
+          <li>Transparent metrics and history</li>
+          <li>Legit rules and clear payout windows</li>
+        </ul>
+      `,
+      referral: `
+        <p><strong>Referral Engine:</strong> Invite friends with your link and earn when they activate and engage.</p>
+        <ul class="list-disc pl-5 space-y-1 text-white/70">
+          <li>Instant link generation</li>
+          <li>Tiered bonuses (direct & indirect)</li>
+          <li>Helpful team-growth tips</li>
+        </ul>
+      `,
+      contest: `
+        <p><strong>30-Day Marathon:</strong> Compete in monthly sprints. The top performers share a prize pool.</p>
+        <ul class="list-disc pl-5 space-y-1 text-white/70">
+          <li>Micro-tasks & social actions</li>
+          <li>Leaderboard transparency</li>
+          <li>Special rewards for consistency</li>
+        </ul>
+      `
+    };
+
+    document.querySelectorAll('.feature-btn').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        const k = btn.dataset.kind; 
+        const title = btn.querySelector('h4')?.textContent || 'Details';
+        openModal(title, featureHTML[k]);
+      });
+    });
+
+    // Allow ?packages=URL override without editing code
+    const params = new URLSearchParams(location.search);
+    const qs = params.get('packages');
+    if(qs){ try { pkgSrc = decodeURIComponent(qs); } catch(_){} }
+
+    // Open the packages in a scrollable modal (70vh iframe)
+    openPackagesBtn.addEventListener('click', ()=>{
+      openModal('Earning Packages', `
+        <iframe src="${pkgSrc}" title="Magnus Packages" class="w-full h-[70vh] rounded-xl border border-white/10"></iframe>
+      `);
+    });
+
+    // Open source link
+    openSrc.addEventListener('click', (e)=>{
+      e.preventDefault();
+      window.open(pkgSrc, '_blank');
+    });
+  </script>
+</body>
+</html>

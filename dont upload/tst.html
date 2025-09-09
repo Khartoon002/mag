@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Magnus — Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme:{ extend:{
+        colors:{ orange:'#F97316', obsidian:'#0B0B0F', onyx:'#0e0e13' },
+        boxShadow:{
+          glow:'0 0 24px rgba(249,115,22,.45)',
+          card:'0 10px 30px rgba(0,0,0,.35)'
+        },
+        backgroundImage:{
+          'radial-dots':'radial-gradient(circle at 1px 1px, rgba(255,255,255,.06) 1px, transparent 0)',
+          'orange-gradient':'linear-gradient(135deg, rgba(249,115,22,.15), rgba(249,115,22,.05))'
+        },
+        animation:{
+          fadeUp:'fadeUp .7s ease both',
+          float:'float 6s ease-in-out infinite'
+        },
+        keyframes:{
+          fadeUp:{ '0%':{opacity:0, transform:'translateY(16px)'},
+                   '100%':{opacity:1, transform:'none'} },
+          float:{ '0%,100%':{ transform:'translateY(0px)'},
+                  '50%':{ transform:'translateY(-6px)'} }
+        }
+      }}
+    }
+  </script>
+  <style>
+    .glass{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);backdrop-filter:blur(10px)}
+    .card{transition:transform .25s ease, box-shadow .25s ease}
+    .card:hover{transform:translateY(-4px); box-shadow:var(--tw-shadow,0 0 #0000), 0 10px 30px rgba(0,0,0,.35)}
+    .btn{transition:box-shadow .3s ease, transform .2s ease}
+    .btn:hover{box-shadow:0 0 24px rgba(249,115,22,.45); transform:translateY(-1px)}
+     html { scroll-behavior: smooth; }
+  </style>
+</head>
+<body class="bg-obsidian text-white min-h-screen">
+<!-- Subtle patterned backdrop -->
+<div class="pointer-events-none fixed inset-0 opacity-[0.08] [background-size:16px_16px] bg-radial-dots"></div>
+<div class="pointer-events-none fixed -top-32 right-[-20%] h-[380px] w-[380px] rounded-full blur-3xl"
+     style="background: radial-gradient(closest-side, rgba(249,115,22,.18), transparent)"></div>
+
+<!-- Header -->
+<header class="sticky top-0 z-50 bg-black/60 backdrop-blur">
+  <nav class="max-w-5xl mx-auto flex items-center justify-between px-4 py-3">
+    <div class="flex items-center gap-3">
+      <img src="logo.png" alt="Magnus app logo" class="w-9 h-9 opacity-90">
+      <span class="font-semibold tracking-wide">Magnus</span>
+    </div>
+    <div class="flex items-center gap-3">
+      <button id="logoutBtn" class="text-sm text-white/80 hover:text-orange">Logout</button>
+      <button id="exitBtn" class="text-sm text-white/80 hover:text-orange">Exit App</button>
+    </div>
+  </nav>
+</header>
+
+<main class="max-w-5xl mx-auto px-4 py-8 space-y-10 relative">
+  <!-- Hero / Intro -->
+  <section class="relative overflow-hidden rounded-3xl p-6 sm:p-8 glass animate-fadeUp">
+    <div class="absolute -right-10 -top-10 h-44 w-44 rounded-full blur-2xl opacity-40"
+         style="background: radial-gradient(closest-side, rgba(249,115,22,.35), transparent)"></div>
+    <div class="grid md:grid-cols-[1.2fr_.8fr] items-center gap-6">
+      <div>
+        <p class="text-orange font-semibold tracking-wide">Welcome back</p>
+        <h1 class="text-3xl sm:text-4xl font-bold mt-1">Your Magnus Dashboard</h1>
+        <p class="text-white/70 mt-3 leading-relaxed">
+          Explore mobile-first tasks, policy-aligned activities, and community features. Stay compliant, safe,
+          and productive—all in one place. Use the quick links below or scroll to view features and packages.
+        </p>
+        <div class="mt-5 flex flex-wrap gap-3">
+          <a href="#features" class="btn inline-flex items-center gap-2 rounded-xl bg-orange text-black px-4 py-2 shadow-glow">
+            Explore Features
+          </a>
+          <a href="#packages" class="btn inline-flex items-center gap-2 rounded-xl border border-white/15 px-4 py-2">
+            View Packages
+          </a>
+        </div>
+      </div>
+      <div class="hidden md:block">
+        <div class="rounded-2xl bg-orange-gradient p-5 glass">
+          <div class="grid grid-cols-3 gap-4">
+            <div class="rounded-xl bg-black/30 p-4 text-center animate-float">
+              <div class="text-2xl font-semibold">24/7</div>
+              <div class="text-xs text-white/70">Support</div>
+            </div>
+            <div class="rounded-xl bg-black/30 p-4 text-center" style="animation: float 7s ease-in-out infinite .2s">
+              <div class="text-2xl font-semibold">Secure</div>
+              <div class="text-xs text-white/70">Access</div>
+            </div>
+            <div class="rounded-xl bg-black/30 p-4 text-center" style="animation: float 8s ease-in-out infinite .4s">
+              <div class="text-2xl font-semibold">Mobile</div>
+              <div class="text-xs text-white/70">First</div>
+            </div>
+          </div>
+          <p class="text-xs text-white/60 mt-4">Magnus focuses on clarity, safety, and accurate descriptions.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quick Nav Cards -->
+  <section class="grid sm:grid-cols-2 gap-4 animate-fadeUp">
+    <a href="#features" class="card glass rounded-2xl p-5 text-left">
+      <h3 class="text-lg font-semibold">Features</h3>
+      <p class="text-sm text-white/70 mt-1">Learn how Magnus helps you stay engaged and organized.</p>
+    </a>
+    <a href="#packages" class="card glass rounded-2xl p-5 text-left">
+      <h3 class="text-lg font-semibold">Packages</h3>
+      <p class="text-sm text-white/70 mt-1">Browse available packages sourced from our GitHub JSON.</p>
+    </a>
+  </section>
+
+  <!-- Features -->
+  <section id="features" class="glass rounded-3xl p-6 sm:p-7 animate-fadeUp">
+    <div class="flex items-center justify-between">
+      <h2 class="text-2xl font-semibold">Features</h2>
+      <span class="text-xs text-white/60">Tap a card to read more</span>
+    </div>
+    <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
+      <li class="feature card glass rounded-2xl p-5 cursor-pointer" data-feature="tasks">
+        <h3 class="font-semibold">Smartphone Tasks & Activities</h3>
+        <p class="text-sm text-white/70 mt-1">Simple, interactive, and beginner-friendly mobile tasks.</p>
+      </li>
+      <li class="feature card glass rounded-2xl p-5 cursor-pointer" data-feature="streaming">
+        <h3 class="font-semibold">Content Streaming Integration</h3>
+        <p class="text-sm text-white/70 mt-1">Participate in approved listening and viewing activities.</p>
+      </li>
+      <li class="feature card glass rounded-2xl p-5 cursor-pointer" data-feature="referral">
+        <h3 class="font-semibold">Referral & Community Program</h3>
+        <p class="text-sm text-white/70 mt-1">Invite friends with clear rules and transparent terms.</p>
+      </li>
+      <li class="feature card glass rounded-2xl p-5 cursor-pointer" data-feature="progress">
+        <h3 class="font-semibold">Progress Tracking & Streaks</h3>
+        <p class="text-sm text-white/70 mt-1">Keep daily streaks and celebrate safe milestones.</p>
+      </li>
+      <li class="feature card glass rounded-2xl p-5 cursor-pointer" data-feature="support">
+        <h3 class="font-semibold">Reliable Support & Secure Access</h3>
+        <p class="text-sm text-white/70 mt-1">24/7 support with secure session-based access.</p>
+      </li>
+    </ul>
+  </section>
+
+  <!-- Packages -->
+  <section id="packages" class="glass rounded-3xl p-6 sm:p-7 animate-fadeUp">
+    <div class="flex items-center justify-between">
+      <div>
+        <h2 class="text-2xl font-semibold">Packages</h2>
+        <p class="text-sm text-white/70 mt-1">Our Live Packages, pick any one and get started.</p>
+      </div>
+      <button id="refreshPkgs" class="px-4 py-2 rounded-xl bg-orange text-black btn">Refresh</button>
+    </div>
+    <div id="pkgList" class="mt-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+  </section>
+</main>
+
+<!-- Modal (shared for features & packages) -->
+<div id="modal" class="fixed inset-0 hidden items-center justify-center bg-black/70 p-4 z-50">
+  <div class="glass rounded-2xl max-w-md w-full p-5">
+    <div class="flex items-center justify-between">
+      <h3 id="modalTitle" class="text-lg font-semibold">Details</h3>
+      <button id="closeModal" class="text-white/70 hover:text-orange">✕</button>
+    </div>
+    <div id="modalBody" class="mt-3 text-sm text-white/80 max-h-[55vh] overflow-y-auto">Loading…</div>
+    <div class="mt-4 flex items-center justify-end gap-2">
+      <a id="modalLink" href="#" target="_blank" rel="noopener" class="hidden inline-block px-4 py-2 rounded-lg bg-orange text-black btn">Open Details</a>
+      <a id="modalCta" href="#" target="_blank" rel="noopener" class="inline-block px-4 py-2 rounded-lg bg-orange text-black btn">Get started</a>
+    </div>
+  </div>
+</div>
+
+<footer class="max-w-5xl mx-auto px-4 py-10 text-center text-xs text-white/60">
+  © <span id="yr"></span> Magnus. <a href="privacy.html" class="text-orange underline">Privacy Policy</a>
+</footer>
+
+<script>
+  // Login gate
+  if (!localStorage.getItem('magnus_session')) location.replace('login.html');
+  document.getElementById('yr').textContent = new Date().getFullYear();
+
+  // 🔗 Replace with your raw GitHub JSON
+  const PKG_URL = 'https://khartoon002.github.io/app/packages.json';
+
+  const list = document.getElementById('pkgList');
+  const modal = document.getElementById('modal');
+  const modalTitle = document.getElementById('modalTitle');
+  const modalBody = document.getElementById('modalBody');
+  const modalLink = document.getElementById('modalLink');
+  const modalCta = document.getElementById('modalCta');
+  const closeModal = document.getElementById('closeModal');
+
+  // Feature popup content
+  const REGISTER_URL = 'https://magnuswebsite.site/magnus_registration.html';
+  const featureDetails = {
+    tasks: {
+      title: 'Smartphone Tasks & Activities',
+      body: `
+        <p>Beginner-friendly smartphone tasks that are simple, interactive, and built for mobile. Complete guided actions at your own pace.</p>
+        <ul class="list-disc ml-5 mt-2 space-y-1 text-white/70">
+          <li>Clear, step-by-step prompts</li>
+          <li>Mobile-first layouts and larger tap targets</li>
+          <li>Built-in reminders for consistency</li>
+        </ul>
+      `
+    },
+    streaming: {
+      title: 'Content Streaming Integration',
+      body: `
+        <p>Participate in approved listening and viewing activities directly in Magnus, following platform rules and regional guidelines.</p>
+        <ul class="list-disc ml-5 mt-2 space-y-1 text-white/70">
+          <li>Streamlined handoffs to trusted providers</li>
+          <li>Policy-aligned participation flow</li>
+          <li>Respectful of user device limits & data usage</li>
+        </ul>
+      `
+    },
+    referral: {
+      title: 'Referral & Community Program',
+      body: `
+        <p>Invite friends transparently with clear rules. Earn recognition for building the Magnus community—no misleading claims.</p>
+        <ul class="list-disc ml-5 mt-2 space-y-1 text-white/70">
+          <li>Simple sharing tools</li>
+          <li>Upfront eligibility & reward criteria</li>
+          <li>Program terms available in-app</li>
+        </ul>
+      `
+    },
+    progress: {
+      title: 'Progress Tracking & Streaks',
+      body: `
+        <p>Keep daily streaks, monitor your activity history, and celebrate milestones with badge-like achievements.</p>
+        <ul class="list-disc ml-5 mt-2 space-y-1 text-white/70">
+          <li>Daily streak counter and reminders</li>
+          <li>History log for completed actions</li>
+          <li>Motivational milestones to stay engaged</li>
+        </ul>
+      `
+    },
+    support: {
+      title: 'Reliable Support & Secure Access',
+      body: `
+        <p>Enjoy 24/7 user support, fast responses, and secure access to your account and dashboard from your device.</p>
+        <ul class="list-disc ml-5 mt-2 space-y-1 text-white/70">
+          <li>In-app policy link and FAQs</li>
+          <li>Minimal data storage; session flag only</li>
+          <li>HTTPS links and safe external redirects</li>
+        </ul>
+      `
+    }
+  };
+
+  function openModalContent(title, html, linkHref=null, linkText='Open Details', ctaHref=REGISTER_URL, ctaText='Get started') {
+    modalTitle.textContent = title || 'Details';
+    modalBody.innerHTML = html || '';
+    if (linkHref) {
+      modalLink.href = linkHref;
+      modalLink.textContent = linkText;
+      modalLink.classList.remove('hidden');
+    } else {
+      modalLink.classList.add('hidden');
+    }
+    modalCta.href = ctaHref || REGISTER_URL;
+    modalCta.textContent = ctaText || 'Get started';
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+  }
+
+  // Feature cards: open glass modal
+  document.querySelectorAll('.feature').forEach(el=>{
+    el.addEventListener('click', ()=>{
+      const key = el.getAttribute('data-feature');
+      const f = featureDetails[key];
+      if (f) openModalContent(f.title, f.body, null, null, REGISTER_URL, 'Get started');
+    });
+  });
+
+  // Packages loader
+  async function loadPackages() {
+    list.innerHTML = '<div class="text-white/70">Loading packages…</div>';
+    try {
+      const res = await fetch(PKG_URL, { cache: 'no-store' });
+      const data = await res.json(); // [{id,title,price,summary,link,details}]
+      list.innerHTML = data.map(p => `
+        <article class="card glass rounded-2xl p-5">
+          <h4 class="font-semibold">${p.title}</h4>
+          <p class="text-sm text-white/70 mt-1">${p.summary}</p>
+          <div class="mt-3 flex items-center justify-between">
+            <span class="text-orange font-semibold">₦${p.price}</span>
+            <button class="px-3 py-2 rounded-lg bg-orange text-black btn" onclick='openPkg(${JSON.stringify(p)})'>View</button>
+          </div>
+        </article>
+      `).join('');
+    } catch(e) {
+      list.innerHTML = '<div class="text-red-400">Failed to load packages. Tap Refresh.</div>';
+    }
+  }
+
+  window.openPkg = (p)=>{
+    openModalContent(
+      p.title,
+      (p.details || p.summary || '—'),
+      p.link || '#',
+      'Open Details',
+      REGISTER_URL,
+      'Get started'
+    );
+  }
+
+  closeModal.addEventListener('click', ()=>{
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+  });
+
+  document.getElementById('refreshPkgs').addEventListener('click', loadPackages);
+  document.getElementById('logoutBtn').addEventListener('click', ()=>{
+    localStorage.removeItem('magnus_session'); location.replace('login.html');
+  });
+  document.getElementById('exitBtn').addEventListener('click', ()=>{
+    if (window.Android && typeof window.Android.exitApp === 'function') {
+      window.Android.exitApp();
+    } else {
+      window.location.href='about:blank';
+    }
+  });
+
+  // Ensure external links open in browser (WebView native will route to Chrome)
+  document.addEventListener('click', (e)=>{
+    const a = e.target.closest('a[href]');
+    if (!a) return;
+    const href = a.getAttribute('href') || '';
+    if (/^https?:\/\//i.test(href)) {
+      a.setAttribute('target','_blank');
+      a.setAttribute('rel','noopener');
+    }
+  });
+
+  loadPackages();
+</script>
+</body>
+</html>
