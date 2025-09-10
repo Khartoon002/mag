@@ -47,97 +47,103 @@
   <meta name="theme-color" content="#ff8c00">
 
   <!-- JSON-LD (updated logo + tidy graph) -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "Organization",
-        "@id": "https://magnuswebsite.site/#organization",
-        "name": "Magnus Platform",
-        "alternateName": ["Magnus", "Magnus Platform", "Magnus Website"],
-        "url": "https://magnuswebsite.site/",
-        "logo": {
-          "@type": "ImageObject",
-          "url": "https://magnuswebsite.site/img/magnus_logo_512_transparent.png",
-          "width": 512,
-          "height": 512
-        },
-        "sameAs": ["https://linktr.ee/magnusonline"],
-        "description": "Magnus is a mobile-first earning platform offering streaming jobs, smartphone jobs, a referrals program, and secure withdrawals."
+ <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://magnuswebsite.site/#organization",
+      "name": "Magnus Platform",
+      "alternateName": ["Magnus", "Magnus Platform", "Magnus Website"],
+      "url": "https://magnuswebsite.site/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://magnuswebsite.site/img/magnus_logo_512_transparent.png",
+        "width": 512,
+        "height": 512
       },
-      {
-        "@type": "WebSite",
-        "@id": "https://magnuswebsite.site/#website",
-        "url": "https://magnuswebsite.site/",
-        "name": "Magnus Website",
-        "publisher": { "@id": "https://magnuswebsite.site/#organization" },
-        "inLanguage": "en",
-        "potentialAction": {
-          "@type": "SearchAction",
-          "target": "https://magnuswebsite.site/search?q={search_term_string}",
-          "query-input": "required name=search_term_string"
-        },
-        "keywords": "magnus website, magnus registration, magnus app, magnus platform, earn online, streaming jobs, smartphone jobs"
+      "sameAs": ["https://linktr.ee/magnusonline"],
+      "description": "Magnus is a mobile-first earning platform offering streaming jobs, smartphone jobs, a referrals program, and secure withdrawals."
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://magnuswebsite.site/#website",
+      "url": "https://magnuswebsite.site/",
+      "name": "Magnus Website",
+      "publisher": { "@id": "https://magnuswebsite.site/#organization" },
+      "inLanguage": "en",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://magnuswebsite.site/search?q={search_term_string}",
+        "query-input": "required name=search_term_string"
       },
-      {
-        "@type": "WebPage",
-        "@id": "https://magnuswebsite.site/magnus_registration.html#webpage",
+      "keywords": "magnus website, magnus registration, magnus app, magnus platform, earn online, streaming jobs, smartphone jobs"
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://magnuswebsite.site/magnus_registration.html#webpage",
+      "url": "https://magnuswebsite.site/magnus_registration.html",
+      "name": "Register | Magnus Platform",
+      "isPartOf": { "@id": "https://magnuswebsite.site/#website" },
+      "primaryImageOfPage": {
+        "@type": "ImageObject",
+        "url": "https://magnuswebsite.site/assets/registration-hero.png"
+      },
+      "description": "Registration page for Magnus Platform — complete Magnus registration, pay the one-time fee and unlock streaming jobs, smartphone jobs, referrals and withdrawals.",
+      "breadcrumb": { "@id": "https://magnuswebsite.site/magnus_registration.html#breadcrumb" },
+      "mainEntity": { "@id": "https://magnuswebsite.site/magnus_registration.html#product" },
+      "inLanguage": "en"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://magnuswebsite.site/magnus_registration.html#breadcrumb",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://magnuswebsite.site/" },
+        { "@type": "ListItem", "position": 2, "name": "Register", "item": "https://magnuswebsite.site/magnus_registration.html" }
+      ]
+    },
+    {
+      "@type": "Product",
+      "@id": "https://magnuswebsite.site/magnus_registration.html#product",
+      "name": "Magnus Registration Package",
+      "description": "One-time Magnus registration to unlock streaming jobs, smartphone jobs, referrals, and secure withdrawals.",
+      "sku": "MAG-REG-14000",
+      "brand": { "@type": "Brand", "name": "Magnus" },
+      "image": [
+        "https://magnuswebsite.site/img/magnus_register.jpg"
+      ],
+      "offers": {
+        "@type": "Offer",
         "url": "https://magnuswebsite.site/magnus_registration.html",
-        "name": "Register | Magnus Platform",
-        "isPartOf": { "@id": "https://magnuswebsite.site/#website" },
-        "primaryImageOfPage": "https://magnuswebsite.site/assets/registration-hero.png",
-        "description": "Registration page for Magnus Platform — complete Magnus registration, pay the one-time fee and unlock streaming jobs, smartphone jobs, referrals and withdrawals.",
-        "breadcrumb": { "@id": "https://magnuswebsite.site/magnus_registration.html#breadcrumb" },
-        "mainEntity": { "@id": "https://magnuswebsite.site/magnus_registration.html#product" },
-        "inLanguage": "en"
-      },
-      {
-        "@type": "BreadcrumbList",
-        "@id": "https://magnuswebsite.site/magnus_registration.html#breadcrumb",
-        "itemListElement": [
-          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://magnuswebsite.site/" },
-          { "@type": "ListItem", "position": 2, "name": "Register", "item": "https://magnuswebsite.site/magnus_registration.html" }
-        ]
-      },
-      {
-        "@type": "Product",
-        "@id": "https://magnuswebsite.site/magnus_registration.html#product",
-        "name": "Magnus Registration Package",
-        "description": "One-time Magnus registration to unlock streaming jobs, smartphone jobs, referrals, and secure withdrawals.",
-        "sku": "MAG-REG-14000",
-        "brand": { "@type": "Brand", "name": "Magnus" },
-        "offers": {
-          "@type": "Offer",
-          "url": "https://magnuswebsite.site/magnus_registration.html",
-          "priceCurrency": "NGN",
-          "price": "14000",
-          "availability": "https://schema.org/InStock",
-          "eligibleRegion": { "@type": "Country", "name": "NG" }
-        }
-      },
-      {
-        "@type": "SoftwareApplication",
-        "@id": "https://magnuswebsite.site/#software",
-        "name": "Magnus Mobile App",
-        "operatingSystem": "iOS, Android",
-        "applicationCategory": "BusinessApplication",
-        "url": "https://magnuswebsite.site/app",
-        "description": "Access streaming jobs, smartphone jobs, referrals, and quick withdrawals in the Magnus app."
-      },
-      {
-        "@type": "FAQPage",
-        "@id": "https://magnuswebsite.site/magnus_registration.html#faq",
-        "mainEntity": [
-          { "@type": "Question", "name": "Is this the Magnus website?", "acceptedAnswer": { "@type": "Answer", "text": "Yes — this is the official Magnus Platform. Use this registration page to create an account on the Magnus website and access earning opportunities." } },
-          { "@type": "Question", "name": "How do I complete Magnus registration?", "acceptedAnswer": { "@type": "Answer", "text": "Fill the form, verify your details, and pay the one-time fee to unlock streaming jobs, smartphone jobs, referrals and withdrawals." } },
-          { "@type": "Question", "name": "How can I earn online with Magnus?", "acceptedAnswer": { "@type": "Answer", "text": "Complete verified micro-tasks, join streaming jobs, do smartphone jobs and micro-courses, join contests and grow referrals." } },
-          { "@type": "Question", "name": "How do Magnus withdrawals work?", "acceptedAnswer": { "@type": "Answer", "text": "Withdraw from your wallet to bank accounts or mobile wallets. Times vary by method and region." } }
-        ]
+        "priceCurrency": "NGN",
+        "price": "14000",
+        "availability": "https://schema.org/InStock",
+        "eligibleRegion": { "@type": "Country", "name": "NG" }
       }
-    ]
-  }
-  </script>
+    },
+    {
+      "@type": "SoftwareApplication",
+      "@id": "https://magnuswebsite.site/#software",
+      "name": "Magnus Mobile App",
+      "operatingSystem": "iOS, Android",
+      "applicationCategory": "BusinessApplication",
+      "url": "https://magnuswebsite.site/app",
+      "description": "Access streaming jobs, smartphone jobs, referrals, and quick withdrawals in the Magnus app."
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://magnuswebsite.site/magnus_registration.html#faq",
+      "mainEntity": [
+        { "@type": "Question", "name": "Is this the Magnus website?", "acceptedAnswer": { "@type": "Answer", "text": "Yes — this is the official Magnus Platform. Use this registration page to create an account on the Magnus website and access earning opportunities." } },
+        { "@type": "Question", "name": "How do I complete Magnus registration?", "acceptedAnswer": { "@type": "Answer", "text": "Fill the form, verify your details, and pay the one-time fee to unlock streaming jobs, smartphone jobs, referrals and withdrawals." } },
+        { "@type": "Question", "name": "How can I earn online with Magnus?", "acceptedAnswer": { "@type": "Answer", "text": "Complete verified micro-tasks, join streaming jobs, do smartphone jobs and micro-courses, join contests and grow referrals." } },
+        { "@type": "Question", "name": "How do Magnus withdrawals work?", "acceptedAnswer": { "@type": "Answer", "text": "Withdraw from your wallet to bank accounts or mobile wallets. Times vary by method and region." } }
+      ]
+    }
+  ]
+}
+</script>
 
   <style>
     :root {
