@@ -1,0 +1,3 @@
+[submodule "mag"]
+	path = mag
+	url = https://github.com/Khartoon002/mag.git
