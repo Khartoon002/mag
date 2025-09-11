@@ -1,32 +1,72 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Canonical home -->
+  <url>
+    <loc>https://magnuswebsite.site/</loc>
+    <lastmod>2025-09-11</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
 
-    <url>
-        <loc>https://magnuswebsite.site/index.html</loc>
-        <lastmod>2025-09-02</lastmod>
-        <changefreq>daily</changefreq>
-        <priority>1.0</priority>
-    </url>
+  <!-- Legacy home path (lower priority) -->
+  <url>
+    <loc>https://magnuswebsite.site/index.html</loc>
+    <lastmod>2025-09-11</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
 
-    <url>
-        <loc>https://magnuswebsite.site/magnus_blogs.html</loc>
-        <lastmod>2025-09-02</lastmod>
-        <changefreq>daily</changefreq>
-        <priority>0.8</priority>
-    </url>
+  <!-- Registration -->
+  <url>
+    <loc>https://magnuswebsite.site/magnus_registration.html</loc>
+    <lastmod>2025-09-11</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
 
-    <url>
-        <loc>https://magnuswebsite.site/magnus_registration.html</loc>
-        <lastmod>2025-09-02</lastmod>
-        <changefreq>daily</changefreq>
-        <priority>0.9</priority>
-    </url>
+  <url>
+    <loc>https://magnuswebsite.site/magnus_website_registration.html</loc>
+    <lastmod>2025-09-11</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
 
-    <url>
-        <loc>https://magnuswebsite.site/blogs/test.html</loc>
-        <lastmod>2025-09-02</lastmod>
-        <changefreq>daily</changefreq>
-        <priority>0.7</priority>
-    </url>
+  <!-- App stub to strengthen "Magnus App" footprint -->
+  <url>
+    <loc>https://magnuswebsite.site/magnus-app</loc>
+    <lastmod>2025-09-11</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.85</priority>
+  </url>
 
+  <!-- Blogs hub -->
+  <url>
+    <loc>https://magnuswebsite.site/magnus_blogs.html</loc>
+    <lastmod>2025-09-11</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Example blog post -->
+  <url>
+    <loc>https://magnuswebsite.site/blogs/test.html</loc>
+    <lastmod>2025-09-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Helpful legal pages referenced in footer -->
+  <url>
+    <loc>https://magnuswebsite.site/terms.html</loc>
+    <lastmod>2025-09-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.4</priority>
+  </url>
+
+  <url>
+    <loc>https://magnuswebsite.site/privacy.html</loc>
+    <lastmod>2025-09-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.4</priority>
+  </url>
 </urlset>
