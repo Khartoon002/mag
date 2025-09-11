@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Magnus App — Official Magnus Application for Streaming & Smartphone Jobs</title>
+  <meta name="description" content="The official Magnus App. Access Magnus jobs, streaming jobs, smartphone tasks, referrals and secure withdrawals on mobile." />
+  <link rel="canonical" href="https://magnuswebsite.site/magnus-app" />
+  <meta name="robots" content="index, follow" />
+
+  <!-- Open Graph / Twitter minimal -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Magnus App — Official Magnus Application" />
+  <meta property="og:description" content="Install the Magnus App to access Magnus jobs, streaming jobs, smartphone tasks and secure withdrawals." />
+  <meta property="og:url" content="https://magnuswebsite.site/magnus-app" />
+  <meta property="og:image" content="https://magnuswebsite.site/img/magnus_logo_512.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- JSON-LD: SoftwareApplication (matches main page @id) -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"SoftwareApplication",
+    "@id":"https://magnuswebsite.site/#software",
+    "name":"Magnus App",
+    "applicationCategory": ["BusinessApplication", "LifestyleApplication"],
+    "operatingSystem":"Android, iOS",
+    "url":"https://magnuswebsite.site/magnus-app",
+    "downloadUrl":"https://magnuswebsite.site/magnus-app",
+    "installUrl":"https://magnuswebsite.site/magnus-app",
+    "description":"The official Magnus app for streaming jobs, smartphone tasks, referrals, and quick withdrawals on the Magnus platform.",
+    "publisher": {
+      "@type":"Organization",
+      "@id":"https://magnuswebsite.site/#organization"
+    },
+    "offers":{
+      "@type":"Offer",
+      "price":"0",
+      "priceCurrency":"NGN",
+      "category":"free"
+    }
+  }
+  </script>
+
+  <style>
+    :root { color-scheme: dark light; }
+    body{
+      margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial, sans-serif;
+      background:#0F172A; color:#fff; display:grid; place-items:center; min-height:100dvh; padding:24px;
+      background-image:
+        radial-gradient(at 80% 20%, rgba(249,115,22,0.15) 0, transparent 60%),
+        radial-gradient(at 20% 80%, rgba(245,158,11,0.12) 0, transparent 60%);
+    }
+    .card{
+      max-width:720px; width:100%;
+      background:linear-gradient(135deg, rgba(255,255,255,.10), rgba(255,255,255,.06));
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:18px; padding:24px; box-shadow:0 10px 30px rgba(0,0,0,.25);
+    }
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center; gap:10px;
+      background:linear-gradient(90deg,#F97316,#F59E0B); color:#fff;
+      padding:14px 20px; border-radius:12px; text-decoration:none; font-weight:600;
+      border:1px solid rgba(255,255,255,.15);
+    }
+    .muted{opacity:.85}
+    img{display:block}
+  </style>
+</head>
+<body>
+  <main class="card">
+    <header style="display:flex; align-items:center; gap:12px; margin-bottom:12px">
+      <img src="https://magnuswebsite.site/img/magnus_logo_512.png" alt="Magnus App logo" width="48" height="48" />
+      <h1 style="margin:0; font-size:1.6rem">Magnus App — Official Magnus Application</h1>
+    </header>
+    <p class="muted" style="margin:.5rem 0 1rem">
+      Install the <strong>Magnus App</strong> to access the full Magnus experience on mobile — streaming jobs, smartphone tasks, referrals and secure withdrawals. The Magnus App works seamlessly with the <a href="/">Magnus Website</a>.
+    </p>
+    <div style="display:flex; flex-wrap:wrap; gap:12px; margin-top:12px">
+      <!-- If you publish APK or store links later, update hrefs below -->
+      <a class="btn" href="/magnus_registration.html">Register on Magnus Website</a>
+      <a class="btn" href="/">Back to Home</a>
+    </div>
+    <p class="muted" style="margin-top:16px; font-size:.95rem">
+      Coming soon: direct install links for Android and iOS.
+    </p>
+  </main>
+</body>
+</html>
