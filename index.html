@@ -38,9 +38,22 @@
 <meta name="twitter:image:alt" content="Magnus Platform logo" />
 
 <!-- Favicons -->
-<link rel="icon" type="image/png" sizes="32x32" href="https://magnuswebsite.site/img/favicon-32.png?v=2" />
-<link rel="icon" type="image/png" sizes="16x16" href="https://magnuswebsite.site/img/favicon-16.png?v=2" />
-<link rel="apple-touch-icon" sizes="180x180" href="https://magnuswebsite.site/img/apple-touch-icon.png?v=2" />
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="16x16" href="img/favicon-16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32.png">
+<link rel="icon" type="image/png" sizes="48x48" href="img/favicon-48.png">
+<link rel="icon" type="image/png" sizes="192x192" href="img/favicon-192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="img/favicon-512.png">
+<link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png">
+<link rel="preload" as="image" href="img/favicon-512.png">
+
+<!-- Brand theme color for browser UI -->
+<meta name="theme-color" content="#F97316">
+
+<!-- Progressive Web App Manifest -->
+<link rel="manifest" href="/site.webmanifest">
+
+
 
 <!-- Fonts (swap + metric override to prevent CLS) -->
 <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -59,22 +72,19 @@
       "@type": "Organization",
       "@id": "https://magnuswebsite.site/#organization",
       "name": "Magnus Platform",
-      "alternateName": ["Magnus", "Magnus Website"],
       "url": "https://magnuswebsite.site/",
-      "logo": {
+      "logo": "https://magnuswebsite.site/favicon-512.png",
+      "image": {
         "@type": "ImageObject",
         "@id": "https://magnuswebsite.site/#logo",
-        "url": "https://magnuswebsite.site/img/magnus_logo_512_transparent.png",
-        "contentUrl": "https://magnuswebsite.site/img/magnus_logo_512_transparent.png",
+        "url": "https://magnuswebsite.site/favicon-512.png",
         "width": 512,
-        "height": 512,
-        "caption": "Magnus Platform logo"
+        "height": 512
       },
-      "image": { "@id": "https://magnuswebsite.site/#logo" },
+      "description": "Magnus is a mobile-first platform offering streaming jobs, smartphone tasks, a referrals program, and secure withdrawals.",
       "sameAs": [
         "https://linktr.ee/magnusonline"
       ],
-      "description": "Magnus is a mobile-first platform offering streaming jobs, smartphone tasks, a referrals program, and secure withdrawals.",
       "contactPoint": [
         {
           "@type": "ContactPoint",
@@ -82,10 +92,25 @@
           "telephone": "+2347045052056",
           "areaServed": "NG",
           "availableLanguage": ["en"],
-          "url": "https://wa.me/2347045052056"
+          "url": "https://wa.me/2347037195976"
         }
       ]
     },
+    {
+      "@type": "WebSite",
+      "@id": "https://magnuswebsite.site/#website",
+      "url": "https://magnuswebsite.site/",
+      "name": "Magnus Website",
+      "alternateName": "Magnus",
+      "publisher": { "@id": "https://magnuswebsite.site/#organization" },
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://magnuswebsite.site/search?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+  ]
+},
 
     {
       "@type": "WebSite",
@@ -276,6 +301,7 @@
   <!-- Tailwind (JIT CDN). Preload to reduce blocking; keep script in head for styles. -->
   <link rel="preload" as="script" href="https://cdn.tailwindcss.com">
   <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Tailwind config (customization) -->
 
   <script>
     tailwind.config = {
@@ -436,6 +462,15 @@
       *{animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important;}
     }
   </style>
+
+  <script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/sw.js', { scope: '/' })
+        .catch(console.error);
+    });
+  }
+</script>
 </head>
 
 <body class="text-white font-sans">
