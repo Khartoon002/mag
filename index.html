@@ -63,7 +63,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 </noscript>
 
-<!-- 🔧 JSON-LD: Magnus Website focused -->
+<!-- ✅ JSON-LD: Magnus Website -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -73,14 +73,14 @@
       "@id": "https://magnuswebsite.site/#organization",
       "name": "Magnus Platform",
       "url": "https://magnuswebsite.site/",
-      "logo": "https://magnuswebsite.site/favicon-512.png",
-      "image": {
+      "logo": {
         "@type": "ImageObject",
         "@id": "https://magnuswebsite.site/#logo",
         "url": "https://magnuswebsite.site/favicon-512.png",
         "width": 512,
         "height": 512
       },
+      "image": { "@id": "https://magnuswebsite.site/#logo" },
       "description": "Magnus is a mobile-first platform offering streaming jobs, smartphone tasks, a referrals program, and secure withdrawals.",
       "sameAs": [
         "https://linktr.ee/magnusonline"
@@ -92,7 +92,7 @@
           "telephone": "+2347045052056",
           "areaServed": "NG",
           "availableLanguage": ["en"],
-          "url": "https://wa.me/2347037195976"
+          "url": "https://wa.me/2347045052056"
         }
       ]
     },
@@ -102,30 +102,14 @@
       "url": "https://magnuswebsite.site/",
       "name": "Magnus Website",
       "alternateName": "Magnus",
-      "publisher": { "@id": "https://magnuswebsite.site/#organization" },
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://magnuswebsite.site/search?q={search_term_string}",
-        "query-input": "required name=search_term_string"
-      }
-    }
-  ]
-},
-
-    {
-      "@type": "WebSite",
-      "@id": "https://magnuswebsite.site/#website",
-      "url": "https://magnuswebsite.site/",
-      "name": "Magnus Website",
-      "publisher": { "@id": "https://magnuswebsite.site/#organization" },
       "inLanguage": "en",
+      "publisher": { "@id": "https://magnuswebsite.site/#organization" },
       "potentialAction": {
         "@type": "SearchAction",
         "target": "https://magnuswebsite.site/search?q={search_term_string}",
         "query-input": "required name=search_term_string"
       }
     },
-
     {
       "@type": "WebPage",
       "@id": "https://magnuswebsite.site/#webpage-home",
@@ -142,7 +126,6 @@
       "inLanguage": "en",
       "dateModified": "2025-09-13"
     },
-
     {
       "@type": "WebPage",
       "@id": "https://magnuswebsite.site/magnus_registration.html#webpage",
@@ -160,9 +143,8 @@
       "datePublished": "2025-09-10",
       "dateModified": "2025-09-11",
       "about": { "@type": "Thing", "name": "Magnus jobs" },
-      "mainEntity": { "@id": "https://magnuswebsite.site/magnus_registration.html#product" }
+      "mainEntity": { "@id": "https://magnuswebsite.site/magnus_registration.html/#product" }
     },
-
     {
       "@type": "BreadcrumbList",
       "@id": "https://magnuswebsite.site/magnus_registration.html#breadcrumb",
@@ -171,10 +153,9 @@
         { "@type": "ListItem", "position": 2, "name": "Register", "item": "https://magnuswebsite.site/magnus_registration.html" }
       ]
     },
-
     {
       "@type": "Product",
-      "@id": "https://magnuswebsite.site/magnus_registration.html#product",
+      "@id": "https://magnuswebsite.site/magnus_registration.html/#product",
       "name": "Magnus Registration Package",
       "description": "One-time Magnus registration to unlock streaming jobs, smartphone tasks, referrals, and secure withdrawals.",
       "sku": "MAG-REG-14000",
@@ -202,7 +183,6 @@
         }
       }
     },
-
     {
       "@type": "FAQPage",
       "@id": "https://magnuswebsite.site/magnus_registration.html#faq",
@@ -241,13 +221,10 @@
         }
       ]
     },
-
     {
       "@type": "SiteNavigationElement",
       "@id": "https://magnuswebsite.site/#site-navigation",
       "name": "Primary navigation",
-      "url": "https://magnuswebsite.site/",
-      "about": "Magnus Website site navigation",
       "inLanguage": "en",
       "hasPart": [
         { "@type": "WebPage", "name": "Home", "url": "https://magnuswebsite.site/" },
@@ -255,12 +232,11 @@
         { "@type": "WebPage", "name": "Blogs", "url": "https://magnuswebsite.site/magnus_blogs.html" }
       ]
     },
-
     {
       "@type": "ItemList",
       "@id": "https://magnuswebsite.site/#key-features",
       "name": "Magnus Website Key Features",
-      "itemListOrder": "http://schema.org/ItemListOrderAscending",
+      "itemListOrder": "https://schema.org/ItemListOrderAscending",
       "numberOfItems": 4,
       "itemListElement": [
         {
@@ -292,8 +268,6 @@
   ]
 }
 </script>
-
-
 
   <!-- Preload LCP candidates (above-the-fold images) -->
   <link rel="preload" as="image" href="https://magnuswebsite.site/img/magnus_logo_512.png" imagesrcset="https://magnuswebsite.site/img/magnus_logo_512.png 512w" imagesizes="80px" />
