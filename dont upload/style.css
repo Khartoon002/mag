@@ -1,0 +1,368 @@
+/* style.css: Common styles for MiAmor pages */
+
+/* Basic reset and font */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: 'Poppins', sans-serif;
+  line-height: 1.5;
+  /* default background for pages (overridden per page via body class) */
+  background: #f9f9f9;
+  color: #333;
+}
+a {
+  text-decoration: none;
+  color: inherit;
+}
+ul { list-style: none; }
+img.responsive-img { max-width: 100%; height: auto; display: block; }
+
+/* --- 1. Home Page (Welcome) Styles --- */
+body.home {
+  /* Dark blue gradient background (fullscreen) */
+  background: linear-gradient(to bottom, #0F2027, #203A43, #2C5364);
+  color: #fff;
+  text-align: center;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.welcome-container {
+  max-width: 320px;
+  padding: 20px;
+}
+.logo-circle {
+  width: 60px;
+  height: 60px;
+  margin: 0 auto 20px auto;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.logo-circle .fa-heart {
+  color: #fff;
+  font-size: 1.5rem;
+}
+.welcome-container h1 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin-bottom: 0.5em;
+}
+.welcome-container .brand-name {
+  color: #fff;
+}
+.welcome-container .tagline {
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin-bottom: 0.3em;
+}
+.welcome-container .subtitle {
+  font-size: 0.9rem;
+  font-weight: 400;
+  margin-bottom: 1.5em;
+  opacity: 0.85;
+}
+
+/* Primary button style (used for Get Started, Join, etc.) */
+.btn {
+  display: inline-block;
+  padding: 0.75em 1.5em;
+  border-radius: 30px;
+  font-weight: 600;
+  text-align: center;
+  cursor: pointer;
+}
+.primary-btn {
+  background: #FFC107;
+  color: #000;
+}
+.btn i {
+  margin-right: 0.5em;
+  /* Vertically center the icon with text */
+  vertical-align: middle;
+}
+.btn:hover { filter: brightness(1.05); }
+
+/* --- 2. Landing Page Styles --- */
+body.landing {
+  background: #f9f9f9;
+  color: #333;
+}
+/* Top navigation bar */
+.top-bar {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  background: #fff;
+  color: #333;
+  padding: 10px 15px;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #ddd;
+  z-index: 100;
+}
+.top-bar .burger-btn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  margin-right: 15px;
+}
+.top-bar .burger-btn:focus { outline: none; }
+.top-bar .burger-btn .fa-bars { color: #333; }
+.top-bar .logo-text {
+  font-size: 1.2rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+}
+.top-bar .logo-text .fa-heart {
+  color: #e00050;  /* a pink/red accent for the heart logo */
+  margin-right: 8px;
+}
+
+/* Sections content */
+.content {
+  padding: 70px 15px 50px;  /* add top padding to avoid overlap with fixed header */
+  max-width: 600px;
+  margin: 0 auto;
+}
+.section {
+  margin-bottom: 2.5em;
+}
+.section h2 {
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-bottom: 0.6em;
+  color: #111;
+}
+.section p {
+  font-size: 0.95rem;
+  margin-bottom: 1em;
+}
+.highlight-quote {
+  font-style: italic;
+  background: #eef9ff;
+  padding: 10px 15px;
+  border-left: 4px solid #17a2b8;
+  margin: 0.5em 0 1em;
+  color: #111;
+}
+.motto {
+  font-size: 1.1rem;
+  font-weight: 500;
+  text-align: center;
+  margin-bottom: 1.5em;
+}
+.motto strong {
+  color: #e00050;
+}
+
+/* Features list */
+.features-list li {
+  margin: 0.5em 0;
+  line-height: 1.4;
+}
+.features-list i {
+  color: #FFC107;
+  margin-right: 8px;
+}
+
+/* Couples Challenge section */
+.challenge-section h2 {
+  margin-bottom: 0.5em;
+}
+.challenge-section img {
+  border-radius: 8px;
+  margin: 0.5em 0 1em;
+}
+.challenge-section p {
+  font-size: 0.95rem;
+}
+
+/* Join section */
+.join-section {
+  text-align: center;
+  background: #fff;
+  padding: 20px;
+  border: 2px solid #FFD766;
+  border-radius: 8px;
+}
+.join-section h2 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5em;
+}
+.join-section p {
+  margin-bottom: 1em;
+  font-size: 0.95rem;
+}
+.join-section .primary-btn {
+  font-size: 1rem;
+  padding: 0.6em 1.2em;
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+  font-size: 0.85rem;
+  color: #777;
+  padding: 20px 0;
+}
+
+/* --- Hamburger Menu (Side Menu) Styles --- */
+.menu-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.5);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s;
+  z-index: 110;
+}
+.side-menu {
+  position: fixed;
+  top: 0; left: 0;
+  height: 100%;
+  width: 250px;
+  max-width: 80%;
+  background: #fff;
+  transform: translateX(-100%);
+  transition: transform 0.3s;
+  z-index: 120;
+  padding: 15px;
+  box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+}
+.menu-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1em;
+}
+.menu-header h2 {
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+.close-btn .fa-xmark { color: #333; }
+.menu-links li {
+  margin: 0.8em 0;
+}
+.menu-links a {
+  font-size: 1rem;
+  color: #333;
+  text-decoration: none;
+}
+.menu-links i {
+  margin-right: 10px;
+  color: #e00050;
+}
+
+/* When menu is open, reveal overlay and slide menu in */
+body.menu-open .menu-overlay {
+  opacity: 1;
+  visibility: visible;
+}
+body.menu-open .side-menu {
+  transform: translateX(0);
+}
+
+/* --- 3. Sign-Up Page Styles --- */
+body.signup {
+  background: #f9f9f9;
+  color: #333;
+}
+.top-bar .back-btn {
+  text-decoration: none;
+  font-size: 1.2rem;
+  margin-right: 15px;
+  color: #333;
+}
+.top-bar .page-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+.form-container {
+  padding: 70px 15px 30px;
+  max-width: 400px;
+  margin: 0 auto;
+}
+.signup-form .input-field {
+  position: relative;
+  margin-bottom: 1.2em;
+}
+.input-field .icon {
+  position: absolute;
+  top: 50%;
+  left: 12px;
+  transform: translateY(-50%);
+  color: #888;
+  font-size: 0.95rem;
+}
+.input-field input, 
+.input-field select {
+  width: 100%;
+  padding: 0.6em 0.5em 0.6em 2.5em; /* padding-left for icon space */
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 0.95rem;
+  font-family: 'Poppins', sans-serif;
+}
+.input-field select {
+  /* Remove native arrow for select (we'll use a custom icon) */
+  appearance: none;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  padding-right: 2.5em; /* padding-right for dropdown arrow */
+  background-color: #fff;
+}
+.input-field select:focus, .input-field input:focus {
+  outline: none;
+  border-color: #888;
+}
+.select-field .dropdown-arrow {
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  transform: translateY(-50%);
+  color: #888;
+  pointer-events: none;
+}
+.note {
+  font-size: 0.85rem;
+  margin-top: -0.5em;
+  margin-bottom: 1.5em;
+  color: #555;
+}
+.note a {
+  color: #007bff;
+  text-decoration: underline;
+  font-weight: 500;
+}
+.submit-btn {
+  background: #FFC107;
+  color: #000;
+  width: 100%;
+  padding: 0.75em;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+}
+.submit-btn i {
+  margin-right: 0.5em;
+  vertical-align: middle;
+}
+.submit-btn:hover { filter: brightness(1.05); }

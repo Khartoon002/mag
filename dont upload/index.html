@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+<title>Magnus — Landing</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        fontFamily: { sans: ['Poppins','ui-sans-serif','system-ui'] },
+        colors: {
+          mag: {
+            bg:'#0E0E0F', bg2:'#0B0B0C',
+            card:'rgba(255,255,255,0.06)', border:'rgba(255,255,255,0.10)',
+            text:'#F5F5F7', muted:'#B8BBC6',
+            acc:'#ff7a00', acc2:'#ffa441',
+            dot:'#676b74', dotActive:'#ff9341'
+          }
+        },
+        boxShadow:{ glass:'0 14px 40px rgba(0,0,0,0.45)', pill:'0 8px 18px rgba(0,0,0,0.35)' },
+        borderRadius:{ xl2:'18px' }
+      }
+    }
+  }
+</script>
+
+<style>
+  .top-gradient{
+    background:
+      linear-gradient(180deg, rgba(14,14,15,0.96) 0%,
+                             rgba(14,14,15,0.82) 40%,
+                             rgba(14,14,15,0.40) 70%,
+                             rgba(14,14,15,0.00) 100%);
+    backdrop-filter: blur(6px);
+  }
+  .mag-bg{
+    background:
+      radial-gradient(1200px 600px at 20% -10%, rgba(255,122,0,0.10), transparent 60%),
+      radial-gradient(900px 500px at 85% 10%, rgba(255,164,65,0.10), transparent 60%),
+      linear-gradient(180deg, #0E0E0F 0%, #0B0B0C 100%);
+  }
+  .safe-top{ padding-top: env(safe-area-inset-top); }
+  input,select,textarea,button{ font-size:16px; } /* avoid iOS zoom */
+</style>
+</head>
+<body class="mag-bg text-mag-text font-sans antialiased overflow-x-hidden">
+
+<!-- ===== Top bar ===== -->
+<header class="top-gradient safe-top sticky top-0 z-40">
+  <div class="max-w-[480px] mx-auto px-5 py-3 flex items-center justify-between">
+    <div class="flex items-center gap-2 select-none">
+      <div class="w-8 h-8 rounded-full border border-mag-border bg-white/10 grid place-items-center backdrop-blur">
+        <svg viewBox="0 0 24 24" class="w-5 h-5">
+          <path d="M12 21s-6.716-4.243-9.243-7.172C.23 11.15.63 7.87 3.05 6.343 5.27 4.93 7.9 5.39 9.5 7.07c1.6-1.68 4.23-2.14 6.45-.727 2.42 1.528 2.82 4.807.293 7.485C18.716 16.757 12 21 12 21z" fill="#fff"/>
+        </svg>
+      </div>
+      <span class="text-white/95 font-semibold tracking-wide">Magnus</span>
+    </div>
+
+    <!-- Hamburger button -->
+    <button id="openMenu"
+            class="w-11 h-11 rounded-full bg-gradient-to-br from-mag-acc to-mag-acc2 text-[#1b1208] grid place-items-center shadow-pill focus:outline-none focus:ring-2 focus:ring-white/50"
+            aria-controls="drawer" aria-expanded="false" aria-label="Open menu">
+      <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor"><path d="M3 6h18v2H3zM3 11h18v2H3zM3 16h18v2H3z"/></svg>
+    </button>
+  </div>
+</header>
+
+<!-- ===== Drawer + overlay ===== -->
+<div id="overlay"
+     class="fixed inset-0 bg-black/50 backdrop-blur-[2px] opacity-0 invisible transition-opacity duration-300 z-40 pointer-events-none"></div>
+
+<aside id="drawer"
+  class="fixed inset-y-0 left-0 w-[82%] max-w-[320px] bg-[#0B0B0C] text-mag-text -translate-x-full transition-transform duration-300 z-50 rounded-r-[22px] shadow-2xl overflow-hidden border-r border-mag-border"
+  role="dialog" aria-modal="true" aria-label="Main menu" tabindex="-1">
+  <div class="px-5 pt-6 pb-4 flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <div class="w-9 h-9 rounded-full bg-gradient-to-br from-mag-acc to-mag-acc2 grid place-items-center text-[#1a1a1a] font-extrabold">M</div>
+      <span class="font-semibold text-lg">Magnus</span>
+    </div>
+    <button id="closeMenu"
+            class="w-10 h-10 rounded-full bg-white/10 border border-mag-border grid place-items-center"
+            aria-label="Close menu">
+      <svg class="w-5 h-5" viewBox="0 0 24 24" fill="#fff"><path d="M18.3 5.71 12 12l6.3 6.29-1.41 1.42L10.59 13.41 4.3 19.71 2.89 18.3 9.17 12 2.89 5.71 4.3 4.29l6.29 6.3 6.29-6.3z"/></svg>
+    </button>
+  </div>
+  <nav class="px-5 pb-8">
+    <a href="landing.html" class="menu-link flex items-center gap-3 py-3">🏠 Home</a>
+    <a href="signup.html" class="menu-link flex items-center gap-3 py-3">📝 Sign Up</a>
+    <a href="#overview" class="menu-link flex items-center gap-3 py-3">ℹ️ Learn More</a>
+  </nav>
+</aside>
+
+<!-- ===== HERO ===== -->
+<section class="max-w-[480px] mx-auto px-5 mt-6">
+  <h2 class="text-white font-extrabold text-4xl leading-tight">
+    Real <span class="italic text-white/90">Connections</span>
+  </h2>
+
+  <!-- Couples Challenge carousel -->
+  <div class="mt-4">
+    <div id="carousel" class="flex snap-x snap-mandatory overflow-x-auto gap-4 pb-4 -mx-5 px-5">
+      <!-- Slide 1 -->
+      <article class="min-w-[92%] snap-center rounded-xl2 border border-mag-border bg-mag-card shadow-glass overflow-hidden backdrop-blur">
+        <div class="p-4">
+          <h3 class="text-transparent bg-clip-text bg-gradient-to-r from-mag-acc to-mag-acc2 font-bold text-[20px]">Couples Challenge</h3>
+          <p class="mt-2 text-mag-text/85 text-sm">Since it's the love season, the Top 3 couples share <span class="font-semibold">₦300,000</span>.</p>
+        </div>
+        <img src="https://images.unsplash.com/photo-1511988617509-a57c8a288659?q=80&w=1200&auto=format&fit=crop" class="w-full h-48 object-cover" alt="">
+        <div class="p-4 text-sm text-mag-text/85">✔ Sign up on Magnus<br/>✔ Choose your love partner</div>
+      </article>
+
+      <!-- Slide 2 -->
+      <article class="min-w-[92%] snap-center rounded-xl2 border border-mag-border bg-mag-card shadow-glass overflow-hidden backdrop-blur">
+        <div class="p-4">
+          <h3 class="text-transparent bg-clip-text bg-gradient-to-r from-mag-acc to-mag-acc2 font-bold text-[20px]">Share Moments</h3>
+          <p class="mt-2 text-mag-text/85 text-sm">Upload photos & invite friends to react.</p>
+        </div>
+        <img src="https://images.unsplash.com/photo-1544006659-f0b21884ce1d?q=80&w=1200&auto=format&fit=crop" class="w-full h-48 object-cover" alt="">
+      </article>
+
+      <!-- Slide 3 -->
+      <article class="min-w-[92%] snap-center rounded-xl2 border border-mag-border bg-mag-card shadow-glass overflow-hidden backdrop-blur">
+        <div class="p-4">
+          <h3 class="text-transparent bg-clip-text bg-gradient-to-r from-mag-acc to-mag-acc2 font-bold text-[20px]">Win Prizes</h3>
+          <p class="mt-2 text-mag-text/85 text-sm">Weekly rewards for top engaging couples.</p>
+        </div>
+        <img src="https://images.unsplash.com/photo-1511909525232-61113c912358?q=80&w=1200&auto=format&fit=crop" class="w-full h-48 object-cover" alt="">
+      </article>
+    </div>
+
+    <!-- dots -->
+    <div class="mt-2 flex justify-center gap-2" id="dots">
+      <span class="w-2 h-2 rounded-full bg-mag-dot"></span>
+      <span class="w-2 h-2 rounded-full bg-mag-dot"></span>
+      <span class="w-2 h-2 rounded-full bg-mag-dot"></span>
+    </div>
+  </div>
+</section>
+
+<!-- ===== What is Magnus ===== -->
+<section class="max-w-[480px] mx-auto px-5 mt-6">
+  <article class="rounded-xl2 border border-mag-border bg-mag-card shadow-glass overflow-hidden backdrop-blur">
+    <img src="https://images.unsplash.com/photo-1518600506278-4e8ef466b810?q=80&w=1200&auto=format&fit=crop" class="w-full h-36 object-cover" alt="">
+    <div class="p-5">
+      <h3 class="text-transparent bg-clip-text bg-gradient-to-r from-mag-acc to-mag-acc2 font-extrabold text-[22px]">What is Magnus?</h3>
+      <p class="mt-2 text-mag-text/85 text-[15px] leading-7">
+        Magnus is a value-driven platform where community, learning, and earning meet. Find connections, unlock financial opportunities, and gain skills.
+      </p>
+    </div>
+  </article>
+</section>
+
+<!-- ===== Overview ===== -->
+<section id="overview" class="max-w-[480px] mx-auto px-5 mt-6 mb-12">
+  <div class="rounded-2xl border border-mag-border bg-mag-card p-5 shadow-glass backdrop-blur">
+    <h4 class="text-transparent bg-clip-text bg-gradient-to-r from-mag-acc to-mag-acc2 font-extrabold tracking-wide text-[20px]">MAGNUS OVERVIEW</h4>
+    <ul class="mt-3 space-y-3 text-[15.5px] leading-7 text-mag-text/90">
+      <li>🎯 Operates across Africa & beyond, designed for networking + skills.</li>
+      <li>🎯 Blends love, learning, and earning.</li>
+      <li>🎯 Builds community + entrepreneurship with empowerment.</li>
+    </ul>
+    <a href="signup.html"
+       class="mt-5 inline-flex items-center gap-2 bg-gradient-to-br from-mag-acc to-mag-acc2 text-[#1a1a1a] font-bold rounded-xl px-4 py-3 shadow-pill">
+      <span>→</span> <span>Get Started Now</span>
+    </a>
+  </div>
+</section>
+
+<!-- ===== JS: hamburger + carousel ===== -->
+<script>
+(() => {
+  const body=document.body,root=document.documentElement;
+  const overlay=document.getElementById('overlay');
+  const drawer=document.getElementById('drawer');
+  const openBtn=document.getElementById('openMenu');
+  const closeBtn=document.getElementById('closeMenu');
+  const links=drawer.querySelectorAll('.menu-link');
+  let lastFocus=null;
+
+  function lockScroll(v){ root.style.overflow=v?'hidden':''; }
+  function setOverlay(v){
+    if(v){ overlay.classList.remove('invisible','pointer-events-none');
+           requestAnimationFrame(()=>overlay.classList.add('opacity-100')); }
+    else { overlay.classList.remove('opacity-100');
+           overlay.addEventListener('transitionend',()=>overlay.classList.add('invisible','pointer-events-none'),{once:true}); }
+  }
+  function openDrawer(){
+    lastFocus=document.activeElement;
+    drawer.style.transform='translateX(0)';
+    setOverlay(true); lockScroll(true);
+    openBtn.setAttribute('aria-expanded','true');
+    setTimeout(()=>drawer.focus(),50);
+  }
+  function closeDrawer(){
+    drawer.style.transform='translateX(-100%)';
+    setOverlay(false); lockScroll(false);
+    openBtn.setAttribute('aria-expanded','false');
+    setTimeout(()=> (lastFocus||openBtn).focus(),50);
+  }
+
+  openBtn.addEventListener('click',openDrawer);
+  closeBtn.addEventListener('click',closeDrawer);
+  overlay.addEventListener('click',closeDrawer);
+  links.forEach(a=>a.addEventListener('click',closeDrawer));
+  document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeDrawer(); });
+
+  // Carousel dots
+  const carousel=document.getElementById('carousel');
+  const dots=[...document.getElementById('dots').children];
+  function updateDots(){
+    const itemW=carousel.querySelector('article').offsetWidth+16;
+    const idx=Math.round(carousel.scrollLeft/itemW);
+    dots.forEach((d,i)=> d.className='w-2 h-2 rounded-full '+(i===idx?'bg-mag-dotActive':'bg-mag-dot'));
+  }
+  carousel.addEventListener('scroll',()=>{ if(!carousel._t){ requestAnimationFrame(()=>{updateDots();carousel._t=false}); carousel._t=true;}});
+  updateDots();
+})();
+</script>
+
+</body>
+</html>
