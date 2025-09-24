@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="en">
 <head>
 <meta charset="utf-8" />
@@ -9,6 +9,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
 <script src="https://cdn.tailwindcss.com"></script>
+<!-- SheetJS for Excel fallback -->
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+
 <script>
   tailwind.config = {
     theme: {
@@ -16,14 +19,18 @@
         fontFamily: { sans: ['Poppins','ui-sans-serif','system-ui'] },
         colors: {
           mag: {
-            bg:'#0E0E0F', bg2:'#0B0B0C',
+            bg:'#0B0B0C', bg2:'#090909',
             card:'rgba(255,255,255,0.06)', border:'rgba(255,255,255,0.10)',
             text:'#F5F5F7', muted:'#B8BBC6',
-            acc:'#ff7a00', acc2:'#ffa441',
-            dot:'#676b74', dotActive:'#ff9341'
+            acc:'#ff6a00', acc2:'#ff8a1a',
+            dot:'#676b74', dotActive:'#ff9440'
           }
         },
-        boxShadow:{ glass:'0 14px 40px rgba(0,0,0,0.45)', pill:'0 8px 18px rgba(0,0,0,0.35)' },
+        boxShadow:{
+          glass:'0 16px 50px rgba(0,0,0,.55)',
+          glow:'0 0 0 1px rgba(255,106,0,.35), 0 10px 30px rgba(255,106,0,.25), 0 30px 60px rgba(0,0,0,.45)',
+          pill:'0 10px 22px rgba(0,0,0,.38)'
+        },
         borderRadius:{ xl2:'18px' }
       }
     }
@@ -31,111 +38,165 @@
 </script>
 
 <style>
-  .top-gradient{
-    background:
-      linear-gradient(180deg, rgba(14,14,15,0.96) 0%,
-                             rgba(14,14,15,0.82) 40%,
-                             rgba(14,14,15,0.40) 70%,
-                             rgba(14,14,15,0.00) 100%);
-    backdrop-filter: blur(6px);
-  }
+  .top-gradient{background:linear-gradient(180deg,rgba(9,9,9,.95)0%,rgba(9,9,9,.85)40%,rgba(9,9,9,.4)70%,rgba(9,9,9,0)100%);backdrop-filter:blur(8px)}
   .mag-bg{
     background:
-      radial-gradient(1200px 600px at 20% -10%, rgba(255,122,0,0.10), transparent 60%),
-      radial-gradient(900px 500px at 85% 10%, rgba(255,164,65,0.10), transparent 60%),
-      linear-gradient(180deg, #0E0E0F 0%, #0B0B0C 100%);
+      radial-gradient(1200px 600px at 20% -10%, rgba(255,106,0,0.12), transparent 60%),
+      radial-gradient(900px 500px at 85% 10%, rgba(255,138,26,0.10), transparent 60%),
+      linear-gradient(180deg, #0B0B0C 0%, #090909 100%);
   }
+  .glass{ background: rgba(255,255,255,0.06); backdrop-filter: blur(12px); }
   .safe-top{ padding-top: env(safe-area-inset-top); }
-  input,select,textarea,button{ font-size:16px; } /* avoid iOS zoom */
+  input,select,textarea,button{ font-size:16px; }
+
+  @keyframes floatBg { 0%,100% { transform: translateY(0) } 50% { transform: translateY(-6px) } }
+  .bg-float { animation: floatBg 8s ease-in-out infinite; }
+
+  @keyframes fadeSlideUp { from { opacity:0; transform: translateY(14px) scale(.98) } to { opacity:1; transform: translateY(0) scale(1) } }
+  .reveal { opacity:0; transform: translateY(14px) }
+  .reveal-in { animation: fadeSlideUp .7s ease forwards }
+
+  @keyframes pulseSoft { 0%,100% { box-shadow: 0 0 0 0 rgba(255,106,0,.35) } 50% { box-shadow: 0 0 0 18px rgba(255,106,0,0) } }
+  .cta-pulse { animation: pulseSoft 2.2s ease-in-out infinite }
+
+  @keyframes shine { from { background-position: 220% 0 } to { background-position: -220% 0 } }
+  .btn-shine{
+    background-image: linear-gradient(110deg, rgba(255,255,255,.16) 0%, rgba(255,255,255,0) 20%, rgba(255,255,255,.16) 40%, rgba(255,255,255,0) 60%, rgba(255,255,255,.16) 80%);
+    background-size: 200% 100%;
+    animation: shine 2.6s linear infinite;
+  }
+
+  .tilt { transition: transform .25s ease, box-shadow .25s ease, background .25s ease; will-change: transform, box-shadow, background; }
+  .tilt:hover{ transform: translateY(-6px) rotate3d(.8, .2, 0, 6deg); box-shadow: var(--shadow, 0 18px 50px rgba(0,0,0,.55)); }
+
+  .ribbon {position:absolute; top:14px; right:-6px; background:linear-gradient(90deg,#ff8a1a,#ff6a00); color:#1b1208; font-weight:800; font-size:12px; padding:6px 14px; border-radius:10px; transform:rotate(8deg); box-shadow:0 10px 24px rgba(0,0,0,.35)}
+  .modal-hide { opacity: 0; pointer-events: none; transform: translateY(8px) scale(.98) }
+  .modal-show { opacity: 1; pointer-events: auto; transform: translateY(0) scale(1) }
+  .fade-swap { transition: opacity .5s ease }
+  .glow-ring{ box-shadow: 0 0 0 1px rgba(255,106,0,.35), 0 16px 40px rgba(255,106,0,.25), 0 24px 70px rgba(0,0,0,.55); }
+
+  /* Chat panel styles */
+  .chat-fab{ position: fixed; right: 18px; bottom: 18px; z-index: 60; }
+  .chat-panel{
+    position: fixed; right: 12px; bottom: 92px; width: clamp(300px, 88vw, 380px);
+    transform: translateY(16px); opacity: 0; pointer-events: none;
+    transition: all .25s ease; z-index: 60;
+  }
+  .chat-panel.show{ transform: translateY(0); opacity: 1; pointer-events: auto; }
+  /* Darker glass for readability */
+  .chat-card{ background: rgba(18,18,20,0.9); border: 1px solid rgba(255,255,255,.12); backdrop-filter: blur(14px); }
+  .chat-bubble{ background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.12); backdrop-filter: blur(10px); }
+
+  /* Motion Lab tags glow/shimmer */
+  .marquee { overflow: hidden; white-space: nowrap; }
+  .marquee > div{ display:inline-block; padding-left:100%; animation: marquee 16s linear infinite; }
+  .marquee:hover > div { animation-play-state: paused; }
+  @keyframes marquee { 0% { transform: translateX(0) } 100% { transform: translateX(-100%) } }
+
+  .tag{ display:inline-block; margin: 0 12px; padding: 4px 10px; border-radius: 999px;
+        background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.10);
+        box-shadow: 0 0 0 0 rgba(255,106,0,0.0); }
+  @keyframes tagGlow { 0%,100% { box-shadow: 0 0 0 0 rgba(255,106,0,.0) } 50% { box-shadow: 0 0 18px 2px rgba(255,106,0,.28) } }
+  @keyframes tagShimmer { from { background-position: 220% 0 } to { background-position: -220% 0 } }
+  .tag.anim{
+    animation: tagGlow 3.2s ease-in-out infinite;
+    background-image: linear-gradient(110deg, rgba(255,255,255,.10) 0%, rgba(255,255,255,0) 18%, rgba(255,255,255,.12) 36%, rgba(255,255,255,0) 54%, rgba(255,255,255,.1) 72%);
+    background-size: 200% 100%;
+    animation-delay: var(--d, 0s);
+  }
 </style>
 </head>
 <body class="mag-bg text-mag-text font-sans antialiased overflow-x-hidden">
+
+<!-- ================= CONFIG (edit URLs to your files) ================= -->
+<script>
+  const LINK_SOURCES = {
+    jsonUrl: 'https://magnuswebsite.site/bot-links.json',
+    xlsxUrl: 'https://magnuswebsite.site/bot-links.xlsx',
+    sheetName: 'Links'
+  };
+</script>
 
 <!-- ===== Top bar ===== -->
 <header class="top-gradient safe-top sticky top-0 z-40">
   <div class="max-w-[480px] mx-auto px-5 py-3 flex items-center justify-between">
     <div class="flex items-center gap-2 select-none">
-      <div class="w-8 h-8 rounded-full border border-mag-border bg-white/10 grid place-items-center backdrop-blur">
-        <svg viewBox="0 0 24 24" class="w-5 h-5">
-          <path d="M12 21s-6.716-4.243-9.243-7.172C.23 11.15.63 7.87 3.05 6.343 5.27 4.93 7.9 5.39 9.5 7.07c1.6-1.68 4.23-2.14 6.45-.727 2.42 1.528 2.82 4.807.293 7.485C18.716 16.757 12 21 12 21z" fill="#fff"/>
-        </svg>
-      </div>
+      <img src="https://magnuswebsite.site/img/magnus_logo_512.png" alt="Magnus logo"
+           class="w-8 h-8 rounded-full object-cover border border-mag-border bg-white/10 backdrop-blur glow-ring" />
       <span class="text-white/95 font-semibold tracking-wide">Magnus</span>
     </div>
 
-    <!-- Hamburger button -->
+    <!-- Improved Hamburger: bigger tap, high-contrast strokes -->
     <button id="openMenu"
-            class="w-11 h-11 rounded-full bg-gradient-to-br from-mag-acc to-mag-acc2 text-[#1b1208] grid place-items-center shadow-pill focus:outline-none focus:ring-2 focus:ring-white/50"
+            class="w-12 h-12 rounded-full bg-[#1a1a1d]/70 border border-white/15 hover:bg-[#1d1d20]/80 text-white grid place-items-center shadow-pill focus:outline-none focus:ring-2 focus:ring-white/50"
             aria-controls="drawer" aria-expanded="false" aria-label="Open menu">
-      <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor"><path d="M3 6h18v2H3zM3 11h18v2H3zM3 16h18v2H3z"/></svg>
+      <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+        <path d="M3 6h18M3 12h18M3 18h18"/>
+      </svg>
     </button>
   </div>
 </header>
 
 <!-- ===== Drawer + overlay ===== -->
-<div id="overlay"
-     class="fixed inset-0 bg-black/50 backdrop-blur-[2px] opacity-0 invisible transition-opacity duration-300 z-40 pointer-events-none"></div>
-
-<aside id="drawer"
-  class="fixed inset-y-0 left-0 w-[82%] max-w-[320px] bg-[#0B0B0C] text-mag-text -translate-x-full transition-transform duration-300 z-50 rounded-r-[22px] shadow-2xl overflow-hidden border-r border-mag-border"
-  role="dialog" aria-modal="true" aria-label="Main menu" tabindex="-1">
+<div id="overlay" class="fixed inset-0 bg-black/50 backdrop-blur-[2px] opacity-0 invisible transition-opacity duration-300 z-40 pointer-events-none"></div>
+<aside id="drawer" class="fixed inset-y-0 left-0 w-[82%] max-w-[320px] bg-[#0B0B0C]/95 text-mag-text -translate-x-full transition-transform duration-300 z-50 rounded-r-[22px] shadow-2xl overflow-hidden border-r border-mag-border" role="dialog" aria-modal="true" aria-label="Main menu" tabindex="-1">
   <div class="px-5 pt-6 pb-4 flex items-center justify-between">
     <div class="flex items-center gap-3">
-      <div class="w-9 h-9 rounded-full bg-gradient-to-br from-mag-acc to-mag-acc2 grid place-items-center text-[#1a1a1a] font-extrabold">M</div>
+      <img src="https://magnuswebsite.site/img/magnus_app.jpg" alt="Magnus logo" class="w-9 h-9 rounded-full object-cover glow-ring" />
       <span class="font-semibold text-lg">Magnus</span>
     </div>
-    <button id="closeMenu"
-            class="w-10 h-10 rounded-full bg-white/10 border border-mag-border grid place-items-center"
-            aria-label="Close menu">
-      <svg class="w-5 h-5" viewBox="0 0 24 24" fill="#fff"><path d="M18.3 5.71 12 12l6.3 6.29-1.41 1.42L10.59 13.41 4.3 19.71 2.89 18.3 9.17 12 2.89 5.71 4.3 4.29l6.29 6.3 6.29-6.3z"/></svg>
+    <button id="closeMenu" class="w-10 h-10 rounded-full bg-white/10 border border-mag-border grid place-items-center" aria-label="Close menu">
+      <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round">
+        <path d="M6 6l12 12M18 6l-12 12"/>
+      </svg>
     </button>
   </div>
   <nav class="px-5 pb-8">
-    <a href="landing.html" class="menu-link flex items-center gap-3 py-3">🏠 Home</a>
-    <a href="signup.html" class="menu-link flex items-center gap-3 py-3">📝 Sign Up</a>
+    <a href="login.html" class="menu-link flex items-center gap-3 py-3">🏠 Home</a>
+    <a href="#plans" class="menu-link flex items-center gap-3 py-3">💳 Entry Plans</a>
     <a href="#overview" class="menu-link flex items-center gap-3 py-3">ℹ️ Learn More</a>
+    <a href="#motion" class="menu-link flex items-center gap-3 py-3">✨ Motion Lab</a>
   </nav>
 </aside>
 
 <!-- ===== HERO ===== -->
-<section class="max-w-[480px] mx-auto px-5 mt-6">
-  <h2 class="text-white font-extrabold text-4xl leading-tight">
-    Real <span class="italic text-white/90">Connections</span>
-  </h2>
+<section id="hero" class="max-w-[480px] mx-auto px-5 mt-6">
+  <h1 class="text-white font-extrabold text-4xl leading-tight">
+    <span class="fade-swap" id="rotatingPrefix">Real</span>
+    <span class="italic text-white/90">Connections</span>
+  </h1>
+  <p class="mt-2 text-mag-muted text-[15px] reveal">
+    Build community, learn practical skills, and grow with guided programs and activities.
+  </p>
 
-  <!-- Couples Challenge carousel -->
-  <div class="mt-4">
+  <!-- Carousel (unchanged content) -->
+  <div class="mt-4 reveal">
     <div id="carousel" class="flex snap-x snap-mandatory overflow-x-auto gap-4 pb-4 -mx-5 px-5">
-      <!-- Slide 1 -->
-      <article class="min-w-[92%] snap-center rounded-xl2 border border-mag-border bg-mag-card shadow-glass overflow-hidden backdrop-blur">
+      <article class="min-w-[92%] snap-center rounded-xl2 border border-mag-border glass shadow-glass overflow-hidden backdrop-blur tilt">
         <div class="p-4">
-          <h3 class="text-transparent bg-clip-text bg-gradient-to-r from-mag-acc to-mag-acc2 font-bold text-[20px]">Couples Challenge</h3>
-          <p class="mt-2 text-mag-text/85 text-sm">Since it's the love season, the Top 3 couples share <span class="font-semibold">₦300,000</span>.</p>
+          <h3 class="text-transparent bg-clip-text bg-gradient-to-r from-mag-acc to-mag-acc2 font-bold text-[20px]">Resell Hub</h3>
+          <p class="mt-2 text-mag-text/85 text-sm">Curated catalogs and creator-friendly tools for collaborative projects.</p>
         </div>
-        <img src="https://images.unsplash.com/photo-1511988617509-a57c8a288659?q=80&w=1200&auto=format&fit=crop" class="w-full h-48 object-cover" alt="">
-        <div class="p-4 text-sm text-mag-text/85">✔ Sign up on Magnus<br/>✔ Choose your love partner</div>
+        <img src="https://magnuswebsite.site/img/magnus_resell.jpg" class="w-full h-48 object-cover" alt="Resell hub">
+        <div class="p-4 text-sm text-mag-text/85">✔ Pick a catalog<br/>✔ Collaborate with your team</div>
       </article>
 
-      <!-- Slide 2 -->
-      <article class="min-w-[92%] snap-center rounded-xl2 border border-mag-border bg-mag-card shadow-glass overflow-hidden backdrop-blur">
+      <article class="min-w-[92%] snap-center rounded-xl2 border border-mag-border glass shadow-glass overflow-hidden backdrop-blur tilt">
         <div class="p-4">
-          <h3 class="text-transparent bg-clip-text bg-gradient-to-r from-mag-acc to-mag-acc2 font-bold text-[20px]">Share Moments</h3>
-          <p class="mt-2 text-mag-text/85 text-sm">Upload photos & invite friends to react.</p>
+          <h3 class="text-transparent bg-clip-text bg-gradient-to-r from-mag-acc to-mag-acc2 font-bold text-[20px]">Web Tools</h3>
+          <p class="mt-2 text-mag-text/85 text-sm">Starter templates and guides for simple, beautiful web pages.</p>
         </div>
-        <img src="https://images.unsplash.com/photo-1544006659-f0b21884ce1d?q=80&w=1200&auto=format&fit=crop" class="w-full h-48 object-cover" alt="">
+        <img src="https://magnuswebsite.site/img/magnus_web.jpg" class="w-full h-48 object-cover" alt="Web tools">
       </article>
 
-      <!-- Slide 3 -->
-      <article class="min-w-[92%] snap-center rounded-xl2 border border-mag-border bg-mag-card shadow-glass overflow-hidden backdrop-blur">
+      <article class="min-w-[92%] snap-center rounded-xl2 border border-mag-border glass shadow-glass overflow-hidden backdrop-blur tilt">
         <div class="p-4">
-          <h3 class="text-transparent bg-clip-text bg-gradient-to-r from-mag-acc to-mag-acc2 font-bold text-[20px]">Win Prizes</h3>
-          <p class="mt-2 text-mag-text/85 text-sm">Weekly rewards for top engaging couples.</p>
+          <h3 class="text-transparent bg-clip-text bg-gradient-to-r from-mag-acc to-mag-acc2 font-bold text-[20px]">Community Platform</h3>
+          <p class="mt-2 text-mag-text/85 text-sm">Events, highlights, and progress badges to celebrate your growth.</p>
         </div>
-        <img src="https://images.unsplash.com/photo-1511909525232-61113c912358?q=80&w=1200&auto=format&fit=crop" class="w-full h-48 object-cover" alt="">
+        <img src="https://magnuswebsite.site/img/magnus_platform.jpg" class="w-full h-48 object-cover" alt="Platform">
       </article>
     </div>
-
-    <!-- dots -->
     <div class="mt-2 flex justify-center gap-2" id="dots">
       <span class="w-2 h-2 rounded-full bg-mag-dot"></span>
       <span class="w-2 h-2 rounded-full bg-mag-dot"></span>
@@ -146,81 +207,413 @@
 
 <!-- ===== What is Magnus ===== -->
 <section class="max-w-[480px] mx-auto px-5 mt-6">
-  <article class="rounded-xl2 border border-mag-border bg-mag-card shadow-glass overflow-hidden backdrop-blur">
-    <img src="https://images.unsplash.com/photo-1518600506278-4e8ef466b810?q=80&w=1200&auto=format&fit=crop" class="w-full h-36 object-cover" alt="">
+  <article class="rounded-xl2 border border-mag-border glass shadow-glass overflow-hidden backdrop-blur reveal">
+    <img src="https://magnuswebsite.site/img/magnus_app.jpg" class="w-full h-36 object-cover" alt="Magnus app">
     <div class="p-5">
       <h3 class="text-transparent bg-clip-text bg-gradient-to-r from-mag-acc to-mag-acc2 font-extrabold text-[22px]">What is Magnus?</h3>
       <p class="mt-2 text-mag-text/85 text-[15px] leading-7">
-        Magnus is a value-driven platform where community, learning, and earning meet. Find connections, unlock financial opportunities, and gain skills.
+        Magnus is a value-driven community that blends learning, collaboration, and real-world projects.
+        Follow beginner-to-advanced paths, track progress with points and badges, and use creator-friendly tools.
+        No financial guarantees or payout features are offered in-app.
       </p>
     </div>
   </article>
 </section>
 
-<!-- ===== Overview ===== -->
-<section id="overview" class="max-w-[480px] mx-auto px-5 mt-6 mb-12">
-  <div class="rounded-2xl border border-mag-border bg-mag-card p-5 shadow-glass backdrop-blur">
+<!-- ===== Entry Plans (buttons now open Chat Bot) ===== -->
+<section id="plans" class="max-w-[480px] mx-auto px-5 mt-8 mb-4">
+  <h4 class="text-transparent bg-clip-text bg-gradient-to-r from-mag-acc to-mag-acc2 font-extrabold tracking-wide text-[20px] mb-3 reveal">
+    Choose Your Entry Plan
+  </h4>
+
+  <!-- Lite -->
+  <article class="relative rounded-xl2 border border-mag-border glass shadow-glass overflow-hidden backdrop-blur p-5 reveal tilt glow-ring">
+    <h5 class="font-bold text-[18px]">Magnus Lite</h5>
+    <p class="mt-2 text-mag-text/85 text-sm leading-6">
+      Start steady with core tasks and simple guides. Learn the workflow and collect in-app points for completing activities.
+    </p>
+    <ul class="mt-3 space-y-2 text-[14.5px]">
+      <li>• Essential tasks & checklists</li>
+      <li>• Beginner-friendly video guides</li>
+      <li>• Optional community referrals</li>
+      <li>• Progress tracking & badges</li>
+    </ul>
+    <p class="mt-4 text-mag-muted text-sm">One-time access fee applies.</p>
+    <button data-plan="Lite"
+            class="mt-3 w-full rounded-xl bg-gradient-to-br from-mag-acc to-mag-acc2 text-[#1a1a1a] font-bold py-3 shadow-pill cta-pulse btn-shine register-btn">
+      Continue — Magnus Lite
+    </button>
+  </article>
+
+  <div class="h-5"></div>
+
+  <!-- Pro -->
+  <article class="relative rounded-xl2 border border-mag-border glass shadow-glass overflow-hidden backdrop-blur p-5 reveal tilt glow-ring">
+    <span class="ribbon">Most Popular</span>
+    <h5 class="font-bold text-[18px]">Magnus Pro</h5>
+    <p class="mt-2 text-mag-text/85 text-sm leading-6">
+      Go beyond the basics with expanded task access, content challenges, and priority review windows for faster iterations.
+    </p>
+    <ul class="mt-3 space-y-2 text-[14.5px]">
+      <li>• Everything in Lite + advanced challenges</li>
+      <li>• Higher task availability & flexible limits</li>
+      <li>• Priority review windows</li>
+      <li>• Detail-rich progress analytics</li>
+    </ul>
+    <p class="mt-4 text-mag-muted text-sm">One-time access fee applies.</p>
+    <button data-plan="Pro"
+            class="mt-3 w-full rounded-xl bg-gradient-to-br from-mag-acc to-mag-acc2 text-[#1a1a1a] font-bold py-3 shadow-pill cta-pulse btn-shine register-btn">
+      Continue — Magnus Pro
+    </button>
+  </article>
+
+  <div class="h-5"></div>
+
+  <!-- Business -->
+  <article class="relative rounded-xl2 border border-mag-border glass shadow-glass overflow-hidden backdrop-blur p-5 reveal tilt glow-ring">
+    <span class="ribbon" style="right:-10px; transform: rotate(-6deg);">Best Value</span>
+    <h5 class="font-bold text-[18px]">Magnus Business</h5>
+    <p class="mt-2 text-mag-text/85 text-sm leading-6">
+      For teams, creators, and small businesses. Collaborate with roles, shared libraries, and extended limits.
+    </p>
+    <ul class="mt-3 space-y-2 text-[14.5px]">
+      <li>• Everything in Pro + team collaboration tools</li>
+      <li>• Shared libraries & templates</li>
+      <li>• Advanced analytics & audit history</li>
+      <li>• Priority support & onboarding</li>
+    </ul>
+    <p class="mt-4 text-mag-muted text-sm">One-time access fee applies.</p>
+    <button data-plan="Business"
+            class="mt-3 w-full rounded-xl bg-gradient-to-br from-mag-acc to-mag-acc2 text-[#1a1a1a] font-bold py-3 shadow-pill cta-pulse btn-shine register-btn">
+      Continue — Magnus Business
+    </button>
+  </article>
+</section>
+
+<!-- ===== Motion Lab (animated hashtags) ===== -->
+<section id="motion" class="relative max-w-[480px] mx-auto px-5 mt-10 mb-16">
+  <div class="g-border rounded-2xl p-[1px] reveal">
+    <div class="rounded-2xl glass shadow-glass p-5 relative overflow-hidden">
+      <h4 class="text-transparent bg-clip-text bg-gradient-to-r from-mag-acc to-mag-acc2 font-extrabold text-[20px] mb-1">
+        Motion Lab — see Magnus in action
+      </h4>
+      <p class="text-mag-text/85 text-[14.5px] mb-4">
+        Smooth interactions, kinetic text, and parallax cards showcase how content feels inside Magnus.
+      </p>
+
+      <div class="marquee mb-4">
+        <div id="tagStream" class="text-[13px] text-mag-text/90">
+          <span class="tag anim" style="--d:.0s">#learning-paths</span>
+          <span class="tag anim" style="--d:.2s">#creator-tools</span>
+          <span class="tag anim" style="--d:.4s">#community-events</span>
+          <span class="tag anim" style="--d:.6s">#progress-badges</span>
+          <span class="tag anim" style="--d:.8s">#team-workspace</span>
+          <span class="tag anim" style="--d:1.0s">#mobile-first</span>
+          <span class="tag anim" style="--d:1.2s">#glass-ui</span>
+          <span class="tag anim" style="--d:1.4s">#dark-orange</span>
+        </div>
+      </div>
+
+      <div class="grid gap-4">
+        <article class="rounded-xl2 border border-mag-border glass p-4 tilt shadow-glass parallax" data-depth=".6">
+          <div class="flex items-center gap-3">
+            <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-mag-acc to-mag-acc2 glow-ring grid place-items-center text-[#1b1208] font-extrabold">A</div>
+            <div>
+              <h5 class="font-semibold">Content Studio</h5>
+              <p class="text-xs text-mag-muted">Plan posts, organize assets, and track your skill milestones.</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="rounded-xl2 border border-mag-border glass p-4 tilt shadow-glass parallax" data-depth=".8">
+          <div class="flex items-center gap-3">
+            <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-mag-acc to-mag-acc2 glow-ring grid place-items-center text-[#1b1208] font-extrabold">B</div>
+            <div>
+              <h5 class="font-semibold">Web Templates</h5>
+              <p class="text-xs text-mag-muted">Launch simple, beautiful pages with step-by-step guides.</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="rounded-xl2 border border-mag-border glass p-4 tilt shadow-glass parallax" data-depth="1.0">
+          <div class="flex items-center gap-3">
+            <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-mag-acc to-mag-acc2 glow-ring grid place-items-center text-[#1b1208] font-extrabold">C</div>
+            <div>
+              <h5 class="font-semibold">Team Rooms</h5>
+              <p class="text-xs text-mag-muted">Share libraries, assign roles, and review progress together.</p>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <a href="#plans"
+         class="mt-5 inline-flex items-center gap-2 bg-gradient-to-br from-mag-acc to-mag-acc2 text-[#1a1a1a] font-bold rounded-xl px-4 py-3 shadow-pill cta-pulse btn-shine">
+        <span>→</span> <span>Explore Entry Plans</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Overview (kept) ===== -->
+<section id="overview" class="max-w-[480px] mx-auto px-5 mb-14">
+  <div class="rounded-2xl border border-mag-border glass p-5 shadow-glass backdrop-blur reveal">
     <h4 class="text-transparent bg-clip-text bg-gradient-to-r from-mag-acc to-mag-acc2 font-extrabold tracking-wide text-[20px]">MAGNUS OVERVIEW</h4>
     <ul class="mt-3 space-y-3 text-[15.5px] leading-7 text-mag-text/90">
-      <li>🎯 Operates across Africa & beyond, designed for networking + skills.</li>
-      <li>🎯 Blends love, learning, and earning.</li>
-      <li>🎯 Builds community + entrepreneurship with empowerment.</li>
+      <li>🎯 A community designed for learning, collaboration, and real projects.</li>
+      <li>🎯 Progress with points, badges, and structured paths — no financial promises.</li>
+      <li>🎯 Privacy-first controls for your content and profile.</li>
     </ul>
-    <a href="signup.html"
-       class="mt-5 inline-flex items-center gap-2 bg-gradient-to-br from-mag-acc to-mag-acc2 text-[#1a1a1a] font-bold rounded-xl px-4 py-3 shadow-pill">
-      <span>→</span> <span>Get Started Now</span>
+    <a href="#plans"
+       class="mt-5 inline-flex items-center gap-2 bg-gradient-to-br from-mag-acc to-mag-acc2 text-[#1a1a1a] font-bold rounded-xl px-4 py-3 shadow-pill cta-pulse">
+      <span>→</span> <span>Choose a Plan</span>
     </a>
   </div>
 </section>
 
-<!-- ===== JS: hamburger + carousel ===== -->
+<!-- ===== Register Modal (kept in DOM, not used) ===== -->
+<div id="regOverlay" class="fixed inset-0 bg-black/60 backdrop-blur-sm modal-hide transition-all duration-200 z-[60]"></div>
+<div id="regModal" role="dialog" aria-modal="true" aria-labelledby="regTitle"
+     class="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[92%] max-w-[480px] rounded-2xl border border-mag-border bg-[#111113] text-mag-text shadow-2xl p-5 modal-hide transition-all duration-200 z-[61]">
+  <div class="flex items-center justify-between">
+    <h3 id="regTitle" class="text-[18px] font-bold">Continue with your selection</h3>
+    <button id="closeReg" class="w-9 h-9 grid place-items-center rounded-full bg-white/10 border border-mag-border" aria-label="Close">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="#fff"><path d="M18.3 5.71 12 12l6.3 6.29-1.41 1.42L10.59 13.41 4.3 19.71 2.89 18.3 9.17 12 2.89 5.71 4.3 4.29l6.29 6.3 6.29-6.3z"/></svg>
+    </button>
+  </div>
+  <p id="regCopy" class="mt-2 text-mag-text/85 text-sm">
+    You selected <b>Magnus Lite</b>. Choose how you’d like to proceed.
+  </p>
+  <div class="mt-4 grid gap-3">
+    <button id="continueBtn"
+       class="w-full rounded-xl bg-gradient-to-br from-mag-acc to-mag-acc2 text-[#1a1a1a] font-bold py-3 shadow-pill">Continue</button>
+    <a id="learnBtn" href="#overview"
+       class="w-full rounded-xl bg-white/10 border border-mag-border font-semibold py-3 text-center">Learn about this plan</a>
+  </div>
+  <p class="mt-4 text-[12.5px] text-mag-muted">
+    Note: Magnus uses points, badges, and progress tracking. No financial guarantees or payout features are offered in-app.
+  </p>
+</div>
+
+<!-- ===== Chat Bot FAB ===== -->
+<button id="chatFab" class="chat-fab rounded-full p-4 bg-gradient-to-br from-mag-acc to-mag-acc2 text-[#1b1208] shadow-[0_10px_26px_rgba(0,0,0,.45)] glow-ring"
+        aria-controls="chatPanel" aria-expanded="false" aria-label="Open chat bot">
+  💬
+</button>
+
+<!-- ===== Chat Bot Panel (single primary button) ===== -->
+<div id="chatPanel" class="chat-panel">
+  <div class="chat-card rounded-2xl shadow-glass overflow-hidden">
+    <div class="px-4 py-3 flex items-center justify-between border-b border-mag-border/60">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-mag-acc to-mag-acc2 grid place-items-center text-[#1b1208] font-extrabold">M</div>
+        <div>
+          <div class="font-semibold leading-tight">Magnus Assistant</div>
+          <div class="text-xs text-mag-muted leading-tight">Join via Telegram</div>
+        </div>
+      </div>
+      <button id="closeChat" class="w-9 h-9 rounded-full bg-white/10 grid place-items-center" aria-label="Close chat">✕</button>
+    </div>
+
+    <div class="px-4 py-3 space-y-3 max-h-[56vh] overflow-y-auto">
+      <div class="chat-bubble rounded-2xl p-3">
+        <p class="text-sm">
+          To join Magnus, you’ll use Telegram. If you don’t have it yet,
+          <a id="installTelegramLink" href="#" class="underline underline-offset-2 decoration-mag-acc hover:opacity-80">install Telegram</a>
+          first. Otherwise, just click <b>Join Magnus</b>.
+        </p>
+      </div>
+
+      <button id="joinMagnus" class="w-full rounded-xl py-3 bg-gradient-to-br from-mag-acc to-mag-acc2 text-[#1a1a1a] font-bold shadow-pill">
+        Join Magnus
+      </button>
+
+      <div id="chatStatus" class="text-[12.5px] text-mag-muted"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== Install Telegram Modal (Android / iPhone) ===== -->
+<div id="installOverlay" class="fixed inset-0 bg-black/60 backdrop-blur-sm modal-hide transition-all duration-200 z-[75]"></div>
+<div id="installModal" role="dialog" aria-modal="true" aria-labelledby="installTitle"
+     class="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[92%] max-w-[460px] rounded-2xl border border-mag-border bg-[#151516] text-mag-text shadow-2xl p-5 modal-hide transition-all duration-200 z-[76]">
+  <h3 id="installTitle" class="text-[18px] font-bold">Install Telegram</h3>
+  <p class="mt-2 text-mag-text/85 text-sm">Choose your device to continue:</p>
+  <div class="mt-4 grid grid-cols-2 gap-3">
+    <a id="installAndroid" class="rounded-xl py-3 text-center bg-gradient-to-br from-mag-acc to-mag-acc2 text-[#1a1a1a] font-bold shadow-pill" href="#" rel="noopener">Android</a>
+    <a id="installIOS" class="rounded-xl py-3 text-center bg-white/10 border border-mag-border font-semibold" href="#" rel="noopener">iPhone</a>
+  </div>
+  <button id="installWeb" class="mt-3 w-full rounded-xl bg-white/10 border border-mag-border font-semibold py-3">Use Telegram Web</button>
+  <button id="alreadyHave" class="mt-3 w-full rounded-xl bg-transparent text-mag-muted underline underline-offset-4">I already have Telegram</button>
+</div>
+
+<!-- ===== Offline Modal ===== -->
+<div id="netOverlay" class="fixed inset-0 bg-black/60 backdrop-blur-sm modal-hide transition-all duration-200 z-[70]"></div>
+<div id="netModal" role="alertdialog" aria-modal="true" aria-labelledby="netTitle"
+     class="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[92%] max-w-[460px] rounded-2xl border border-mag-border bg-[#161617] text-mag-text shadow-2xl p-5 modal-hide transition-all duration-200 z-[71]">
+  <h3 id="netTitle" class="text-[18px] font-bold">No Internet Connection</h3>
+  <p class="mt-2 text-mag-text/85 text-sm">Please reconnect to continue. The interface needs an internet connection to fetch live links.</p>
+  <button id="netDismiss" class="mt-4 w-full rounded-xl bg-white/10 border border-mag-border font-semibold py-3">Okay</button>
+</div>
+
+<!-- ===== JS ===== -->
 <script>
 (() => {
-  const body=document.body,root=document.documentElement;
+  /* Rotating hero prefix */
+  const rotatingPrefix=document.getElementById('rotatingPrefix');
+  const words=['Real','Bold','Skilled','Creative','Trusted','Global','Community'];
+  let wi=0; setInterval(()=>{ rotatingPrefix.style.opacity=0; setTimeout(()=>{ wi=(wi+1)%words.length; rotatingPrefix.textContent=words[wi]; rotatingPrefix.style.opacity=1; },220); },1800);
+
+  /* Drawer */
+  const root=document.documentElement;
   const overlay=document.getElementById('overlay');
   const drawer=document.getElementById('drawer');
   const openBtn=document.getElementById('openMenu');
   const closeBtn=document.getElementById('closeMenu');
   const links=drawer.querySelectorAll('.menu-link');
   let lastFocus=null;
-
   function lockScroll(v){ root.style.overflow=v?'hidden':''; }
   function setOverlay(v){
-    if(v){ overlay.classList.remove('invisible','pointer-events-none');
-           requestAnimationFrame(()=>overlay.classList.add('opacity-100')); }
-    else { overlay.classList.remove('opacity-100');
-           overlay.addEventListener('transitionend',()=>overlay.classList.add('invisible','pointer-events-none'),{once:true}); }
+    if(v){ overlay.classList.remove('invisible','pointer-events-none'); requestAnimationFrame(()=>overlay.classList.add('opacity-100')); }
+    else { overlay.classList.remove('opacity-100'); overlay.addEventListener('transitionend',()=>overlay.classList.add('invisible','pointer-events-none'),{once:true}); }
   }
-  function openDrawer(){
-    lastFocus=document.activeElement;
-    drawer.style.transform='translateX(0)';
-    setOverlay(true); lockScroll(true);
-    openBtn.setAttribute('aria-expanded','true');
-    setTimeout(()=>drawer.focus(),50);
-  }
-  function closeDrawer(){
-    drawer.style.transform='translateX(-100%)';
-    setOverlay(false); lockScroll(false);
-    openBtn.setAttribute('aria-expanded','false');
-    setTimeout(()=> (lastFocus||openBtn).focus(),50);
-  }
-
+  function openDrawer(){ lastFocus=document.activeElement; drawer.style.transform='translateX(0)'; setOverlay(true); lockScroll(true); openBtn.setAttribute('aria-expanded','true'); setTimeout(()=>drawer.focus(),50); }
+  function closeDrawer(){ drawer.style.transform='translateX(-100%)'; setOverlay(false); lockScroll(false); openBtn.setAttribute('aria-expanded','false'); setTimeout(()=> (lastFocus||openBtn).focus(),50); }
   openBtn.addEventListener('click',openDrawer);
   closeBtn.addEventListener('click',closeDrawer);
   overlay.addEventListener('click',closeDrawer);
   links.forEach(a=>a.addEventListener('click',closeDrawer));
   document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeDrawer(); });
 
-  // Carousel dots
+  /* Carousel dots */
   const carousel=document.getElementById('carousel');
   const dots=[...document.getElementById('dots').children];
   function updateDots(){
-    const itemW=carousel.querySelector('article').offsetWidth+16;
+    const item=carousel?.querySelector('article'); if(!item) return;
+    const itemW=item.offsetWidth+16;
     const idx=Math.round(carousel.scrollLeft/itemW);
     dots.forEach((d,i)=> d.className='w-2 h-2 rounded-full '+(i===idx?'bg-mag-dotActive':'bg-mag-dot'));
   }
-  carousel.addEventListener('scroll',()=>{ if(!carousel._t){ requestAnimationFrame(()=>{updateDots();carousel._t=false}); carousel._t=true;}});
+  carousel?.addEventListener('scroll',()=>{ if(!carousel._t){ requestAnimationFrame(()=>{updateDots();carousel._t=false}); carousel._t=true;}});
   updateDots();
+
+  /* Scroll reveal */
+  const io=new IntersectionObserver((entries)=>{ entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('reveal-in'); io.unobserve(e.target);} }); },{threshold:.18});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+  /* Motion Lab tags loop + glow */
+  const tagStream = document.getElementById('tagStream');
+  if (tagStream){
+    const clone = tagStream.cloneNode(true);
+    tagStream.parentNode.appendChild(clone);
+    [...document.querySelectorAll('.tag.anim')].forEach((el,i)=>{
+      const base = el.style.animation ? el.style.animation + ', ' : '';
+      el.style.animation = base + 'tagShimmer 2.8s linear infinite';
+      el.style.animationDelay = `calc(var(--d, 0s) + ${i*0.05}s)`;
+    });
+  }
+
+  /* Parallax cards */
+  const parallaxEls=[...document.querySelectorAll('.parallax')];
+  window.addEventListener('mousemove',(e)=>{
+    const {innerWidth:w, innerHeight:h}=window;
+    const x=(e.clientX-w/2)/w, y=(e.clientY-h/2)/h;
+    parallaxEls.forEach(el=>{
+      const d=parseFloat(el.dataset.depth||.6);
+      el.style.transform=`translate3d(${x*d*12}px, ${y*d*12}px, 0)`;
+    });
+  });
+
+  /* Offline modal */
+  const netOverlay=document.getElementById('netOverlay');
+  const netModal=document.getElementById('netModal');
+  const netDismiss=document.getElementById('netDismiss');
+  function showNet(){ netOverlay.classList.remove('modal-hide'); netModal.classList.remove('modal-hide'); requestAnimationFrame(()=>{ netOverlay.classList.add('modal-show'); netModal.classList.add('modal-show'); }); }
+  function hideNet(){ netOverlay.classList.remove('modal-show'); netModal.classList.remove('modal-show'); netOverlay.addEventListener('transitionend',()=>{ netOverlay.classList.add('modal-hide'); netModal.classList.add('modal-hide'); },{once:true}); }
+  window.addEventListener('offline', showNet); window.addEventListener('online', hideNet);
+  netOverlay.addEventListener('click', hideNet); netDismiss.addEventListener('click', hideNet);
+
+  /* Entry Plans -> open chat bot */
+  document.querySelectorAll('.register-btn').forEach(b=>{
+    b.addEventListener('click', (e)=>{ e.preventDefault(); toggleChat(true); });
+  });
+
+  /* Chat controls */
+  const chatFab=document.getElementById('chatFab');
+  const chatPanel=document.getElementById('chatPanel');
+  const closeChat=document.getElementById('closeChat');
+  const statusEl=document.getElementById('chatStatus');
+  function toggleChat(open){ if(open){ chatPanel.classList.add('show'); chatFab?.setAttribute('aria-expanded','true'); } else { chatPanel.classList.remove('show'); chatFab?.setAttribute('aria-expanded','false'); } }
+  chatFab?.addEventListener('click',()=>toggleChat(true));
+  closeChat?.addEventListener('click',()=>toggleChat(false));
+
+  /* Install Telegram modal (Android/iPhone) */
+  const installOverlay=document.getElementById('installOverlay');
+  const installModal=document.getElementById('installModal');
+  const installLink=document.getElementById('installTelegramLink');
+  const installAndroid=document.getElementById('installAndroid');
+  const installIOS=document.getElementById('installIOS');
+  const installWeb=document.getElementById('installWeb');
+  const alreadyHave=document.getElementById('alreadyHave');
+
+  function showInstall(){ installOverlay.classList.remove('modal-hide'); installModal.classList.remove('modal-hide'); requestAnimationFrame(()=>{ installOverlay.classList.add('modal-show'); installModal.classList.add('modal-show'); }); }
+  function hideInstall(){ installOverlay.classList.remove('modal-show'); installModal.classList.remove('modal-show'); installOverlay.addEventListener('transitionend',()=>{ installOverlay.classList.add('modal-hide'); installModal.classList.add('modal-hide'); },{once:true}); }
+
+  installLink.addEventListener('click', (e)=>{ e.preventDefault(); showInstall(); });
+  installOverlay.addEventListener('click', hideInstall);
+
+  installAndroid.addEventListener('click', (e)=>{ e.preventDefault(); window.open('https://play.google.com/store/apps/details?id=org.telegram.messenger','_blank'); });
+  installIOS.addEventListener('click', (e)=>{ e.preventDefault(); window.open('https://apps.apple.com/app/telegram-messenger/id686449807','_blank'); });
+  installWeb.addEventListener('click', ()=>{ window.open('https://web.telegram.org/','_blank'); });
+
+  alreadyHave.addEventListener('click', ()=>{ localStorage.setItem('tgInstalled','1'); hideInstall(); statusEl.textContent='Great! Tap “Join Magnus” to continue.'; });
+
+  /* Fetch bot links (JSON, fallback Excel) */
+  async function fetchLinks(){
+    if(!navigator.onLine){ showNet(); throw new Error('Offline'); }
+    try{
+      const r = await fetch(LINK_SOURCES.jsonUrl, { cache: 'no-store' });
+      if(r.ok){ const data = await r.json(); if(data && data.bots) return data.bots; }
+      throw new Error('JSON missing bots');
+    }catch(e){
+      const r = await fetch(LINK_SOURCES.xlsxUrl, { cache: 'no-store' });
+      const ab = await r.arrayBuffer();
+      const wb = XLSX.read(ab, { type: 'array' });
+      const ws = wb.Sheets[LINK_SOURCES.sheetName] || wb.Sheets[wb.SheetNames[0]];
+      const rows = XLSX.utils.sheet_to_json(ws);
+      const out = {};
+      rows.forEach(row=>{
+        const name = String(row.Name||'').toLowerCase();
+        const url  = String(row.URL||'');
+        if(name.includes('main')) out.main = url;
+        if(name.includes('support')) out.support = url;
+      });
+      if(out.main || out.support) return out;
+      throw new Error('Links not found');
+    }
+  }
+
+  /* Join Magnus button */
+  const joinBtn=document.getElementById('joinMagnus');
+  joinBtn.addEventListener('click', async ()=>{
+    try{
+      if(!navigator.onLine){ showNet(); return; }
+      // If user hasn't confirmed Telegram installed, nudge them via modal first.
+      if(localStorage.getItem('tgInstalled')!=='1'){
+        showInstall();
+        return;
+      }
+      statusEl.textContent='Fetching live link…';
+      const bots = await fetchLinks();
+      const url = bots.main || bots.support;
+      if(!url){ statusEl.textContent='No link available right now.'; return; }
+      statusEl.textContent='Opening Telegram…';
+      window.open(url,'_blank');
+    }catch(e){
+      statusEl.textContent='Could not fetch link. Check your connection.';
+      showNet();
+    }
+  });
+
 })();
 </script>
 
