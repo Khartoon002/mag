@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="en">
 <head>
   <meta charset="utf-8" />
@@ -534,9 +534,21 @@
                class="w-full rounded-xl bg-white/10 ring-1 ring-white/10 focus:ring-2 focus:ring-[#FF8A1A] outline-none px-3 py-3 placeholder-white/40 text-sm"
                placeholder="e.g. janet@example.com" />
       </div>
+
+      <!-- NEW: Plan dropdown with preselected Pro but changeable -->
+      <div class="space-y-1">
+        <label for="applyPlan" class="text-sm font-semibold">Preferred Magnus Entry Plan</label>
+        <select id="applyPlan" name="applyPlan"
+                class="w-full rounded-xl bg-white/10 ring-1 ring-white/10 focus:ring-2 focus:ring-[#FF8A1A] outline-none px-3 py-3 text-sm">
+          <option value="Lite">Magnus Lite – ₦11,000 (Starter)</option>
+          <option value="Pro" selected>Magnus Pro – ₦17,500 (Most Popular)</option>
+          <option value="Business">Magnus Business – ₦28,500 (Heavy Earner)</option>
+        </select>
+      </div>
+
       <button type="submit"
               class="w-full orangrad text-[#111] font-extrabold rounded-2xl px-4 py-3 shadow-soft text-[13px]">
-        Save &amp; Continue
+        Save &amp; Continue to Payment
       </button>
       <p class="text-[11px] text-center text-[#C8C8CC]">
         Your details are used to personalize your Magnus registration and PayFac verification.
@@ -605,21 +617,21 @@
           <div class="flex items-center justify-between bg-white/5 rounded-xl p-3 ring-1 ring-white/10">
             <div>
               <div class="text-white/70">Account number</div>
-              <div class="font-bold" id="pfAcctNo">2283315431</div>
+              <div class="font-bold" id="pfAcctNo">6054080105</div>
             </div>
             <button class="ml-3 text-xs bg-white/10 hover:bg-white/15 rounded-lg px-3 py-2" data-copy-target="#pfAcctNo">Copy</button>
           </div>
           <div class="flex items-center justify-between bg-white/5 rounded-xl p-3 ring-1 ring-white/10">
             <div>
               <div class="text-white/70">Account Name</div>
-              <div class="font-bold" id="pfAcctName">Isonguyo Emmanuella</div>
+              <div class="font-bold" id="pfAcctName">Spino Clinton</div>
             </div>
             <button class="ml-3 text-xs bg-white/10 hover:bg-white/15 rounded-lg px-3 py-2" data-copy-target="#pfAcctName">Copy</button>
           </div>
           <div class="flex items-center justify-between bg-white/5 rounded-xl p-3 ring-1 ring-white/10">
             <div>
               <div class="text-white/70">Bank</div>
-              <div class="font-bold" id="pfBank">UBA</div>
+              <div class="font-bold" id="pfBank">Moniepoint</div>
             </div>
             <button class="ml-3 text-xs bg-white/10 hover:bg-white/15 rounded-lg px-3 py-2" data-copy-target="#pfBank">Copy</button>
           </div>
@@ -729,8 +741,15 @@
       ].filter(Boolean);
       const closeApplyBtn = document.getElementById('closeApply');
 
+      let preselectedPlan = 'Pro';
+
       function showApply(){
         if (!applyOverlay) return;
+        // Ensure dropdown reflects the preselected plan when opening
+        const planSel = document.getElementById('applyPlan');
+        if (planSel && preselectedPlan){
+          planSel.value = preselectedPlan;
+        }
         applyOverlay.classList.remove('hidden');
         applyOverlay.classList.add('flex');
       }
@@ -739,8 +758,16 @@
         applyOverlay.classList.add('hidden');
         applyOverlay.classList.remove('flex');
       }
+      function openApplyWithPlan(planKey){
+        preselectedPlan = planKey || 'Pro';
+        showApply();
+      }
 
-      openApplyBtns.forEach(btn => btn.addEventListener('click', showApply));
+      openApplyBtns.forEach(btn => btn.addEventListener('click', function(){
+        // All non-card buttons default to Pro but user can change in dropdown
+        openApplyWithPlan('Pro');
+      }));
+
       if (closeApplyBtn) closeApplyBtn.addEventListener('click', hideApply);
       if (applyOverlay){
         applyOverlay.addEventListener('click', function(e){
@@ -748,41 +775,7 @@
         });
       }
 
-      // APPLY FORM SUBMIT
-      const form = document.getElementById('applyForm');
-      function setWelcomeName(name){
-        // Could be used later to personalize text if you add [data-hero-name] spans
-        // For now we just store it.
-        return;
-      }
-
-      form && form.addEventListener('submit', function(e){
-        e.preventDefault();
-        const fullName = (document.getElementById('fullName').value || '').trim();
-        const phone = (document.getElementById('phone').value || '').trim();
-        const email = (document.getElementById('email').value || '').trim();
-        if (!fullName || !phone || !email) return;
-
-        try{
-          localStorage.setItem('magnus_apply_fullname', fullName);
-          localStorage.setItem('magnus_apply_phone', phone);
-          localStorage.setItem('magnus_apply_email', email);
-        }catch(_){}
-        setWelcomeName(fullName);
-        hideApply();
-      });
-
-      // Prefill if saved
-      try{
-        const savedName = localStorage.getItem('magnus_apply_fullname');
-        const savedPhone = localStorage.getItem('magnus_apply_phone');
-        const savedEmail = localStorage.getItem('magnus_apply_email');
-        if (savedName && document.getElementById('fullName')) document.getElementById('fullName').value = savedName;
-        if (savedPhone && document.getElementById('phone')) document.getElementById('phone').value = savedPhone;
-        if (savedEmail && document.getElementById('email')) document.getElementById('email').value = savedEmail;
-      }catch(_){}
-
-      // PLAN SELECTION + PAYMENT FLOW
+      // PLAN DATA MAP (used by both cards and form submission)
       const planAmountMap = {
         'Lite': '₦11,000',
         'Pro': '₦17,500',
@@ -791,6 +784,56 @@
       let selectedPlan = null;
       let selectedAmount = null;
 
+      // APPLY FORM SUBMIT
+      const form = document.getElementById('applyForm');
+      function setWelcomeName(name){
+        // Placeholder for future personalization if needed
+        return;
+      }
+
+      form && form.addEventListener('submit', function(e){
+        e.preventDefault();
+        const fullName = (document.getElementById('fullName').value || '').trim();
+        const phone = (document.getElementById('phone').value || '').trim();
+        const email = (document.getElementById('email').value || '').trim();
+        const planSel = document.getElementById('applyPlan');
+        const chosenPlan = (planSel && planSel.value) ? planSel.value : 'Pro';
+
+        if (!fullName || !phone || !email) return;
+
+        try{
+          localStorage.setItem('magnus_apply_fullname', fullName);
+          localStorage.setItem('magnus_apply_phone', phone);
+          localStorage.setItem('magnus_apply_email', email);
+          localStorage.setItem('magnus_apply_plan', chosenPlan);
+        }catch(_){}
+
+        setWelcomeName(fullName);
+
+        // Use the selected plan from dropdown to drive payment flow
+        selectedPlan = chosenPlan;
+        selectedAmount = planAmountMap[selectedPlan] || '₦0';
+
+        hideApply();
+        openPaymentCard(); // Go straight into packages/payment flow for selected plan
+      });
+
+      // Prefill if saved
+      try{
+        const savedName = localStorage.getItem('magnus_apply_fullname');
+        const savedPhone = localStorage.getItem('magnus_apply_phone');
+        const savedEmail = localStorage.getItem('magnus_apply_email');
+        const savedPlan = localStorage.getItem('magnus_apply_plan');
+        if (savedName && document.getElementById('fullName')) document.getElementById('fullName').value = savedName;
+        if (savedPhone && document.getElementById('phone')) document.getElementById('phone').value = savedPhone;
+        if (savedEmail && document.getElementById('email')) document.getElementById('email').value = savedEmail;
+        if (savedPlan && document.getElementById('applyPlan')){
+          document.getElementById('applyPlan').value = savedPlan;
+          preselectedPlan = savedPlan;
+        }
+      }catch(_){}
+
+      // PLAN SELECTION + PAYMENT FLOW
       const payMethodModal = document.getElementById('paymentMethodModal');
       const payModal = document.getElementById('payfacPaymentModal');
       const closePayModalBtn = document.getElementById('closePaymentModal');
@@ -830,19 +873,27 @@
         if (nameEl) nameEl.textContent = name;
         if (amtEl) amtEl.textContent = selectedAmount || '₦0';
 
-        // First ask for payment method
+        // Start at payment method selection
         showPayMethod();
       }
 
-      // Expose for debugging if you want
+      // Expose if needed
       window.openPaymentCard = openPaymentCard;
 
-      // Handle click on Select Plan buttons
+      // Handle click on Select Plan buttons (entry plan cards)
       document.addEventListener('click', function(e){
         const btn = e.target.closest('[data-select-plan]');
         if (!btn) return;
         selectedPlan = btn.getAttribute('data-select-plan') || null;
         selectedAmount = btn.getAttribute('data-plan-amount') || planAmountMap[selectedPlan] || '₦0';
+
+        // Also sync dropdown with this choice for consistency
+        const planSel = document.getElementById('applyPlan');
+        if (planSel && selectedPlan){
+          planSel.value = selectedPlan;
+          try{ localStorage.setItem('magnus_apply_plan', selectedPlan); }catch(_){}
+        }
+
         openPaymentCard();
       });
 
@@ -861,14 +912,14 @@
 
       const paymentMethods = {
         opay: {
-          acctNo: '1862610783',
-          acctName: 'Abasifreke Idorenyin Umoh',
-          bank: 'Kredi Money Mfb Ltd'
+          acctNo: '6416620475',
+          acctName: 'Spino Clinton',
+          bank: 'Opay Bank'
         },
         bank: {
-          acctNo: acctNoEl ? acctNoEl.textContent.trim() : '2283315431',
-          acctName: acctNameEl ? acctNameEl.textContent.trim() : 'Isonguyo Emmanuella',
-          bank: bankEl ? bankEl.textContent.trim() : 'UBA'
+          acctNo: acctNoEl ? acctNoEl.textContent.trim() : '6054080105',
+          acctName: acctNameEl ? acctNameEl.textContent.trim() : 'Spino Clinton',
+          bank: bankEl ? bankEl.textContent.trim() : 'Moniepoint'
         }
       };
 
@@ -923,8 +974,8 @@
           phone = localStorage.getItem('magnus_apply_phone') || '';
           email = localStorage.getItem('magnus_apply_email') || '';
         }catch(_){}
-        const plan = selectedPlan || 'Not selected';
-        const amount = selectedAmount || '₦0';
+        const plan = selectedPlan || (localStorage.getItem && localStorage.getItem('magnus_apply_plan')) || 'Not selected';
+        const amount = selectedAmount || planAmountMap[plan] || '₦0';
 
         const acctNo = (acctNoEl && acctNoEl.textContent || '').trim();
         const acctName = (acctNameEl && acctNameEl.textContent || '').trim();
