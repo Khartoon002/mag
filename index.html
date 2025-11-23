@@ -116,7 +116,8 @@
           <a href="#faq" class="hover:text-white">FAQs</a>
         </nav>
         <div class="flex items-center gap-2">
-          <a href="https://wa.me/2347071627074" target="_blank" class="hidden sm:inline-flex btn btn-ghost text-[12px]">
+          <!-- WhatsApp header link now controlled by JS variable -->
+          <a href="#" id="headerWaLink" class="hidden sm:inline-flex btn btn-ghost text-[12px]">
             Chat PayFac
           </a>
           <button id="openApply" class="btn btn-orange text-[12px]">
@@ -484,7 +485,8 @@
             <button id="openApplyBottom" class="btn btn-orange w-full sm:w-auto text-[13px]">
               Apply Now &amp; Register
             </button>
-            <a href="https://wa.me/2347071627074" target="_blank" class="btn btn-ghost w-full sm:w-auto text-[13px]">
+            <!-- WhatsApp CTA link now controlled by JS variable -->
+            <a href="#" class="btn btn-ghost w-full sm:w-auto text-[13px] js-wa-link">
               Chat PayFac on WhatsApp
             </a>
           </div>
@@ -728,6 +730,19 @@
   <!-- SCRIPTS -->
   <script>
     (function(){
+
+      /* ========= GLOBAL CONTACT VARIABLES ========= */
+      // Edit ONLY these three when you want to change contact details
+      const MAGNUS_WHATSAPP_LOCAL = "09152304164";        // local format
+      const MAGNUS_TELEGRAM_LOCAL = "07037195976";        // local format
+      const MAGNUS_EMAIL         = "magnuswebsite@site.com";
+
+      // Auto-generate international format and links
+      const MAGNUS_WHATSAPP_INT  = "234" + MAGNUS_WHATSAPP_LOCAL.replace(/^0/, "");
+      const MAGNUS_TELEGRAM_INT  = "234" + MAGNUS_TELEGRAM_LOCAL.replace(/^0/, "");
+      const MAGNUS_WHATSAPP_LINK = "https://wa.me/" + MAGNUS_WHATSAPP_INT;
+      const MAGNUS_TELEGRAM_LINK = "https://t.me/" + MAGNUS_TELEGRAM_INT;
+
       // Year in footer
       document.getElementById('yearSpan').textContent = new Date().getFullYear();
 
@@ -1035,17 +1050,15 @@ I will now send my proof of payment (screenshot/file). Please help me activate m
         submitOptionsModal.classList.remove('flex');
 
         if (channel === 'whatsapp'){
-          const waNumber = "2347045052056";
-          const url = "https://wa.me/" + waNumber + "?text=" + encodeURIComponent(msg);
+          const url = MAGNUS_WHATSAPP_LINK + "?text=" + encodeURIComponent(msg);
           window.location.href = url;
         } else if (channel === 'email'){
-          const emailTo = "magusskillsite@gmail.com";
+          const emailTo = MAGNUS_EMAIL;
           const subject = "Magnus Payment Proof Verification";
           const url = "mailto:" + emailTo + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(msg);
           window.location.href = url;
         } else if (channel === 'telegram'){
-          const tgLink = "https://t.me/paramount_payfac";
-          const url = tgLink + "?text=" + encodeURIComponent(msg);
+          const url = MAGNUS_TELEGRAM_LINK + "?text=" + encodeURIComponent(msg);
           window.location.href = url;
         }
       });
@@ -1082,6 +1095,18 @@ I will now send my proof of payment (screenshot/file). Please help me activate m
         });
         obs.observe(payModal, { attributes:true, attributeFilter:['class'] });
       })();
+
+      // Apply contact variables to visible WhatsApp links
+      const waLinks = document.querySelectorAll('.js-wa-link');
+      waLinks.forEach(a => {
+        a.setAttribute('href', MAGNUS_WHATSAPP_LINK);
+        a.setAttribute('target', '_blank');
+      });
+      const headerWa = document.getElementById('headerWaLink');
+      if (headerWa){
+        headerWa.setAttribute('href', MAGNUS_WHATSAPP_LINK);
+        headerWa.setAttribute('target', '_blank');
+      }
 
     })();
   </script>
